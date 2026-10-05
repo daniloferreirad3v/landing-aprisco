@@ -202,45 +202,14 @@ const inclui = [
     font-weight: var(--peso-forte);
   }
 
-  /* Oferta: a parcela do anual é o número em destaque (pedido do cliente).
-     Celular: preço em cima, botão embaixo. Desktop: botão e preço na mesma linha, para o
-     botão aparecer sem rolar em notebooks (720–768 px de altura). */
+  /* Oferta: a parcela é o número em destaque (pedido do cliente).
+     Celular: preço em cima, botão embaixo. Desktop: botão e preço lado a lado, para o botão
+     aparecer sem rolar em notebooks. Ordem: regras gerais primeiro, depois as do desktop. */
   .hero-oferta {
     display: grid;
     gap: var(--esp-1);
     flex-basis: 100%;
     color: var(--cor-texto);
-  }
-
-  .hero-ver-cursos {
-    flex-basis: 100%;
-  }
-
-  @media (min-width: 48rem) {
-    .hero-oferta {
-      flex-basis: auto;
-      order: 1;
-      gap: 0;
-    }
-
-    .hero-oferta__texto {
-      color: var(--cor-texto-suave);
-      font-size: var(--fs-pequeno);
-      line-height: 1.2;
-    }
-
-    /* Ao lado do botão, o bloco do preço tem a altura do botão (~52 px) */
-    .hero-oferta__valor {
-      font-size: 2.25rem;
-    }
-
-    .hero-oferta__moeda {
-      font-size: 1.25rem;
-    }
-
-    .hero-ver-cursos {
-      order: 2;
-    }
   }
 
   .hero-oferta__preco {
@@ -250,16 +219,48 @@ const inclui = [
     font-weight: var(--peso-forte);
   }
 
-  .hero-oferta__moeda {
-    font-family: var(--fonte-display);
-    font-size: 1.5rem;
-  }
-
+  /* Só os números em Anton; "12x de R$" na fonte de texto (o "R$" em Anton fica espremido) */
   .hero-oferta__valor {
     font-family: var(--fonte-display);
     font-size: clamp(2.25rem, 1.9rem + 1.2vw, 2.75rem);
     font-weight: 400;
     line-height: 1;
+  }
+
+  .hero-ver-cursos {
+    flex-basis: 100%;
+  }
+
+  @media (min-width: 48rem) {
+    /* O bloco do preço tem a altura do botão: o texto encosta no topo do botão e a base
+       dos números na base dele (line-height curto tira o espaço vazio abaixo dos dígitos) */
+    .hero-oferta {
+      flex-basis: auto;
+      order: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0;
+    }
+
+    .hero-oferta__texto {
+      color: var(--cor-texto-suave);
+      font-size: var(--fs-pequeno);
+      line-height: 1;
+    }
+
+    .hero-oferta__preco {
+      line-height: 1;
+    }
+
+    .hero-oferta__valor {
+      font-size: 2.25rem;
+      line-height: 0.76;
+    }
+
+    .hero-ver-cursos {
+      order: 2;
+    }
   }
 
   /* Manifesto: o problema, com as palavras do cliente */
@@ -280,7 +281,7 @@ const inclui = [
   .manifesto__texto {
     display: grid;
     gap: var(--esp-4);
-    align-content: end;
+    align-content: start;
   }
 
   .manifesto__pergunta {
@@ -294,8 +295,10 @@ const inclui = [
   }
 
   @media (min-width: 64rem) {
+    /* texto da direita centralizado na altura do título grande */
     .manifesto__grade {
       grid-template-columns: 1.1fr 1fr;
+      align-items: center;
       gap: var(--esp-8);
     }
   }
@@ -361,16 +364,23 @@ const inclui = [
     counter-reset: passo;
   }
 
+  /* Cada passo: número à esquerda; título e texto empilhados à direita, colados no topo
+     (sem isso, o passo é esticado e o espaço extra empurra o texto de forma desigual) */
   .passos li {
     counter-increment: passo;
     display: grid;
     grid-template-columns: 2.5rem 1fr;
+    grid-template-rows: auto auto;
+    align-content: start;
     column-gap: var(--esp-3);
+    row-gap: var(--esp-2);
   }
 
   .passos li::before {
     content: counter(passo);
-    grid-row: span 2;
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: start;
     font-family: var(--fonte-display);
     font-size: var(--fs-h2);
     line-height: 1;
@@ -378,18 +388,27 @@ const inclui = [
   }
 
   .passos h3 {
+    grid-column: 2;
     font-size: var(--fs-h4);
   }
 
   .passos p {
-    margin-top: var(--esp-2);
+    grid-column: 2;
     color: var(--cor-texto-suave);
     font-size: var(--fs-pequeno);
   }
 
+  /* Desktop: os 4 passos dividem as mesmas linhas (subgrid), então os títulos e os textos
+     começam na mesma altura em todas as colunas */
   @media (min-width: 64rem) {
     .passos {
       grid-template-columns: repeat(4, minmax(0, 1fr));
+      row-gap: 0;
+    }
+
+    .passos li {
+      grid-row: span 2;
+      grid-template-rows: subgrid;
     }
   }
 
@@ -467,12 +486,11 @@ const inclui = [
       font-size: var(--fs-corpo);
     }
 
+    /* Números altos da Anton: 2,375rem cabe junto do texto na altura do botão sem encostar */
     .hero-oferta__valor {
-      font-size: 3.25rem;
+      font-size: 2.375rem;
+      line-height: 0.76;
     }
 
-    .hero-oferta__moeda {
-      font-size: 1.5rem;
-    }
   }
 </style>

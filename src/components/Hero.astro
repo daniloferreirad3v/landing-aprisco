@@ -81,7 +81,8 @@ const temVisual = Astro.slots.has('visual');
   .hero__acoes {
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
+    /* stretch: no desktop o bloco do preço ganha a altura do botão (ver index.astro) */
+    align-items: stretch;
     gap: var(--esp-3) var(--esp-4);
     margin-top: var(--esp-5);
   }
@@ -101,6 +102,12 @@ const temVisual = Astro.slots.has('visual');
       grid-template-columns: 1fr auto;
       align-items: center;
       gap: var(--esp-7);
+    }
+
+    /* Botão do topo um pouco mais alto no desktop: o bloco do preço ao lado ganha a mesma
+       altura e respiro entre o texto e os números (index.astro) */
+    .hero__acoes :global(.botao) {
+      min-height: 3.5rem;
     }
 
     .hero__selo {
