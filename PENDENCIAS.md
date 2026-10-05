@@ -71,7 +71,9 @@ Lista viva do que falta. Marque `[x]` quando resolver e anote a resposta ao lado
 - [x] Links de checkout da assinatura na Kiwify (oficiais, ver acima)
 - [ ] **Aprovar o cordeiro vetorizado** (Fase 1): `public/logo/cordeiro-selo-branco.svg`, `cordeiro-selo-preto.svg`, `public/favicon.svg`. Feito a partir de `design/logo-preto.png`
 - [ ] Aprovar a imagem de compartilhamento `public/og/default.jpg` (recriação da peça `6.png` com as fontes reais)
-- [ ] Domínio provisório `https://aprisco.example.com` em `astro.config.mjs` (troca única; canonical, sitemap e robots.txt derivam dele)
+- [x] Endereço do site automático (`astro.config.mjs`): na Vercel usa o endereço de produção do projeto (o `*.vercel.app` na demonstração e o domínio oficial quando for conectado); fora da Vercel, `aprisco.example.com`
+- [x] Demonstração fora do Google: `vercel.json` manda `X-Robots-Tag: noindex` para qualquer endereço `*.vercel.app`. O domínio oficial não recebe esse cabeçalho
+- [ ] Antes do lançamento: conectar o domínio oficial na Vercel e conferir que ele **não** responde `X-Robots-Tag: noindex`
 - [ ] Remover `src/pages/teste.astro` antes do lançamento (página de teste da Fase 1, já com noindex e fora do sitemap)
 - [ ] Verificar se o checkout da Kiwify preserva UTMs
 - [ ] Ferramenta de analytics (Plausible, Umami ou GA4) e pixels de anúncio (impacta aviso de cookies/LGPD)

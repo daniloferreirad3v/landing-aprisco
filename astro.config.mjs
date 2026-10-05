@@ -2,9 +2,16 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// [PREENCHER: domínio definitivo] Trocar antes do build de produção.
-// Canonical, Open Graph e sitemap são gerados a partir deste valor.
-const SITE = 'https://aprisco.example.com';
+// Endereço do site: canonical, Open Graph (imagem no WhatsApp), sitemap e robots.txt saem daqui.
+// 1. SITE_URL, se definida (ex.: forçar o domínio oficial no build).
+// 2. Na Vercel, o endereço de produção do projeto: o *.vercel.app durante a demonstração e,
+//    depois, o domínio oficial assim que ele for conectado (VERCEL_PROJECT_PRODUCTION_URL).
+// 3. Fora da Vercel (máquina local), um domínio reservado de exemplo.
+const SITE =
+  process.env.SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : 'https://aprisco.example.com');
 
 // Páginas fora do sitemap (também recebem noindex no <head>).
 const FORA_DO_SITEMAP = ['/404', '/teste'];
