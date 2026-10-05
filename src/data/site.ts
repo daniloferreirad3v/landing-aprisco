@@ -25,8 +25,12 @@ export const site = {
   },
 } as const;
 
+// Single page (decisão do cliente, 2026-10-05): o menu rola até as seções da home.
+// "/#..." funciona tanto na home quanto nas páginas de curso e legais.
 export const navegacao = [
-  { href: '/cursos', rotulo: 'Cursos' },
-  { href: '/sobre', rotulo: 'Quem somos' },
-  { href: '/contato', rotulo: 'Contato' },
+  { href: '/#cursos', rotulo: 'Cursos' },
+  { href: '/#sobre', rotulo: 'Sobre' },
+  { href: '/#planos', rotulo: 'Planos' },
+  { href: '/#duvidas', rotulo: 'Dúvidas' },
+  { href: '/#contato', rotulo: 'Contato' },
 ] as const;

@@ -1,5 +1,7 @@
 ---
-// Home: página de vendas da assinatura.
+// Home: página de vendas da assinatura, em SINGLE PAGE (decisão do cliente, 2026-10-05).
+// O menu rola até as seções: #cursos, #sobre, #planos, #duvidas, #contato.
+// As páginas de curso existem só como porta de entrada pelo Google (sem links daqui).
 // Ordem pensada para conversão: oferta + produto na 1ª tela → problema (texto do cliente)
 // → o que a assinatura inclui → vitrine dos cursos → como funciona → planos → dúvidas → fechamento.
 // Outline: h1 → h2 manifesto → h2 inclui → h2 cursos (h3 trilhas, h4 cursos) → h2 como funciona
@@ -15,6 +17,7 @@ import Planos from '../components/Planos.astro';
 import Faq from '../components/Faq.astro';
 import BarraAssinatura from '../components/BarraAssinatura.astro';
 import Preencher from '../components/Preencher.astro';
+import { site } from '../data/site';
 import { trilhas } from '../data/trilhas';
 import { cursos, formatarReais, precoAPartirDe } from '../data/cursos';
 import { faqGeral } from '../data/faq';
@@ -62,7 +65,7 @@ const inclui = [
     <MuralCapas slot="visual" />
   </Hero>
 
-  <section class="manifesto" aria-labelledby="titulo-manifesto">
+  <section id="sobre" class="manifesto" aria-labelledby="titulo-manifesto">
     <div class="container secao manifesto__grade">
       <h2 id="titulo-manifesto" class="manifesto__titulo">Uma fé rasa, uma vida rasa.</h2>
       <div class="manifesto__texto">
@@ -72,7 +75,6 @@ const inclui = [
           sociedade hoje. Os cursos existem para ajudar você a construir uma vida profunda a partir do conhecimento
           de Deus.
         </p>
-        <a class="link-forte" href="/sobre">Conheça o APRISCO</a>
       </div>
     </div>
   </section>
@@ -101,11 +103,10 @@ const inclui = [
     <div class="vitrine__cabeca">
       <h2 id="titulo-trilhas">Escolha por onde começar</h2>
       <p>
-        {totalCursos} cursos em {trilhas.length} trilhas, todos incluídos na assinatura. Toque em um curso para ver
-        os detalhes ou veja o <a href="/cursos">catálogo completo de cursos de teologia</a>.
+        {totalCursos} cursos em {trilhas.length} trilhas, todos incluídos na assinatura.
       </p>
     </div>
-    {trilhas.map((trilha, i) => <TrilhaSection trilha={trilha} nivel="h3" prioridade={i === 0} compacto />)}
+    {trilhas.map((trilha, i) => <TrilhaSection trilha={trilha} nivel="h3" prioridade={i === 0} compacto link={false} />)}
   </section>
 
   <section class="faixa" aria-labelledby="titulo-como-funciona">
@@ -139,9 +140,42 @@ const inclui = [
     <Planos />
   </div>
 
-  <div class="container secao">
+  <div id="duvidas" class="container secao">
     <Faq itens={faqGeral} titulo="Dúvidas antes de assinar" />
   </div>
+
+  <section id="contato" class="container secao contato" aria-labelledby="titulo-contato">
+    <h2 id="titulo-contato">Fale com o APRISCO</h2>
+    <div class="contato__grade">
+      <div>
+        <p class="contato__intro">Tire suas dúvidas sobre os cursos e a assinatura antes de começar.</p>
+        <address class="contato__canais">
+          <ul class="lista-limpa">
+            <li>
+              <span class="contato__rotulo">WhatsApp</span>
+              {site.contato.whatsapp ? <a href={`https://wa.me/${site.contato.whatsapp}`}>Falar no WhatsApp</a> : <Preencher oque="WhatsApp" />}
+            </li>
+            <li>
+              <span class="contato__rotulo">E-mail</span>
+              {site.contato.email ? <a href={`mailto:${site.contato.email}`}>{site.contato.email}</a> : <Preencher oque="e-mail" />}
+            </li>
+            <li>
+              <span class="contato__rotulo">Instagram</span>
+              {site.redes.instagram ? <a href={site.redes.instagram}>Perfil do APRISCO</a> : <Preencher oque="Instagram" />}
+            </li>
+            <li>
+              <span class="contato__rotulo">Horário</span>
+              {site.contato.horario || <Preencher oque="horário de atendimento" />}
+            </li>
+          </ul>
+        </address>
+      </div>
+      <p class="contato__kiwify">
+        Pagamento, acesso à área de membros e pedidos de reembolso são processados pela Kiwify, a plataforma onde
+        ficam os cursos.
+      </p>
+    </div>
+  </section>
 
   <section class="final" aria-labelledby="titulo-final">
     <div class="container secao final__conteudo">
@@ -299,6 +333,49 @@ const inclui = [
   @media (min-width: 64rem) {
     .passos {
       grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  /* Contato */
+  .contato__grade {
+    display: grid;
+    gap: var(--esp-6);
+    margin-top: var(--esp-6);
+  }
+
+  .contato__intro,
+  .contato__kiwify {
+    color: var(--cor-texto-suave);
+  }
+
+  .contato__canais {
+    margin-top: var(--esp-5);
+    font-style: normal;
+  }
+
+  .contato__canais li {
+    display: grid;
+    gap: var(--esp-1);
+    padding-block: var(--esp-3);
+    border-bottom: var(--fio) solid var(--cor-fio);
+  }
+
+  .contato__canais a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--alvo-toque);
+    font-weight: var(--peso-forte);
+  }
+
+  .contato__rotulo {
+    color: var(--cor-texto-suave);
+    font-size: var(--fs-pequeno);
+  }
+
+  @media (min-width: 64rem) {
+    .contato__grade {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--esp-8);
     }
   }
 

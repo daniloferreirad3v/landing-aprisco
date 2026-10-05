@@ -10,9 +10,10 @@ interface Props {
   nivel?: 'h2' | 'h3';
   prioridade?: boolean;
   compacto?: boolean;
+  link?: boolean;
 }
 
-const { trilha, nivel = 'h3', prioridade = false, compacto = false } = Astro.props;
+const { trilha, nivel = 'h3', prioridade = false, compacto = false, link = true } = Astro.props;
 const Titulo = nivel;
 const nivelCard = nivel === 'h2' ? 'h3' : 'h4';
 const cursos = cursosDaTrilha(trilha.id);
@@ -23,7 +24,7 @@ const idTitulo = `trilha-${trilha.id}`;
   <ul class="trilha__cursos lista-limpa">
     {cursos.map((curso, i) => (
       <li>
-        <CursoCard curso={curso} nivel={nivelCard} prioridade={prioridade && i < 2} compacto={compacto} />
+        <CursoCard curso={curso} nivel={nivelCard} prioridade={prioridade && i < 2} compacto={compacto} link={link} />
       </li>
     ))}
   </ul>

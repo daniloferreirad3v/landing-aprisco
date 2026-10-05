@@ -66,13 +66,13 @@ const dadosCurso = {
   <div class="curso__topo">
     <div class="container curso__grade">
       <div class="curso__texto">
-        <Breadcrumbs itens={[{ nome: 'Cursos', href: '/cursos' }, { nome: curso.nome, href: urlDoCurso(curso) }]} />
+        <Breadcrumbs itens={[{ nome: curso.nome, href: urlDoCurso(curso) }]} />
         <p class="curso__trilha">
-          <a href={`/cursos#trilha-${trilhaPrincipal.id}`}>{trilhaPrincipal.nome}</a>
+          <a href={`/#trilha-${trilhaPrincipal.id}`}>{trilhaPrincipal.nome}</a>
           {outrasTrilhas.map((t) => (
             <>
               <span aria-hidden="true"> · </span>
-              <a href={`/cursos#trilha-${t.id}`}>{t.nome}</a>
+              <a href={`/#trilha-${t.id}`}>{t.nome}</a>
             </>
           ))}
         </p>
@@ -195,7 +195,7 @@ const dadosCurso = {
           ))}
         </ul>
         <p class="relacionados__todos">
-          <a href="/cursos">Ver todos os cursos de teologia</a>
+          <a href="/#cursos">Ver todos os cursos de teologia do APRISCO</a>
         </p>
       </aside>
     )

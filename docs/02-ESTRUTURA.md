@@ -106,6 +106,11 @@ Regras:
 
 ## Rotas e intenção de cada página
 
+> **Atualização 2026-10-05: single page.** A tabela abaixo é o plano original. Hoje existem:
+> `/` (home com as seções #cursos, #sobre, #planos, #duvidas e #contato), `/cursos/[slug]`
+> (portas de entrada pelo Google, sem links da home), `/politica-de-privacidade`, `/termos-de-uso` e `/404`.
+> `/cursos`, `/sobre`, `/contato` e o blog foram removidos.
+
 | Rota | Função | Palavra-chave principal (definir) |
 |---|---|---|
 | `/` | Landing de vendas institucional | `[PREENCHER]` ex.: seminário teológico online |

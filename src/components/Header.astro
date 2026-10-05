@@ -2,8 +2,6 @@
 import Logo from './Logo.astro';
 import { navegacao, site } from '../data/site';
 
-const atual = Astro.url.pathname.replace(/\/$/, '') || '/';
-const ehAtual = (href: string) => atual === href || atual.startsWith(`${href}/`);
 ---
 <header class="header">
   <div class="container header__barra">
@@ -15,7 +13,7 @@ const ehAtual = (href: string) => atual === href || atual.startsWith(`${href}/`)
       <ul class="header__lista header__lista--desktop lista-limpa">
         {navegacao.map((item) => (
           <li>
-            <a href={item.href} aria-current={ehAtual(item.href) ? 'page' : undefined}>{item.rotulo}</a>
+            <a href={item.href}>{item.rotulo}</a>
           </li>
         ))}
       </ul>
@@ -30,7 +28,7 @@ const ehAtual = (href: string) => atual === href || atual.startsWith(`${href}/`)
         <ul class="menu__lista lista-limpa">
           {navegacao.map((item) => (
             <li>
-              <a href={item.href} aria-current={ehAtual(item.href) ? 'page' : undefined}>{item.rotulo}</a>
+              <a href={item.href}>{item.rotulo}</a>
             </li>
           ))}
         </ul>
@@ -39,9 +37,18 @@ const ehAtual = (href: string) => atual === href || atual.startsWith(`${href}/`)
   </div>
 </header>
 
+<script>
+  // Single page: ao tocar num item do menu do celular, fecha o <details> para não cobrir a seção.
+  for (const link of document.querySelectorAll<HTMLAnchorElement>('.menu__lista a')) {
+    link.addEventListener('click', () => link.closest('details')?.removeAttribute('open'));
+  }
+</script>
+
 <style>
+  /* Fixo no topo: no single page o menu precisa estar sempre ao alcance */
   .header {
-    position: relative;
+    position: sticky;
+    top: 0;
     z-index: 10;
     background: var(--cor-preto);
     border-bottom: var(--fio) solid var(--cor-fio);
@@ -78,13 +85,6 @@ const ehAtual = (href: string) => atual === href || atual.startsWith(`${href}/`)
     font-size: var(--fs-pequeno);
     font-weight: var(--peso-medio);
     text-decoration: none;
-  }
-
-  .header__nav a[aria-current='page'] {
-    text-decoration: underline;
-    text-decoration-color: var(--cor-destaque);
-    text-decoration-thickness: 2px;
-    text-underline-offset: 0.45em;
   }
 
   /* Menu mobile sem JavaScript: <details>/<summary> */

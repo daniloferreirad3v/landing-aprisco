@@ -75,6 +75,7 @@ Registre as respostas aqui conforme chegarem.
 - **2026-10-05, FAQ:** usar um FAQ provisório até o cliente enviar o definitivo. Ele fica marcado como rascunho no código e em `PENDENCIAS.md`, e as respostas sem fonte aparecem com [PREENCHER].
 - **2026-10-05, blog:** fora do escopo. A Fase 4 (blog) não será feita, e o link saiu do menu.
 - **2026-10-05, home:** reforçar a cara de página de vendas de alta conversão (ver docs/design-plan.md, seção 9).
+- **2026-10-05, arquitetura:** **single page**. A home concentra tudo, e o menu rola até as seções #cursos, #sobre, #planos, #duvidas e #contato. As 21 páginas de curso continuam existindo só como porta de entrada pelo Google e por anúncios: ficam no sitemap, mas não recebem link da home. Os cards de curso na home são só vitrine, sem clique. Catálogo, Sobre e Contato deixaram de ser páginas. Política de privacidade, termos e 404 continuam separadas.
 
 ## Tom de voz
 

@@ -5,7 +5,8 @@
 
 html {
   background: var(--cor-fundo);
-  scroll-padding-top: var(--esp-5);
+  /* o header é fixo: as âncoras param logo abaixo dele */
+  scroll-padding-top: calc(var(--altura-header) + var(--esp-4));
 }
 
 @media (prefers-reduced-motion: no-preference) {

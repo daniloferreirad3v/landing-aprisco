@@ -83,6 +83,12 @@ Lista viva do que falta. Marque `[x]` quando resolver e anote a resposta ao lado
 - [ ] Palavra-chave principal da home: proposta "seminário teológico online" (validar)
 - [ ] Validar as palavras-chave propostas para os 21 cursos (campo `palavraChave` em `src/data/cursos.ts`; o build impede duas páginas com a mesma)
 
+## Single page (2026-10-05)
+
+- [ ] Páginas de curso sem link da home: o Google as encontra pelo sitemap e pelos links entre cursos relacionados. Para cada curso ranquear bem, o ideal é ter descrição real (300+ palavras) e, se possível, links de fora (Instagram, anúncios)
+- [ ] Sobre (seção da home): hoje só tem o manifesto; declaração de fé e professores entram quando houver material
+- [ ] Contato (seção da home): canais em `src/data/site.ts`
+
 ## Registro da Fase 3 (2026-10-05)
 
 - [ ] **Sobre:** história da escola, declaração de fé e "Quem ensina" (professores) aparecem como [PREENCHER]

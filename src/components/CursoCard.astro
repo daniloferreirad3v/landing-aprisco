@@ -11,13 +11,14 @@ interface Props {
   nivel?: 'h3' | 'h4';
   prioridade?: boolean; // true só para cards visíveis na primeira tela
   compacto?: boolean; // só capa e nome (vitrine da home); a chamada fica na página do curso
+  link?: boolean; // false = só vitrine, sem clique (home single page)
 }
 
-const { curso, nivel = 'h3', prioridade = false, compacto = false } = Astro.props;
+const { curso, nivel = 'h3', prioridade = false, compacto = false, link = true } = Astro.props;
 const Titulo = nivel;
 const emBreve = curso.status === 'em-breve';
 ---
-<article class="card">
+<article class:list={['card', link && 'card--link']}>
   <div class="card__capa">
     {
       curso.capa ? (
@@ -39,7 +40,7 @@ const emBreve = curso.status === 'em-breve';
     {emBreve && <p class="card__selo">Em preparação</p>}
   </div>
   <Titulo class="card__titulo">
-    <a href={urlDoCurso(curso)}>{curso.nome}</a>
+    {link ? <a href={urlDoCurso(curso)}>{curso.nome}</a> : curso.nome}
   </Titulo>
   {!compacto && <p class="card__chamada">{curso.chamada}</p>}
 </article>
@@ -74,8 +75,8 @@ const emBreve = curso.status === 'em-breve';
     transition: transform var(--duracao-rapida) ease;
   }
 
-  .card:hover .card__capa::after,
-  .card:focus-within .card__capa::after {
+  .card--link:hover .card__capa::after,
+  .card--link:focus-within .card__capa::after {
     transform: scaleX(1);
   }
 
