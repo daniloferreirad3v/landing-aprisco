@@ -1,0 +1,8 @@
+---
+// Marca visualmente um conteúdo que ainda falta. Cada uso deve constar em PENDENCIAS.md.
+interface Props {
+  oque: string;
+}
+const { oque } = Astro.props;
+---
+<span class="preencher">[PREENCHER: {oque}]</span>

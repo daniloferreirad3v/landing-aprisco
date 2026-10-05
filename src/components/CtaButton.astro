@@ -1,0 +1,105 @@
+---
+// ÚNICO componente que gera links de compra (CLAUDE.md, regra 4).
+//
+// - Com `plano`: abre o checkout daquele plano na Kiwify (URL vinda de cursos.ts).
+// - Sem `plano`: leva à seção de planos (`destino`, padrão "#planos"), onde a pessoa
+//   escolhe mensal ou anual antes de pagar.
+//
+// É um <a> (navegação), nunca <button>. Mesma aba, sem target="_blank".
+// Os atributos data-cta/data-plano/data-curso servem para medir cliques (analytics).
+import { getPlano, type PlanoId } from '../data/cursos';
+import { site } from '../data/site';
+
+interface Props {
+  plano?: PlanoId;
+  destino?: string;
+  curso?: string; // slug, só para medição
+  variante?: 'principal' | 'secundario';
+  largura?: 'auto' | 'total';
+}
+
+const { plano, destino = '#planos', curso, variante = 'principal', largura = 'auto' } = Astro.props;
+
+const link = plano ? getPlano(plano).linkKiwify : destino;
+const externo = Boolean(plano);
+const indisponivel = plano !== undefined && link === '';
+const alternativa = site.contato.whatsapp ? `https://wa.me/${site.contato.whatsapp}` : '';
+const classes = ['botao', `botao--${variante}`, largura === 'total' && 'botao--total'];
+---
+{
+  indisponivel ? (
+    alternativa ? (
+      <a class:list={classes} href={alternativa} data-cta="whatsapp" data-plano={plano}>
+        Falar no WhatsApp
+      </a>
+    ) : (
+      <span class:list={[...classes, 'botao--indisponivel']}>Assinatura indisponível no momento</span>
+    )
+  ) : (
+    <a
+      class:list={classes}
+      href={link}
+      rel={externo ? 'noopener' : undefined}
+      data-cta={plano ? `checkout-${plano}` : 'ver-planos'}
+      data-plano={plano}
+      data-curso={curso}
+    >
+      <slot />
+    </a>
+  )
+}
+
+<style>
+  .botao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--esp-2);
+    min-height: 3.25rem;
+    padding: var(--esp-3) var(--esp-5);
+    border: 2px solid transparent;
+    border-radius: var(--raio);
+    font-family: var(--fonte-texto);
+    font-size: var(--fs-corpo);
+    font-weight: var(--peso-forte);
+    line-height: 1.25;
+    text-align: center;
+    text-decoration: none;
+    transition:
+      background-color var(--duracao-rapida) ease,
+      color var(--duracao-rapida) ease,
+      border-color var(--duracao-rapida) ease;
+  }
+
+  .botao--principal {
+    background: var(--cor-destaque);
+    color: var(--cor-sobre-destaque);
+  }
+
+  .botao--principal:hover {
+    background: var(--cor-texto);
+    color: var(--cor-sobre-destaque);
+  }
+
+  .botao--secundario {
+    background: transparent;
+    border-color: var(--cor-texto);
+    color: var(--cor-texto);
+  }
+
+  .botao--secundario:hover {
+    border-color: var(--cor-destaque);
+    color: var(--cor-destaque);
+  }
+
+  .botao--total {
+    width: 100%;
+  }
+
+  .botao--indisponivel {
+    background: var(--cor-superficie);
+    border-color: var(--cor-fio);
+    color: var(--cor-texto-suave);
+    cursor: not-allowed;
+  }
+</style>

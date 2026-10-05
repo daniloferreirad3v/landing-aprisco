@@ -1,0 +1,73 @@
+---
+// Trilha de navegação + BreadcrumbList (JSON-LD) gerados da mesma lista,
+// para o visível e o estruturado nunca divergirem.
+// O último item é a página atual (sem link).
+import JsonLd from './JsonLd.astro';
+
+export interface ItemBreadcrumb {
+  nome: string;
+  href: string;
+}
+
+interface Props {
+  itens: ItemBreadcrumb[]; // sem "Início": ele é adicionado aqui
+}
+
+const itens: ItemBreadcrumb[] = [{ nome: 'Início', href: '/' }, ...Astro.props.itens];
+
+const dados = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: itens.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.nome,
+    item: new URL(item.href, Astro.site).href,
+  })),
+};
+---
+<nav class="breadcrumbs" aria-label="Você está em">
+  <ol class="lista-limpa">
+    {itens.map((item, i) => (
+      <li>
+        {i < itens.length - 1 ? <a href={item.href}>{item.nome}</a> : <span aria-current="page">{item.nome}</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+<JsonLd data={dados} />
+
+<style>
+  .breadcrumbs {
+    font-size: var(--fs-pequeno);
+    color: var(--cor-texto-suave);
+  }
+
+  .breadcrumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .breadcrumbs li {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .breadcrumbs li + li::before {
+    content: '›';
+    margin-inline: var(--esp-2);
+    color: var(--cor-texto-suave);
+  }
+
+  .breadcrumbs a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--alvo-toque);
+    color: var(--cor-texto);
+  }
+
+  .breadcrumbs [aria-current='page'] {
+    color: var(--cor-texto-suave);
+  }
+</style>

@@ -1,0 +1,134 @@
+---
+import Logo from './Logo.astro';
+import Preencher from './Preencher.astro';
+import { navegacao, site } from '../data/site';
+
+const ano = new Date().getFullYear();
+const { contato, redes, empresa } = site;
+const whatsappUrl = contato.whatsapp ? `https://wa.me/${contato.whatsapp}` : '';
+---
+<footer class="rodape">
+  <div class="container rodape__grade">
+    <div class="rodape__marca">
+      <Logo />
+      <p class="rodape__frase">Cursos online de teologia bíblica, por assinatura.</p>
+    </div>
+
+    <nav class="rodape__nav" aria-label="Rodapé">
+      <h2 class="rodape__titulo">Navegação</h2>
+      <ul class="lista-limpa">
+        <li><a href="/">Início</a></li>
+        {navegacao.map((item) => (
+          <li><a href={item.href}>{item.rotulo}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="rodape__contato">
+      <h2 class="rodape__titulo">Atendimento</h2>
+      <address>
+        <ul class="lista-limpa">
+          <li>
+            {contato.whatsapp ? <a href={whatsappUrl}>Falar no WhatsApp</a> : <Preencher oque="WhatsApp" />}
+          </li>
+          <li>
+            {contato.email ? <a href={`mailto:${contato.email}`}>{contato.email}</a> : <Preencher oque="e-mail" />}
+          </li>
+          <li>
+            {redes.instagram ? <a href={redes.instagram}>Instagram</a> : <Preencher oque="Instagram" />}
+          </li>
+          {contato.horario && <li>{contato.horario}</li>}
+        </ul>
+      </address>
+    </div>
+  </div>
+
+  <div class="container rodape__base">
+    <p>
+      Pagamentos e área de membros pela <a href="https://kiwify.com.br" rel="noopener">Kiwify</a>.
+    </p>
+    <ul class="rodape__legal lista-limpa">
+      <li><a href="/politica-de-privacidade">Política de privacidade</a></li>
+      <li><a href="/termos-de-uso">Termos de uso</a></li>
+    </ul>
+    <p>
+      © {ano} {empresa.razaoSocial || site.nome}
+      {empresa.cnpj ? <span> · CNPJ {empresa.cnpj}</span> : <span> · <Preencher oque="razão social e CNPJ" /></span>}
+    </p>
+  </div>
+</footer>
+
+<style>
+  .rodape {
+    background: var(--cor-preto);
+    border-top: var(--fio) solid var(--cor-fio);
+    padding-block: var(--esp-8) var(--esp-6);
+    font-size: var(--fs-pequeno);
+  }
+
+  .rodape__grade {
+    display: grid;
+    gap: var(--esp-7);
+  }
+
+  .rodape__frase {
+    margin-top: var(--esp-4);
+    color: var(--cor-texto-suave);
+    max-inline-size: 32ch;
+  }
+
+  .rodape__titulo {
+    font-family: var(--fonte-texto);
+    font-size: var(--fs-pequeno);
+    font-weight: var(--peso-forte);
+    text-transform: none;
+    letter-spacing: normal;
+    line-height: var(--lh-titulo);
+    margin-bottom: var(--esp-3);
+  }
+
+  address {
+    font-style: normal;
+  }
+
+  .rodape a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--alvo-toque);
+  }
+
+  .rodape__base {
+    display: grid;
+    gap: var(--esp-3);
+    margin-top: var(--esp-7);
+    padding-top: var(--esp-5);
+    border-top: var(--fio) solid var(--cor-fio);
+    color: var(--cor-texto-suave);
+    font-size: var(--fs-mini);
+  }
+
+  .rodape__base a {
+    color: var(--cor-texto);
+  }
+
+  .rodape__legal {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: var(--esp-5);
+  }
+
+  @media (min-width: 48rem) {
+    .rodape__grade {
+      grid-template-columns: 2fr 1fr 1fr;
+    }
+
+    .rodape__base {
+      grid-template-columns: 1fr auto;
+      align-items: center;
+    }
+
+    .rodape__base p:last-child {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

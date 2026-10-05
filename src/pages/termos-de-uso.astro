@@ -1,0 +1,55 @@
+---
+// RASCUNHO para revisão jurídica (docs/06-CONTEUDO.md). Não é aconselhamento legal.
+import Pagina from '../layouts/Pagina.astro';
+import Preencher from '../components/Preencher.astro';
+import { site } from '../data/site';
+import { montarTitulo } from '../lib/seo';
+
+const title = montarTitulo('Termos de Uso');
+const description =
+  'Leia os termos de uso do site do Seminário Teológico APRISCO: uso do conteúdo, contratação da assinatura pela Kiwify e responsabilidades.';
+const atualizacao = new Date('2026-10-05');
+---
+<Pagina title={title} description={description} h1="Termos de Uso" breadcrumbs={[{ nome: 'Termos de Uso', href: '/termos-de-uso' }]}>
+  <Fragment slot="intro">
+    <p>
+      Última atualização:{' '}
+      <time datetime={atualizacao.toISOString().slice(0, 10)}>
+        {atualizacao.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })}
+      </time>
+    </p>
+    <p class="rascunho"><Preencher oque="RASCUNHO: revisão jurídica obrigatória antes da publicação" /></p>
+  </Fragment>
+
+  <h2>Sobre este site</h2>
+  <p>
+    Este site apresenta o {site.nome} e os seus cursos. Ao usá-lo, você concorda com estes termos.
+  </p>
+
+  <h2>Conteúdo</h2>
+  <p>
+    Textos, marcas, logotipos e imagens deste site pertencem ao {site.nome} ou são usados com autorização. Não é
+    permitido copiar ou redistribuir o conteúdo sem autorização prévia.
+  </p>
+
+  <h2>Contratação da assinatura</h2>
+  <p>
+    A assinatura é contratada e paga na Kiwify. A compra, o acesso à área de membros, a renovação e os pedidos de
+    reembolso seguem as condições apresentadas no checkout e os{' '}
+    <a href="https://kiwify.com.br/termos-de-uso/" rel="noopener">termos de uso da Kiwify</a>.
+  </p>
+  <p><Preencher oque="regras da assinatura: renovação, cancelamento e garantia" /></p>
+
+  <h2>Links externos</h2>
+  <p>O site contém links para serviços de terceiros, como a Kiwify, que têm termos e políticas próprios.</p>
+
+  <h2>Alterações e foro</h2>
+  <p>Estes termos podem ser atualizados. A data no topo indica a versão em vigor.</p>
+  <p><Preencher oque="foro e legislação aplicável" /></p>
+</Pagina>
+
+<style>
+  .rascunho {
+    margin-top: var(--esp-3);
+  }
+</style>

@@ -1,0 +1,98 @@
+/*
+ * Design tokens — Seminário Teológico APRISCO
+ * Fonte: docs/design-plan.md (valores extraídos de /design).
+ * Todo valor visual do site vem daqui.
+ */
+
+@font-face {
+  font-family: 'Anton';
+  src: url('/fonts/anton-latin.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/montserrat-latin-var.woff2') format('woff2');
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Reserva com métricas da Montserrat: evita o "pulo" do texto (CLS) quando a fonte chega */
+@font-face {
+  font-family: 'Montserrat Reserva';
+  src: local('Arial');
+  size-adjust: 112.83%;
+  ascent-override: 85.79%;
+  descent-override: 22.25%;
+  line-gap-override: 0%;
+}
+
+:root {
+  color-scheme: dark;
+
+  /* Cor */
+  --cor-preto: #000000;
+  --cor-fundo: #09090b;
+  --cor-superficie: #161618;
+  --cor-texto: #f4f1ec;
+  --cor-texto-suave: #a3a09b;
+  --cor-destaque: #f98080;
+  --cor-aviso: #e8c27a;
+  --cor-fio: rgb(244 241 236 / 0.14);
+  --cor-sobre-destaque: #09090b;
+
+  /* Tipografia */
+  --fonte-display: 'Anton', 'Arial Narrow', Impact, sans-serif;
+  --fonte-texto: 'Montserrat', 'Montserrat Reserva', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --fs-mini: 0.8125rem;    /* 13 */
+  --fs-pequeno: 0.9375rem; /* 15 */
+  --fs-corpo: clamp(1.0625rem, 1rem + 0.25vw, 1.125rem);  /* 17 → 18 */
+  --fs-h4: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);     /* 17 → 19 */
+  --fs-h3: clamp(1.375rem, 1.2rem + 0.8vw, 1.625rem);     /* 22 → 26 */
+  --fs-h2: clamp(2rem, 1.5rem + 2.2vw, 3rem);             /* 32 → 48 */
+  --fs-h1: clamp(2.75rem, 1.6rem + 5.2vw, 5.5rem);        /* 44 → 88 */
+
+  --lh-corpo: 1.6;
+  --lh-titulo: 1.2;
+  --lh-display: 0.95;
+
+  --peso-normal: 400;
+  --peso-medio: 500;
+  --peso-forte: 600;
+
+  --tracking-assinatura: 0.3em;
+  --tracking-display: 0.01em;
+
+  --medida-leitura: 68ch;
+
+  /* Espaço */
+  --esp-1: 0.25rem;
+  --esp-2: 0.5rem;
+  --esp-3: 0.75rem;
+  --esp-4: 1rem;
+  --esp-5: 1.5rem;
+  --esp-6: 2rem;
+  --esp-7: 3rem;
+  --esp-8: 4rem;
+  /* Único espaçamento vertical entre seções */
+  --espaco-secao: clamp(4rem, 3rem + 5vw, 7rem);
+
+  /* Layout */
+  --largura-max: 75rem; /* 1200 */
+  --margem-lateral: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+  --altura-header: 4rem;
+
+  /* Forma */
+  --raio: 4px;
+  --fio: 1px;
+  --alvo-toque: 44px;
+
+  /* Movimento */
+  --duracao-rapida: 150ms;
+  --duracao-media: 600ms;
+  --curva-saida: cubic-bezier(0.2, 0.7, 0.2, 1);
+}

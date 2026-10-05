@@ -1,0 +1,82 @@
+---
+// Perguntas frequentes com <details>/<summary>: funciona sem JavaScript e pelo teclado.
+import Preencher from './Preencher.astro';
+import type { ItemFaq } from '../data/faq';
+
+interface Props {
+  itens: ItemFaq[];
+  titulo?: string;
+  id?: string;
+}
+
+const { itens, titulo = 'Perguntas frequentes', id = 'titulo-faq' } = Astro.props;
+---
+<section class="faq" aria-labelledby={id}>
+  <h2 id={id}>{titulo}</h2>
+  <div class="faq__lista">
+    {itens.map((item) => (
+      <details class="faq__item">
+        <summary class="faq__pergunta">
+          <span>{item.pergunta}</span>
+          <svg class="faq__icone" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
+          </svg>
+        </summary>
+        <div class="faq__resposta">
+          <p>
+            {item.resposta}
+            {item.resposta && item.pendente && ' '}
+            {item.pendente && <Preencher oque={item.pendente} />}
+          </p>
+        </div>
+      </details>
+    ))}
+  </div>
+</section>
+
+<style>
+  .faq h2 {
+    margin-bottom: var(--esp-6);
+  }
+
+  .faq__lista {
+    border-top: var(--fio) solid var(--cor-fio);
+  }
+
+  .faq__item {
+    border-bottom: var(--fio) solid var(--cor-fio);
+  }
+
+  .faq__pergunta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--esp-4);
+    min-height: var(--alvo-toque);
+    padding-block: var(--esp-4);
+    font-weight: var(--peso-forte);
+    list-style: none;
+  }
+
+  .faq__pergunta::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__pergunta:hover {
+    color: var(--cor-destaque);
+  }
+
+  .faq__icone {
+    flex-shrink: 0;
+    transition: transform var(--duracao-rapida) ease;
+  }
+
+  .faq__item[open] .faq__icone {
+    transform: rotate(45deg);
+  }
+
+  .faq__resposta {
+    padding-bottom: var(--esp-5);
+    color: var(--cor-texto-suave);
+  }
+</style>

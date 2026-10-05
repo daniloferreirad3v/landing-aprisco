@@ -1,0 +1,109 @@
+---
+// Mural de capas do hero: a biblioteca real do APRISCO em três colunas desencontradas,
+// que se dissolvem no preto. Decorativo (os cursos estão listados em texto logo abaixo),
+// por isso aria-hidden e alt="".
+import { Image } from 'astro:assets';
+import { getCurso } from '../data/cursos';
+
+// Capas disponíveis, alternando trilhas e tons (claro/escuro/quente) entre vizinhas.
+const slugs = [
+  ['cristologia', 'escola-de-oracao', 'teologia-digital'],
+  ['teontologia', 'como-ler-a-sua-biblia', 'carater-cristao', 'cosmovisao-crista'],
+  ['salve-a-sua-familia', 'panorama-novo-testamento', 'fe-e-trabalho'],
+];
+const colunas = slugs.map((col) => col.map(getCurso).filter((c) => c.capa));
+---
+<div class="mural" aria-hidden="true">
+  {colunas.map((coluna, i) => (
+    <div class:list={['mural__coluna', `mural__coluna--${i + 1}`]}>
+      {coluna.map((curso) => (
+        <Image
+          src={curso.capa!}
+          alt=""
+          widths={[160, 240, 320]}
+          sizes="(min-width: 64rem) 11rem, (min-width: 48rem) 9rem, 30vw"
+          loading="eager"
+          decoding="async"
+          class="mural__capa"
+        />
+      ))}
+    </div>
+  ))}
+</div>
+
+<style>
+  .mural {
+    --altura: 22rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--esp-3);
+    height: var(--altura);
+    overflow: hidden;
+    /* as capas somem no preto em cima e embaixo, como uma estante no escuro */
+    mask-image: linear-gradient(to bottom, transparent 0, #000 18%, #000 72%, transparent 100%);
+  }
+
+  .mural__coluna {
+    display: grid;
+    align-content: start;
+    gap: var(--esp-3);
+  }
+
+  .mural__coluna--1 {
+    transform: translateY(-12%);
+  }
+
+  .mural__coluna--2 {
+    transform: translateY(-34%);
+  }
+
+  .mural__coluna--3 {
+    transform: translateY(4%);
+  }
+
+  .mural__capa {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--raio);
+  }
+
+  @media (min-width: 48rem) {
+    .mural {
+      --altura: 34rem;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .mural {
+      --altura: 40rem;
+      gap: var(--esp-4);
+    }
+
+    .mural__coluna {
+      gap: var(--esp-4);
+    }
+  }
+
+  /* Único movimento orquestrado do hero: as colunas sobem devagar ao carregar */
+  @media (prefers-reduced-motion: no-preference) {
+    .mural__coluna {
+      animation: mural-sobe 1200ms var(--curva-saida) both;
+    }
+
+    .mural__coluna--2 {
+      animation-delay: 120ms;
+    }
+
+    .mural__coluna--3 {
+      animation-delay: 240ms;
+    }
+  }
+
+  @keyframes mural-sobe {
+    from {
+      opacity: 0;
+      translate: 0 24px;
+    }
+  }
+</style>

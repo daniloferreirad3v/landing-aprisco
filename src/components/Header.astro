@@ -1,0 +1,143 @@
+---
+import Logo from './Logo.astro';
+import { navegacao, site } from '../data/site';
+
+const atual = Astro.url.pathname.replace(/\/$/, '') || '/';
+const ehAtual = (href: string) => atual === href || atual.startsWith(`${href}/`);
+---
+<header class="header">
+  <div class="container header__barra">
+    <a class="header__marca" href="/" aria-label={`${site.nome}, página inicial`}>
+      <Logo />
+    </a>
+
+    <nav class="header__nav" aria-label="Principal">
+      <ul class="header__lista header__lista--desktop lista-limpa">
+        {navegacao.map((item) => (
+          <li>
+            <a href={item.href} aria-current={ehAtual(item.href) ? 'page' : undefined}>{item.rotulo}</a>
+          </li>
+        ))}
+      </ul>
+
+      <details class="menu">
+        <summary class="menu__botao">
+          <svg class="menu__icone" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+            <path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
+          </svg>
+          <span>Menu</span>
+        </summary>
+        <ul class="menu__lista lista-limpa">
+          {navegacao.map((item) => (
+            <li>
+              <a href={item.href} aria-current={ehAtual(item.href) ? 'page' : undefined}>{item.rotulo}</a>
+            </li>
+          ))}
+        </ul>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: relative;
+    z-index: 10;
+    background: var(--cor-preto);
+    border-bottom: var(--fio) solid var(--cor-fio);
+  }
+
+  .header__barra {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--esp-4);
+    min-height: var(--altura-header);
+    padding-block: var(--esp-2);
+  }
+
+  .header__marca {
+    display: inline-flex;
+    min-height: var(--alvo-toque);
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .header__marca:hover {
+    color: inherit;
+  }
+
+  .header__lista--desktop {
+    display: none;
+  }
+
+  .header__nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--alvo-toque);
+    font-size: var(--fs-pequeno);
+    font-weight: var(--peso-medio);
+    text-decoration: none;
+  }
+
+  .header__nav a[aria-current='page'] {
+    text-decoration: underline;
+    text-decoration-color: var(--cor-destaque);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.45em;
+  }
+
+  /* Menu mobile sem JavaScript: <details>/<summary> */
+
+  .menu__botao {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--esp-2);
+    min-height: var(--alvo-toque);
+    min-width: var(--alvo-toque);
+    padding-inline: var(--esp-3);
+    border: var(--fio) solid var(--cor-fio);
+    border-radius: var(--raio);
+    font-size: var(--fs-pequeno);
+    font-weight: var(--peso-medio);
+    list-style: none;
+  }
+
+  .menu__botao::-webkit-details-marker {
+    display: none;
+  }
+
+  .menu[open] .menu__botao {
+    border-color: var(--cor-texto);
+  }
+
+  .menu__lista {
+    position: absolute;
+    inset-inline: 0;
+    top: 100%;
+    padding: var(--esp-2) var(--margem-lateral) var(--esp-5);
+    background: var(--cor-preto);
+    border-bottom: var(--fio) solid var(--cor-fio);
+  }
+
+  .menu__lista li + li {
+    border-top: var(--fio) solid var(--cor-fio);
+  }
+
+  .menu__lista a {
+    width: 100%;
+    padding-block: var(--esp-2);
+    font-size: var(--fs-corpo);
+  }
+
+  @media (min-width: 48rem) {
+    .menu {
+      display: none;
+    }
+
+    .header__lista--desktop {
+      display: flex;
+      gap: var(--esp-6);
+    }
+  }
+</style>

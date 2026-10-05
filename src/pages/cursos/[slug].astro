@@ -1,0 +1,362 @@
+---
+// Página de curso, gerada de cursos.ts (uma por curso, URL única).
+// Outline: h1 nome → h2 O que você vai estudar → h2 Para quem é → h2 Como funciona
+// → h2 Planos → h2 Perguntas frequentes → h2 Cursos relacionados (h3 por curso).
+// Campos vazios no cursos.ts aparecem como [PREENCHER]; nada é completado com texto inventado.
+import type { GetStaticPaths } from 'astro';
+import { Image, getImage } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CtaButton from '../../components/CtaButton.astro';
+import CursoCard from '../../components/CursoCard.astro';
+import Planos from '../../components/Planos.astro';
+import Faq from '../../components/Faq.astro';
+import BarraAssinatura from '../../components/BarraAssinatura.astro';
+import Preencher from '../../components/Preencher.astro';
+import JsonLd from '../../components/JsonLd.astro';
+import {
+  cursos,
+  cursosRelacionados,
+  formatarReais,
+  precoAPartirDe,
+  trilhasDoCurso,
+  urlDoCurso,
+  type Curso,
+} from '../../data/cursos';
+import { getTrilha } from '../../data/trilhas';
+import { faqGeral } from '../../data/faq';
+import { site } from '../../data/site';
+import { descricaoDoCurso, tituloDoCurso } from '../../lib/seo';
+
+export const getStaticPaths = (() => cursos.map((curso) => ({ params: { slug: curso.slug }, props: { curso } }))) satisfies GetStaticPaths;
+
+interface Props {
+  curso: Curso;
+}
+
+const { curso } = Astro.props;
+const emBreve = curso.status === 'em-breve';
+const trilhaPrincipal = getTrilha(curso.trilha);
+const outrasTrilhas = trilhasDoCurso(curso).slice(1).map(getTrilha);
+const relacionados = cursosRelacionados(curso, 3);
+const faqCurso = faqGeral.slice(0, 3);
+const url = new URL(urlDoCurso(curso), Astro.site).href;
+
+const imagemSchema = curso.capa ? await getImage({ src: curso.capa, format: 'jpg', width: Math.min(1080, curso.capa.width) }) : undefined;
+
+const dadosCurso = {
+  '@context': 'https://schema.org',
+  '@type': 'Course',
+  name: curso.nome,
+  description: curso.descricao || curso.chamada,
+  url,
+  inLanguage: 'pt-BR',
+  ...(imagemSchema && { image: new URL(imagemSchema.src, Astro.site).href }),
+  provider: {
+    '@type': 'EducationalOrganization',
+    '@id': `${new URL('/', Astro.site).href}#organizacao`,
+    name: site.nome,
+    sameAs: new URL('/', Astro.site).href,
+  },
+};
+---
+<Base title={tituloDoCurso(curso)} description={descricaoDoCurso(curso)}>
+  <JsonLd slot="head" data={dadosCurso} />
+
+  <div class="curso__topo">
+    <div class="container curso__grade">
+      <div class="curso__texto">
+        <Breadcrumbs itens={[{ nome: 'Cursos', href: '/cursos' }, { nome: curso.nome, href: urlDoCurso(curso) }]} />
+        <p class="curso__trilha">
+          <a href={`/cursos#trilha-${trilhaPrincipal.id}`}>{trilhaPrincipal.nome}</a>
+          {outrasTrilhas.map((t) => (
+            <>
+              <span aria-hidden="true"> · </span>
+              <a href={`/cursos#trilha-${t.id}`}>{t.nome}</a>
+            </>
+          ))}
+        </p>
+        <h1 class="curso__titulo">{curso.nome}</h1>
+        <p class="curso__chamada">{curso.chamada}</p>
+        <div class="curso__descricao">
+          {curso.descricao ? <p>{curso.descricao}</p> : <p><Preencher oque={`descrição do curso ${curso.nome} (2 a 4 frases)`} /></p>}
+        </div>
+
+        {emBreve && (
+          <p class="curso__aviso">
+            <strong>Em preparação.</strong> Quem assina o APRISCO já tem acesso garantido a este curso quando ele for
+            liberado.
+          </p>
+        )}
+
+        <div class="curso__acao">
+          <CtaButton curso={curso.slug}>Quero assinar e estudar {curso.nome}</CtaButton>
+          <p class="curso__preco">
+            Incluído na assinatura, a partir de {formatarReais(precoAPartirDe)} por mês.
+          </p>
+        </div>
+      </div>
+
+      <div class="curso__capa">
+        {
+          curso.capa ? (
+            <Image
+              src={curso.capa}
+              alt={`Capa do curso ${curso.nome}`}
+              widths={[320, 480, 640, 800, 1080].filter((w) => w <= curso.capa!.width)}
+              sizes="(min-width: 48rem) 22rem, 20rem"
+              loading="eager"
+              fetchpriority="high"
+              class="curso__img"
+            />
+          ) : (
+            <div class="curso__sem-capa" aria-hidden="true">{curso.nome}</div>
+          )
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="container secao curso__corpo">
+    <section aria-labelledby="titulo-estudar">
+      <h2 id="titulo-estudar">O que você vai estudar</h2>
+      {
+        curso.aprendizados.length > 0 ? (
+          <ol class="curso__lista">
+            {curso.aprendizados.map((a) => (
+              <li>{a}</li>
+            ))}
+          </ol>
+        ) : (
+          <p><Preencher oque={`módulos ou temas do curso ${curso.nome}`} /></p>
+        )
+      }
+    </section>
+
+    <section aria-labelledby="titulo-para-quem">
+      <h2 id="titulo-para-quem">Para quem é este curso</h2>
+      {
+        curso.paraQuem.length > 0 ? (
+          <ul class="curso__lista">
+            {curso.paraQuem.map((p) => (
+              <li>{p}</li>
+            ))}
+          </ul>
+        ) : (
+          <p><Preencher oque={`perfis de aluno do curso ${curso.nome}`} /></p>
+        )
+      }
+    </section>
+
+    <section aria-labelledby="titulo-como-funciona">
+      <h2 id="titulo-como-funciona">Como funciona</h2>
+      <dl class="curso__ficha">
+        <div>
+          <dt>Situação</dt>
+          <dd>{emBreve ? 'Em preparação' : 'Disponível'}</dd>
+        </div>
+        <div>
+          <dt>Acesso</dt>
+          <dd>Na área de membros da Kiwify, com a assinatura do APRISCO (todos os cursos incluídos).</dd>
+        </div>
+        <div>
+          <dt>Formato</dt>
+          <dd>{curso.formato ?? <Preencher oque="formato (videoaulas, material de apoio…)" />}</dd>
+        </div>
+        <div>
+          <dt>Carga horária</dt>
+          <dd>{curso.cargaHoraria ?? <Preencher oque="carga horária, se houver" />}</dd>
+        </div>
+        <div>
+          <dt>Certificado</dt>
+          <dd><Preencher oque="se há certificado e as regras" /></dd>
+        </div>
+      </dl>
+    </section>
+  </div>
+
+  <div class="container secao">
+    <Planos titulo={`Assine e estude ${curso.nome}`} curso={curso.slug} variante="compacta" />
+  </div>
+
+  <div class="container secao">
+    <Faq itens={faqCurso} />
+  </div>
+
+  {
+    relacionados.length > 0 && (
+      <aside class="container secao" aria-labelledby="titulo-relacionados">
+        <h2 id="titulo-relacionados">Cursos relacionados</h2>
+        <ul class="relacionados lista-limpa">
+          {relacionados.map((c) => (
+            <li>
+              <CursoCard curso={c} nivel="h3" />
+            </li>
+          ))}
+        </ul>
+        <p class="relacionados__todos">
+          <a href="/cursos">Ver todos os cursos de teologia</a>
+        </p>
+      </aside>
+    )
+  }
+  <BarraAssinatura curso={curso.slug} />
+</Base>
+
+<style>
+  .curso__topo {
+    background: var(--cor-preto);
+    padding-top: var(--esp-2);
+    padding-bottom: var(--esp-8);
+    border-bottom: var(--fio) solid var(--cor-fio);
+  }
+
+  .curso__grade {
+    display: grid;
+    gap: var(--esp-7);
+  }
+
+  .curso__trilha {
+    margin-top: var(--esp-4);
+    font-size: var(--fs-pequeno);
+    color: var(--cor-texto-suave);
+  }
+
+  .curso__trilha a {
+    color: var(--cor-texto-suave);
+  }
+
+  .curso__titulo {
+    margin-top: var(--esp-2);
+    max-width: 9em;
+  }
+
+  .curso__chamada {
+    margin-top: var(--esp-4);
+    font-size: var(--fs-h4);
+    font-weight: var(--peso-medio);
+    line-height: 1.45;
+  }
+
+  .curso__descricao {
+    margin-top: var(--esp-4);
+    color: var(--cor-texto-suave);
+  }
+
+  .curso__aviso {
+    margin-top: var(--esp-5);
+    padding: var(--esp-3) var(--esp-4);
+    border-left: 3px solid var(--cor-aviso);
+    background: var(--cor-superficie);
+    font-size: var(--fs-pequeno);
+  }
+
+  .curso__aviso strong {
+    color: var(--cor-aviso);
+  }
+
+  .curso__acao {
+    margin-top: var(--esp-6);
+  }
+
+  .curso__preco {
+    margin-top: var(--esp-3);
+    font-size: var(--fs-pequeno);
+    color: var(--cor-texto-suave);
+  }
+
+  .curso__capa {
+    max-width: 20rem;
+  }
+
+  .curso__img,
+  .curso__sem-capa {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--raio);
+  }
+
+  .curso__sem-capa {
+    display: grid;
+    place-items: center;
+    border: var(--fio) solid var(--cor-fio);
+    font-family: var(--fonte-display);
+    font-size: var(--fs-h2);
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 48rem) {
+    .curso__grade {
+      grid-template-columns: minmax(0, 1fr) 22rem;
+      align-items: center;
+    }
+
+    .curso__capa {
+      max-width: none;
+      margin-top: var(--esp-6);
+    }
+  }
+
+  .curso__corpo {
+    display: grid;
+    gap: var(--esp-8);
+  }
+
+  .curso__corpo h2 {
+    margin-bottom: var(--esp-5);
+  }
+
+  .curso__lista {
+    display: grid;
+    gap: var(--esp-2);
+    padding-left: 1.25em;
+  }
+
+  .curso__ficha {
+    display: grid;
+    border-top: var(--fio) solid var(--cor-fio);
+  }
+
+  .curso__ficha > div {
+    display: grid;
+    gap: var(--esp-1);
+    padding-block: var(--esp-4);
+    border-bottom: var(--fio) solid var(--cor-fio);
+  }
+
+  .curso__ficha dt {
+    font-weight: var(--peso-forte);
+  }
+
+  .curso__ficha dd {
+    margin: 0;
+    color: var(--cor-texto-suave);
+  }
+
+  @media (min-width: 48rem) {
+    .curso__ficha > div {
+      grid-template-columns: 12rem 1fr;
+      gap: var(--esp-5);
+    }
+  }
+
+  .relacionados {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--esp-5) var(--esp-4);
+    margin-top: var(--esp-6);
+  }
+
+  @media (min-width: 48rem) {
+    .relacionados {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      max-width: 48rem;
+    }
+  }
+
+  .relacionados__todos {
+    margin-top: var(--esp-6);
+    font-weight: var(--peso-forte);
+  }
+</style>

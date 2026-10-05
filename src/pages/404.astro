@@ -1,0 +1,38 @@
+---
+// Página 404 (noindex, fora do sitemap) com caminhos úteis.
+import Base from '../layouts/Base.astro';
+import { montarTitulo } from '../lib/seo';
+---
+<Base
+  title={montarTitulo('Página não encontrada')}
+  description="A página que você procurou não existe ou mudou de endereço. Volte para o início ou veja o catálogo de cursos do Seminário Teológico APRISCO."
+  canonicalPath="/404"
+  noindex
+>
+  <section class="container secao nao-encontrada" aria-labelledby="titulo-404">
+    <h1 id="titulo-404">Página não encontrada</h1>
+    <p>O endereço pode ter mudado ou estar digitado errado.</p>
+    <ul class="lista-limpa nao-encontrada__links">
+      <li><a href="/">Voltar para o início</a></li>
+      <li><a href="/cursos">Ver o catálogo de cursos de teologia</a></li>
+      <li><a href="/contato">Falar com o APRISCO</a></li>
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .nao-encontrada > :where(* + *) {
+    margin-top: var(--esp-5);
+  }
+
+  .nao-encontrada p {
+    color: var(--cor-texto-suave);
+  }
+
+  .nao-encontrada__links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--alvo-toque);
+    font-weight: var(--peso-forte);
+  }
+</style>

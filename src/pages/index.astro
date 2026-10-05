@@ -1,0 +1,330 @@
+---
+// Home: página de vendas da assinatura.
+// Ordem pensada para conversão: oferta + produto na 1ª tela → problema (texto do cliente)
+// → o que a assinatura inclui → vitrine dos cursos → como funciona → planos → dúvidas → fechamento.
+// Outline: h1 → h2 manifesto → h2 inclui → h2 cursos (h3 trilhas, h4 cursos) → h2 como funciona
+// (h3 passos) → h2 planos (h3 planos) → h2 perguntas → h2 fechamento.
+// Sem números inventados: contagens e preços vêm de cursos.ts/trilhas.ts.
+// "Quem ensina" e "Depoimentos" só entram quando houver dados reais (PENDENCIAS.md).
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import MuralCapas from '../components/MuralCapas.astro';
+import CtaButton from '../components/CtaButton.astro';
+import TrilhaSection from '../components/TrilhaSection.astro';
+import Planos from '../components/Planos.astro';
+import Faq from '../components/Faq.astro';
+import BarraAssinatura from '../components/BarraAssinatura.astro';
+import Preencher from '../components/Preencher.astro';
+import { trilhas } from '../data/trilhas';
+import { cursos, formatarReais, precoAPartirDe } from '../data/cursos';
+import { faqGeral } from '../data/faq';
+import { montarTitulo } from '../lib/seo';
+
+const title = montarTitulo('Seminário Teológico Online');
+const description =
+  'Estude teologia de maneira profunda e descomplicada. Cursos online de Bíblia, doutrina, família e vida cristã no Seminário Teológico APRISCO.';
+
+const totalCursos = cursos.length;
+const emPreparacao = cursos.filter((c) => c.status === 'em-breve').length;
+const preco = formatarReais(precoAPartirDe);
+
+const inclui = [
+  {
+    titulo: `${totalCursos} cursos em ${trilhas.length} trilhas`,
+    texto: 'De crescimento espiritual e leitura da Bíblia a teologia sistemática, família e liderança.',
+  },
+  {
+    titulo: 'Cursos novos sem custo extra',
+    texto: `${emPreparacao} cursos estão em preparação e entram na sua assinatura assim que forem liberados.`,
+  },
+  {
+    titulo: 'Estudo online',
+    texto: 'As aulas ficam na área de membros da Kiwify. Você escolhe por onde começar.',
+  },
+  {
+    titulo: 'Plano mensal ou anual',
+    texto: `A partir de ${preco} por mês. O anual sai mais em conta.`,
+  },
+];
+---
+<Base title={title} description={description}>
+  <Hero titulo="Estude teologia de maneira profunda e descomplicada.">
+    <p>
+      Cursos online de teologia bíblica para quem quer conhecer a Deus com profundidade e viver a fé no dia a dia.
+    </p>
+    <p class="hero-oferta">
+      Acesso aos <strong>{totalCursos} cursos</strong> a partir de <strong>{preco} por mês</strong>.
+    </p>
+    <Fragment slot="acoes">
+      <CtaButton>Quero assinar o APRISCO</CtaButton>
+      <a class="link-forte" href="#cursos">Ver os {totalCursos} cursos</a>
+    </Fragment>
+    <MuralCapas slot="visual" />
+  </Hero>
+
+  <section class="manifesto" aria-labelledby="titulo-manifesto">
+    <div class="container secao manifesto__grade">
+      <h2 id="titulo-manifesto" class="manifesto__titulo">Uma fé rasa, uma vida rasa.</h2>
+      <div class="manifesto__texto">
+        <p class="manifesto__pergunta">Como aplicar uma teologia clássica e sólida aos dilemas da atualidade?</p>
+        <p>
+          O Seminário Teológico APRISCO está comprometido com uma teologia bíblica que responde aos dilemas da
+          sociedade hoje. Os cursos existem para ajudar você a construir uma vida profunda a partir do conhecimento
+          de Deus.
+        </p>
+        <a class="link-forte" href="/sobre">Conheça o APRISCO</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="container secao" aria-labelledby="titulo-inclui">
+    <h2 id="titulo-inclui">O que a assinatura inclui</h2>
+    <ul class="inclui lista-limpa">
+      {inclui.map((item) => (
+        <li class="inclui__item">
+          <svg class="inclui__marca" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+            <path d="M4 12.5l5 5L20 6.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          </svg>
+          <div>
+            <p class="inclui__titulo">{item.titulo}</p>
+            <p class="inclui__texto">{item.texto}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+    <div class="acao-meio">
+      <CtaButton>Quero assinar o APRISCO</CtaButton>
+    </div>
+  </section>
+
+  <section id="cursos" class="container secao vitrine" aria-labelledby="titulo-trilhas">
+    <div class="vitrine__cabeca">
+      <h2 id="titulo-trilhas">Escolha por onde começar</h2>
+      <p>
+        {totalCursos} cursos em {trilhas.length} trilhas, todos incluídos na assinatura. Toque em um curso para ver
+        os detalhes ou veja o <a href="/cursos">catálogo completo de cursos de teologia</a>.
+      </p>
+    </div>
+    {trilhas.map((trilha, i) => <TrilhaSection trilha={trilha} nivel="h3" prioridade={i === 0} compacto />)}
+  </section>
+
+  <section class="faixa" aria-labelledby="titulo-como-funciona">
+    <div class="container secao">
+      <h2 id="titulo-como-funciona">Como funciona</h2>
+      <ol class="passos lista-limpa">
+        <li>
+          <h3>Escolha o plano</h3>
+          <p>Mensal ou anual. Os dois dão acesso a todos os cursos.</p>
+        </li>
+        <li>
+          <h3>Pague na Kiwify</h3>
+          <p>A compra é processada pela Kiwify, a plataforma onde ficam os cursos.</p>
+        </li>
+        <li>
+          <h3>Acesse a área de membros</h3>
+          <p>
+            Os cursos ficam na área de membros da Kiwify.{' '}
+            <Preencher oque="como e quando o acesso chega ao aluno" />
+          </p>
+        </li>
+        <li>
+          <h3>Estude no seu ritmo</h3>
+          <p>Comece pela trilha que fizer mais sentido para você agora.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="container secao">
+    <Planos />
+  </div>
+
+  <div class="container secao">
+    <Faq itens={faqGeral} titulo="Dúvidas antes de assinar" />
+  </div>
+
+  <section class="final" aria-labelledby="titulo-final">
+    <div class="container secao final__conteudo">
+      <img class="final__selo" src="/logo/cordeiro-selo-branco.svg" alt="" width="458" height="458" loading="lazy" />
+      <h2 id="titulo-final">Construa uma vida profunda a partir do conhecimento de Deus.</h2>
+      <p>{totalCursos} cursos, a partir de {preco} por mês.</p>
+      <CtaButton>Quero assinar o APRISCO</CtaButton>
+    </div>
+  </section>
+
+  <BarraAssinatura />
+</Base>
+
+<style>
+  .link-forte {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--alvo-toque);
+    font-weight: var(--peso-forte);
+  }
+
+  .hero-oferta {
+    color: var(--cor-texto);
+  }
+
+  .hero-oferta strong {
+    font-weight: var(--peso-forte);
+  }
+
+  /* Manifesto: o problema, com as palavras do cliente */
+  .manifesto {
+    border-block: var(--fio) solid var(--cor-fio);
+  }
+
+  .manifesto__grade {
+    display: grid;
+    gap: var(--esp-6);
+  }
+
+  .manifesto__titulo {
+    font-size: clamp(3rem, 1.5rem + 7vw, 7rem);
+    max-width: 6.5em;
+  }
+
+  .manifesto__texto {
+    display: grid;
+    gap: var(--esp-4);
+    align-content: end;
+  }
+
+  .manifesto__pergunta {
+    font-size: var(--fs-h3);
+    font-weight: var(--peso-forte);
+    line-height: 1.35;
+  }
+
+  .manifesto__texto p:not(.manifesto__pergunta) {
+    color: var(--cor-texto-suave);
+  }
+
+  @media (min-width: 64rem) {
+    .manifesto__grade {
+      grid-template-columns: 1.1fr 1fr;
+      gap: var(--esp-8);
+    }
+  }
+
+  /* O que inclui: lista com marca de check (informa o que está incluído) */
+  .inclui {
+    display: grid;
+    gap: var(--esp-5) var(--esp-7);
+    margin-top: var(--esp-6);
+  }
+
+  .inclui__item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--esp-3);
+  }
+
+  .inclui__marca {
+    color: var(--cor-destaque);
+    margin-top: 0.15em;
+  }
+
+  .inclui__titulo {
+    font-weight: var(--peso-forte);
+  }
+
+  .inclui__texto {
+    margin-top: var(--esp-1);
+    color: var(--cor-texto-suave);
+    font-size: var(--fs-pequeno);
+  }
+
+  @media (min-width: 48rem) {
+    .inclui {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .acao-meio {
+    margin-top: var(--esp-7);
+  }
+
+  /* Vitrine */
+  .vitrine {
+    display: grid;
+    gap: var(--esp-7);
+  }
+
+  .vitrine__cabeca p {
+    margin-top: var(--esp-4);
+    color: var(--cor-texto-suave);
+  }
+
+  /* Como funciona: faixa em superfície, passos numerados (sequência real) */
+  .faixa {
+    background: var(--cor-superficie);
+  }
+
+  .passos {
+    display: grid;
+    gap: var(--esp-6);
+    margin-top: var(--esp-6);
+    counter-reset: passo;
+  }
+
+  .passos li {
+    counter-increment: passo;
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    column-gap: var(--esp-3);
+  }
+
+  .passos li::before {
+    content: counter(passo);
+    grid-row: span 2;
+    font-family: var(--fonte-display);
+    font-size: var(--fs-h2);
+    line-height: 1;
+    color: var(--cor-destaque);
+  }
+
+  .passos h3 {
+    font-size: var(--fs-h4);
+  }
+
+  .passos p {
+    margin-top: var(--esp-2);
+    color: var(--cor-texto-suave);
+    font-size: var(--fs-pequeno);
+  }
+
+  @media (min-width: 64rem) {
+    .passos {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  /* Fechamento */
+  .final {
+    background: var(--cor-preto);
+  }
+
+  .final__conteudo {
+    display: grid;
+    justify-items: center;
+    gap: var(--esp-5);
+    text-align: center;
+  }
+
+  .final__selo {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+
+  .final__conteudo h2 {
+    font-size: clamp(2.25rem, 1.25rem + 4vw, 4.5rem);
+    max-width: 11em;
+  }
+
+  .final__conteudo p {
+    color: var(--cor-texto-suave);
+  }
+</style>

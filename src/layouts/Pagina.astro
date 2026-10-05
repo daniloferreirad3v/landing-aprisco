@@ -1,0 +1,80 @@
+---
+// Layout de páginas de texto (sobre, contato, políticas): breadcrumbs + h1 + conteúdo.
+import Base from './Base.astro';
+import Breadcrumbs, { type ItemBreadcrumb } from '../components/Breadcrumbs.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  h1: string;
+  breadcrumbs: ItemBreadcrumb[];
+  noindex?: boolean;
+  prosa?: boolean; // false para conteúdo com layout próprio (ex.: catálogo)
+}
+
+const { title, description, h1, breadcrumbs, noindex = false, prosa = true } = Astro.props;
+---
+<Base title={title} description={description} noindex={noindex}>
+  <slot name="head" slot="head" />
+  <div class="pagina__topo">
+    <div class="container">
+      <Breadcrumbs itens={breadcrumbs} />
+      <h1 class="pagina__titulo">{h1}</h1>
+      {Astro.slots.has('intro') && (
+        <div class="pagina__intro">
+          <slot name="intro" />
+        </div>
+      )}
+    </div>
+  </div>
+  <div class:list={['container', 'secao', prosa && 'prosa']}>
+    <slot />
+  </div>
+</Base>
+
+<style>
+  .pagina__topo {
+    background: var(--cor-preto);
+    padding-bottom: var(--esp-7);
+    border-bottom: var(--fio) solid var(--cor-fio);
+  }
+
+  .pagina__titulo {
+    margin-top: var(--esp-4);
+    max-width: 11em;
+  }
+
+  .pagina__intro {
+    margin-top: var(--esp-5);
+    color: var(--cor-texto-suave);
+  }
+
+  /* Texto corrido: ritmo vertical simples, sem conflitar com outras classes */
+  .prosa :global(:where(h2)) {
+    font-size: var(--fs-h3);
+    margin-top: var(--esp-7);
+    margin-bottom: var(--esp-4);
+  }
+
+  .prosa :global(:where(h2:first-child)) {
+    margin-top: 0;
+  }
+
+  .prosa :global(:where(h3)) {
+    font-size: var(--fs-h4);
+    margin-top: var(--esp-6);
+    margin-bottom: var(--esp-3);
+  }
+
+  .prosa :global(:where(p, ul, ol) + :where(p, ul, ol)) {
+    margin-top: var(--esp-4);
+  }
+
+  .prosa :global(:where(ul, ol)) {
+    padding-left: 1.25em;
+  }
+
+  .prosa :global(:where(li + li)) {
+    margin-top: var(--esp-2);
+  }
+</style>

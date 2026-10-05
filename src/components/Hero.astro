@@ -1,0 +1,129 @@
+---
+// O momento memorável do site: tipografia da marca sobre preto.
+// Slots: default = subtítulo; "acoes" = botões; "visual" = elemento à direita
+// (na home, o mural de capas). Sem "visual", mostra o selo do cordeiro.
+// Movimento: entrada do h1 junto com o visual, numa única sequência (desligada com movimento reduzido).
+interface Props {
+  titulo: string;
+  id?: string;
+}
+
+const { titulo, id = 'titulo-hero' } = Astro.props;
+const temVisual = Astro.slots.has('visual');
+---
+<section class:list={['hero', temVisual && 'hero--com-visual']} aria-labelledby={id}>
+  <div class="container hero__grade">
+    <div class="hero__texto">
+      <h1 id={id} class="hero__titulo">{titulo}</h1>
+      <div class="hero__sub">
+        <slot />
+      </div>
+      {Astro.slots.has('acoes') && (
+        <div class="hero__acoes">
+          <slot name="acoes" />
+        </div>
+      )}
+    </div>
+    {
+      temVisual ? (
+        <div class="hero__visual">
+          <slot name="visual" />
+        </div>
+      ) : (
+        <img class="hero__selo" src="/logo/cordeiro-selo-branco.svg" alt="" width="458" height="458" />
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .hero {
+    background: var(--cor-preto);
+    padding-block: var(--esp-7) var(--espaco-secao);
+    overflow: hidden;
+  }
+
+  .hero__grade {
+    display: grid;
+    gap: var(--esp-6);
+  }
+
+  /* Medida em em (não ch): a linha mais longa ("ESTUDE TEOLOGIA") tem ~6,8em em Anton.
+     O tamanho acompanha a largura da tela para nenhuma palavra quebrar, até 320 px. */
+  .hero__titulo {
+    max-width: 7.5em;
+    font-size: clamp(2.5rem, 12vw, 6.5rem);
+    overflow-wrap: normal;
+  }
+
+  .hero__sub {
+    margin-top: var(--esp-5);
+    color: var(--cor-texto-suave);
+    font-size: var(--fs-corpo);
+    max-width: 34rem;
+  }
+
+  .hero__sub :global(p + p) {
+    margin-top: var(--esp-3);
+  }
+
+  .hero__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--esp-3) var(--esp-5);
+    margin-top: var(--esp-6);
+  }
+
+  .hero__selo {
+    width: 4.5rem;
+    height: 4.5rem;
+    order: -1;
+  }
+
+  @media (min-width: 48rem) {
+    .hero {
+      padding-top: var(--espaco-secao);
+    }
+
+    .hero__grade {
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: var(--esp-7);
+    }
+
+    .hero__selo {
+      order: 0;
+      width: clamp(8rem, 4rem + 8vw, 12rem);
+      height: auto;
+    }
+
+    .hero--com-visual .hero__grade {
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    }
+
+    /* Com o mural ao lado, o título divide a largura: tamanho limitado pela coluna */
+    .hero--com-visual .hero__titulo {
+      font-size: clamp(2.75rem, 6.4vw, 5.75rem);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .hero--com-visual {
+      padding-block: var(--esp-6);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__titulo {
+      animation: hero-entrada var(--duracao-media) var(--curva-saida) both;
+    }
+  }
+
+  @keyframes hero-entrada {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
+</style>

@@ -1,0 +1,8 @@
+# Repositório sempre com quebras de linha LF (o build roda em Linux na Vercel)
+* text=auto eol=lf
+
+# Binários
+*.png binary
+*.jpg binary
+*.ico binary
+*.woff2 binary

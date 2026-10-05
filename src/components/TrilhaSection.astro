@@ -1,0 +1,84 @@
+---
+// Uma trilha (categoria) e seus cursos. No celular, fileira com rolagem horizontal
+// em que a próxima capa aparece pela metade; no desktop, grade.
+import CursoCard from './CursoCard.astro';
+import { cursosDaTrilha } from '../data/cursos';
+import type { Trilha } from '../data/trilhas';
+
+interface Props {
+  trilha: Trilha;
+  nivel?: 'h2' | 'h3';
+  prioridade?: boolean;
+  compacto?: boolean;
+}
+
+const { trilha, nivel = 'h3', prioridade = false, compacto = false } = Astro.props;
+const Titulo = nivel;
+const nivelCard = nivel === 'h2' ? 'h3' : 'h4';
+const cursos = cursosDaTrilha(trilha.id);
+const idTitulo = `trilha-${trilha.id}`;
+---
+<section class="trilha" aria-labelledby={idTitulo}>
+  <Titulo id={idTitulo} class="trilha__titulo">{trilha.nome}</Titulo>
+  <ul class="trilha__cursos lista-limpa">
+    {cursos.map((curso, i) => (
+      <li>
+        <CursoCard curso={curso} nivel={nivelCard} prioridade={prioridade && i < 2} compacto={compacto} />
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  /* Dentro de grid/flex, sem isso a fileira rolável alarga a página inteira */
+  .trilha {
+    min-width: 0;
+  }
+
+  .trilha__titulo {
+    font-family: var(--fonte-display);
+    font-size: var(--fs-h3);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-display);
+    line-height: var(--lh-titulo);
+    margin-bottom: var(--esp-4);
+  }
+
+  .trilha__cursos {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 44%;
+    gap: var(--esp-4);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--margem-lateral);
+    /* a fileira encosta na borda da tela; o conteúdo continua alinhado à margem */
+    margin-inline: calc(var(--margem-lateral) * -1);
+    padding-inline: var(--margem-lateral);
+    padding-bottom: var(--esp-3);
+    scrollbar-width: thin;
+    scrollbar-color: var(--cor-fio) transparent;
+  }
+
+  .trilha__cursos > li {
+    scroll-snap-align: start;
+  }
+
+  @media (min-width: 48rem) {
+    .trilha__cursos {
+      grid-auto-columns: 28%;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .trilha__cursos {
+      grid-auto-flow: row;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      overflow: visible;
+      margin-inline: 0;
+      padding-inline: 0;
+    }
+  }
+</style>

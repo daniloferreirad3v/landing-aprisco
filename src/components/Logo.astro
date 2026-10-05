@@ -1,0 +1,31 @@
+---
+// Assinatura compacta da marca: selo do cordeiro + "APRISCO" em texto real.
+// Em tamanhos pequenos o "SEMINÁRIO TEOLÓGICO" ficaria ilegível (na marca ele tem a
+// largura de "APRISCO", ~17% da altura), por isso aparece só como texto acessível.
+// O lockup completo está em public/og/default.jpg.
+---
+<span class="logo">
+  <img class="logo__selo" src="/logo/cordeiro-selo-branco.svg" alt="" width="458" height="458" />
+  <span class="logo__nome"><span class="sr-only">Seminário Teológico </span>APRISCO</span>
+</span>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--cor-texto);
+  }
+
+  .logo__selo {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .logo__nome {
+    font-family: var(--fonte-display);
+    font-size: 1.75rem;
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+</style>

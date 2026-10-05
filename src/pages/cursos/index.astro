@@ -1,0 +1,72 @@
+---
+// Catálogo: todas as trilhas e cursos. Palavra-chave: "cursos de teologia online".
+// Outline: h1 → h2 por trilha (h3 por curso) → h2 Planos.
+import Pagina from '../../layouts/Pagina.astro';
+import TrilhaSection from '../../components/TrilhaSection.astro';
+import Planos from '../../components/Planos.astro';
+import CtaButton from '../../components/CtaButton.astro';
+import JsonLd from '../../components/JsonLd.astro';
+import { trilhas } from '../../data/trilhas';
+import { cursos, urlDoCurso } from '../../data/cursos';
+import { montarTitulo } from '../../lib/seo';
+
+const title = montarTitulo('Cursos de Teologia Online');
+const description =
+  'Conheça os cursos de teologia online do APRISCO: Bíblia, teologia sistemática, vida cristã, família e liderança. Todos incluídos em uma única assinatura.';
+
+const totalCursos = cursos.length;
+
+const itemList = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Cursos do Seminário Teológico APRISCO',
+  numberOfItems: totalCursos,
+  itemListElement: cursos.map((curso, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: curso.nome,
+    url: new URL(urlDoCurso(curso), Astro.site).href,
+  })),
+};
+---
+<Pagina
+  title={title}
+  description={description}
+  h1="Cursos de teologia online"
+  breadcrumbs={[{ nome: 'Cursos', href: '/cursos' }]}
+  prosa={false}
+>
+  <JsonLd slot="head" data={itemList} />
+  <Fragment slot="intro">
+    <p>
+      {totalCursos} cursos organizados em seis trilhas. Uma assinatura dá acesso a todos, inclusive aos que
+      ainda estão em preparação.
+    </p>
+    <div class="catalogo__acao">
+      <CtaButton>Quero assinar o APRISCO</CtaButton>
+    </div>
+  </Fragment>
+
+  <div class="catalogo">
+    {trilhas.map((trilha, i) => <TrilhaSection trilha={trilha} nivel="h2" prioridade={i === 0} />)}
+  </div>
+
+  <div class="catalogo__planos">
+    <Planos />
+  </div>
+</Pagina>
+
+<style>
+  .catalogo__acao {
+    margin-top: var(--esp-5);
+  }
+
+  .catalogo {
+    display: grid;
+    gap: var(--esp-8);
+  }
+
+  .catalogo__planos {
+    margin-top: var(--espaco-secao);
+  }
+</style>

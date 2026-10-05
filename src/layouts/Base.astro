@@ -1,0 +1,113 @@
+---
+// Layout base de todas as páginas: <head> completo (SEO, Open Graph, Twitter),
+// JSON-LD da organização e do site, skip link, header, <main id="conteudo"> e footer.
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  ogImage?: string;
+  ogImageAlt?: string;
+  noindex?: boolean;
+  type?: 'website' | 'article';
+}
+
+const {
+  title,
+  description,
+  canonicalPath = Astro.url.pathname,
+  ogImage = site.ogImagemPadrao,
+  ogImageAlt = site.ogImagemAlt,
+  noindex = false,
+  type = 'website',
+} = Astro.props;
+
+if (!Astro.site) {
+  throw new Error('Defina `site` em astro.config.mjs: canonical e Open Graph precisam de URL absoluta.');
+}
+
+// trailingSlash: 'never' → canonical sem barra final (exceto a home).
+const caminho = canonicalPath !== '/' ? canonicalPath.replace(/\/+$/, '') : '/';
+const canonical = new URL(caminho, Astro.site).href;
+const ogImageUrl = new URL(ogImage, Astro.site).href;
+const origem = new URL('/', Astro.site).href;
+
+const organizacaoId = `${origem}#organizacao`;
+const sameAs = Object.values(site.redes).filter(Boolean);
+
+const grafo = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'EducationalOrganization',
+      '@id': organizacaoId,
+      name: site.nome,
+      url: origem,
+      logo: new URL('/logo/aprisco-logo.png', Astro.site).href,
+      description: site.descricaoPadrao,
+      ...(sameAs.length > 0 && { sameAs }),
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${origem}#site`,
+      name: site.nome,
+      url: origem,
+      inLanguage: 'pt-BR',
+      publisher: { '@id': organizacaoId },
+    },
+  ],
+};
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content={site.corTema} />
+
+    <link rel="preload" href="/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/montserrat-latin-var.woff2" as="font" type="font/woff2" crossorigin />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={site.nome} />
+    <meta property="og:locale" content={site.locale} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
+
+    <JsonLd data={grafo} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+    <Header />
+    <main id="conteudo" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

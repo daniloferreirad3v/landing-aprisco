@@ -1,0 +1,189 @@
+---
+// Seção de planos da assinatura. Destino de todos os botões "Quero assinar".
+// Valores e links vêm de cursos.ts (assinatura.planos). O equivalente mensal e a
+// diferença do anual são CALCULADOS dos preços confirmados, nunca digitados.
+import CtaButton from './CtaButton.astro';
+import { assinatura, formatarReais, getPlano, type Plano } from '../data/cursos';
+import { cursos } from '../data/cursos';
+
+interface Props {
+  titulo?: string;
+  curso?: string; // slug, quando a seção aparece numa página de curso
+  variante?: 'completa' | 'compacta';
+}
+
+const { titulo = 'Escolha seu plano', curso, variante = 'completa' } = Astro.props;
+const idTitulo = 'titulo-planos';
+
+const mensal = getPlano('mensal');
+const anual = getPlano('anual');
+const equivalenteMensal = Math.round((anual.valor / 12) * 100) / 100;
+const diferencaAnual = mensal.valor * 12 - anual.valor;
+
+// Anual primeiro: é o de melhor custo e o que a pessoa vê antes no celular.
+const ordem: Plano[] = [anual, mensal];
+const destaque = (p: Plano) => p.id === 'anual' && diferencaAnual > 0;
+---
+<section id="planos" class:list={['planos', `planos--${variante}`]} aria-labelledby={idTitulo}>
+  <div class="planos__cabeca">
+    <h2 id={idTitulo}>{titulo}</h2>
+    <p class="planos__intro">
+      Os dois planos dão acesso aos {cursos.length} cursos do APRISCO, inclusive aos que estão em preparação, assim
+      que forem liberados.
+    </p>
+  </div>
+
+  <ul class="planos__lista lista-limpa">
+    {ordem.map((plano) => (
+      <li>
+        <article class:list={['plano', destaque(plano) && 'plano--destaque']} aria-labelledby={`plano-${plano.id}`}>
+          <div class="plano__topo">
+            <h3 id={`plano-${plano.id}`} class="plano__nome">{plano.nome}</h3>
+            {destaque(plano) && <p class="plano__selo">Melhor custo</p>}
+          </div>
+          <p class="plano__preco">
+            <span class="plano__valor">{formatarReais(plano.valor)}</span>
+            <span class="plano__periodo">{plano.periodo}</span>
+          </p>
+          {plano.id === 'anual' ? (
+            <ul class="plano__detalhes lista-limpa">
+              <li>Equivale a {formatarReais(equivalenteMensal)} por mês à vista</li>
+              {plano.parcelamento && <li>Ou {plano.parcelamento.replace(/^ou /, '')}</li>}
+              {diferencaAnual > 0 && (
+                <li>{formatarReais(diferencaAnual)} a menos que 12 meses do plano mensal</li>
+              )}
+            </ul>
+          ) : (
+            <ul class="plano__detalhes lista-limpa">
+              <li>Pagamento mês a mês</li>
+            </ul>
+          )}
+          <div class="plano__acao">
+            <CtaButton
+              plano={plano.id}
+              curso={curso}
+              largura="total"
+              variante={destaque(plano) ? 'principal' : 'secundario'}
+            >
+              Assinar o {plano.nome.toLowerCase()}
+            </CtaButton>
+          </div>
+        </article>
+      </li>
+    ))}
+  </ul>
+
+  <p class="planos__nota">Pagamento processado pela Kiwify. Você escolhe o plano e conclui a compra na página dela.</p>
+</section>
+
+<style>
+  .planos__cabeca {
+    display: grid;
+    gap: var(--esp-4);
+    margin-bottom: var(--esp-6);
+  }
+
+  .planos__intro {
+    color: var(--cor-texto-suave);
+  }
+
+  .planos__lista {
+    display: grid;
+    gap: var(--esp-4);
+  }
+
+  .plano {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: var(--esp-5);
+    border: var(--fio) solid var(--cor-fio);
+    border-radius: var(--raio);
+    background: var(--cor-superficie);
+  }
+
+  .plano--destaque {
+    border: 2px solid var(--cor-destaque);
+    background: var(--cor-preto);
+  }
+
+  .plano__topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--esp-3);
+  }
+
+  .plano__nome {
+    font-size: var(--fs-h4);
+  }
+
+  .plano__selo {
+    padding: 0.2em 0.65em;
+    border-radius: var(--raio);
+    background: var(--cor-destaque);
+    color: var(--cor-sobre-destaque);
+    font-size: var(--fs-mini);
+    font-weight: var(--peso-forte);
+    white-space: nowrap;
+  }
+
+  .plano__preco {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--esp-2);
+    margin-top: var(--esp-4);
+  }
+
+  .plano__valor {
+    font-family: var(--fonte-display);
+    font-size: clamp(2.5rem, 2rem + 2.5vw, 3.5rem);
+    line-height: 1;
+  }
+
+  .plano__periodo {
+    color: var(--cor-texto-suave);
+    font-size: var(--fs-pequeno);
+  }
+
+  .plano__detalhes {
+    display: grid;
+    gap: var(--esp-1);
+    margin-top: var(--esp-3);
+    color: var(--cor-texto-suave);
+    font-size: var(--fs-pequeno);
+  }
+
+  .plano--destaque .plano__detalhes li:first-child {
+    color: var(--cor-texto);
+    font-weight: var(--peso-forte);
+  }
+
+  .plano__acao {
+    margin-top: auto;
+    padding-top: var(--esp-5);
+  }
+
+  .planos__nota {
+    margin-top: var(--esp-4);
+    color: var(--cor-texto-suave);
+    font-size: var(--fs-mini);
+  }
+
+  .planos--compacta .planos__cabeca {
+    margin-bottom: var(--esp-5);
+  }
+
+  @media (min-width: 40rem) {
+    .planos__lista {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .planos--completa .planos__lista {
+      max-width: 52rem;
+    }
+  }
+</style>

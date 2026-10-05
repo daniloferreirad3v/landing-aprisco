@@ -1,0 +1,10 @@
+---
+// Dados estruturados (schema.org) em JSON-LD.
+interface Props {
+  data: Record<string, unknown> | Record<string, unknown>[];
+}
+const { data } = Astro.props;
+// Escapa "<" para que nenhum texto feche a tag <script> por engano.
+const json = JSON.stringify(data).replace(/</g, '\\u003c');
+---
+<script type="application/ld+json" set:html={json} />

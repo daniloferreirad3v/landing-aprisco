@@ -1,0 +1,61 @@
+---
+// Página de teste (noindex, fora do sitemap): vitrine dos componentes da Fase 2.
+// Remover antes do lançamento.
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CtaButton from '../components/CtaButton.astro';
+import TrilhaSection from '../components/TrilhaSection.astro';
+import Planos from '../components/Planos.astro';
+import Faq from '../components/Faq.astro';
+import { trilhas } from '../data/trilhas';
+import { faqGeral } from '../data/faq';
+---
+<Base
+  title="Página de teste | Seminário Teológico APRISCO"
+  description="Página interna para validar o layout base, a tipografia e os componentes do site do Seminário Teológico APRISCO antes da construção das páginas finais."
+  noindex
+>
+  <div class="container teste__migalhas">
+    <Breadcrumbs itens={[{ nome: 'Teste de componentes', href: '/teste' }]} />
+  </div>
+
+  <Hero titulo="Estude teologia de maneira profunda e descomplicada.">
+    <p>Uma fé rasa, uma vida rasa. Construa uma vida profunda a partir do conhecimento de Deus.</p>
+    <Fragment slot="acoes">
+      <CtaButton>Quero assinar o APRISCO</CtaButton>
+      <a class="teste__link" href="#trilhas">Ver os cursos</a>
+    </Fragment>
+  </Hero>
+
+  <section id="trilhas" class="container secao teste__trilhas" aria-labelledby="titulo-trilhas">
+    <h2 id="titulo-trilhas">Escolha por onde começar</h2>
+    {trilhas.map((trilha, i) => <TrilhaSection trilha={trilha} prioridade={i === 0} />)}
+  </section>
+
+  <div class="container secao">
+    <Planos />
+  </div>
+
+  <div class="container secao">
+    <Faq itens={faqGeral} />
+  </div>
+</Base>
+
+<style>
+  .teste__migalhas {
+    background: var(--cor-preto);
+  }
+
+  .teste__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--alvo-toque);
+    font-weight: var(--peso-forte);
+  }
+
+  .teste__trilhas {
+    display: grid;
+    gap: var(--esp-8);
+  }
+</style>
