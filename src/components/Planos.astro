@@ -173,4 +173,59 @@ const melhorCusto = ofertaDestaque.parcela < mensal.valor;
   .planos--compacta .planos__cabeca {
     margin-bottom: var(--esp-5);
   }
+
+  /* Desktop: card do anual maior e no centro; o resto da seção acompanha o eixo central */
+  @media (min-width: 64rem) {
+    .planos {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .planos__cabeca {
+      justify-items: center;
+    }
+
+    .planos__intro {
+      max-width: 40rem;
+    }
+
+    .plano {
+      width: 100%;
+      max-width: 36rem;
+      padding: var(--esp-7);
+      text-align: left;
+    }
+
+    .plano__nome {
+      font-size: var(--fs-h3);
+    }
+
+    .plano__valor {
+      font-size: 5.5rem;
+    }
+
+    .plano__moeda {
+      font-size: var(--fs-h2);
+    }
+
+    .plano__periodo {
+      font-size: var(--fs-corpo);
+    }
+
+    .plano__detalhes {
+      font-size: var(--fs-corpo);
+    }
+
+    .plano__acao :global(.botao) {
+      min-height: 3.75rem;
+      font-size: 1.1875rem;
+    }
+
+    .alternativa {
+      justify-content: center;
+      max-width: 36rem;
+    }
+  }
 </style>
