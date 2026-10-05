@@ -44,7 +44,7 @@ const temVisual = Astro.slots.has('visual');
 <style>
   .hero {
     background: var(--cor-preto);
-    padding-block: var(--esp-7) var(--espaco-secao);
+    padding-block: var(--esp-5) var(--espaco-secao);
     overflow: hidden;
   }
 
@@ -53,21 +53,22 @@ const temVisual = Astro.slots.has('visual');
     gap: var(--esp-6);
   }
 
-  /* Medida em em (não ch): a linha mais longa ("ESTUDE TEOLOGIA") tem ~6,8em em Anton.
-     O tamanho acompanha a largura da tela para nenhuma palavra quebrar, até 320 px. */
+  /* O botão de assinar precisa aparecer sem rolar: título em 3 linhas
+     ("ESTUDE TEOLOGIA DE / MANEIRA PROFUNDA E / DESCOMPLICADA.", ~8,3em a mais longa).
+     Medida em em (não ch, que é estreito demais na Anton). */
   .hero__titulo {
-    max-width: 7.5em;
-    font-size: clamp(2.5rem, 12vw, 6.5rem);
+    max-width: 8.6em;
+    font-size: clamp(2rem, 9.4vw, 4.5rem);
     overflow-wrap: normal;
   }
 
   /* A assinatura identifica a escola; o h1 é a mensagem. Respiro claro entre os dois */
   .hero__marca {
-    margin-bottom: var(--esp-7);
+    margin-bottom: var(--esp-4);
   }
 
   .hero__sub {
-    margin-top: var(--esp-5);
+    margin-top: var(--esp-3);
     color: var(--cor-texto-suave);
     font-size: var(--fs-corpo);
     max-width: 34rem;
@@ -80,9 +81,9 @@ const temVisual = Astro.slots.has('visual');
   .hero__acoes {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    gap: var(--esp-3) var(--esp-5);
-    margin-top: var(--esp-6);
+    align-items: flex-start;
+    gap: var(--esp-3) var(--esp-4);
+    margin-top: var(--esp-5);
   }
 
   .hero__selo {
@@ -93,7 +94,7 @@ const temVisual = Astro.slots.has('visual');
 
   @media (min-width: 48rem) {
     .hero {
-      padding-top: var(--espaco-secao);
+      padding-top: var(--esp-7);
     }
 
     .hero__grade {
@@ -114,13 +115,13 @@ const temVisual = Astro.slots.has('visual');
 
     /* Com o mural ao lado, o título divide a largura: tamanho limitado pela coluna */
     .hero--com-visual .hero__titulo {
-      font-size: clamp(2.75rem, 6.4vw, 5.75rem);
+      font-size: clamp(2.5rem, 4.6vw, 4.25rem);
     }
   }
 
   @media (min-width: 64rem) {
     .hero--com-visual {
-      padding-block: var(--esp-8) var(--esp-7);
+      padding-block: var(--esp-5) var(--esp-7);
     }
   }
 
