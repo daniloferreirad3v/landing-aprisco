@@ -137,4 +137,36 @@ const temVisual = Astro.slots.has('visual');
       transform: translateY(12px);
     }
   }
+
+  /* Telas grandes: o topo cresce com a largura E a altura da tela (o menor dos dois),
+     para ocupar o espaço sem empurrar o botão para baixo da dobra */
+  @media (min-width: 100rem) and (min-height: 50rem) {
+    .hero--com-visual {
+      padding-block: var(--esp-7) var(--esp-8);
+    }
+
+    .hero--com-visual .hero__titulo {
+      font-size: clamp(4.25rem, min(5vw, 9.6vh), 7.5rem);
+    }
+
+    .hero__marca {
+      margin-bottom: var(--esp-6);
+    }
+
+    .hero__sub {
+      margin-top: var(--esp-5);
+      max-width: 40rem;
+      font-size: 1.25rem;
+    }
+
+    .hero__acoes {
+      margin-top: var(--esp-6);
+    }
+
+    .hero__acoes :global(.botao) {
+      min-height: 3.75rem;
+      padding-inline: var(--esp-6);
+      font-size: 1.1875rem;
+    }
+  }
 </style>

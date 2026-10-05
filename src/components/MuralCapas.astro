@@ -106,4 +106,10 @@ const colunas = slugs.map((col) => col.map(getCurso).filter((c) => c.capa));
       translate: 0 24px;
     }
   }
+
+  @media (min-width: 100rem) and (min-height: 50rem) {
+    .mural {
+      --altura: min(56rem, 72vh);
+    }
+  }
 </style>

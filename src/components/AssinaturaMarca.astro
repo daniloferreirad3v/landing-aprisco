@@ -49,4 +49,14 @@ import { site } from '../data/site';
     width: clamp(2.75rem, 2.5rem + 1vw, 3.5rem);
     height: auto;
   }
+
+  @media (min-width: 100rem) and (min-height: 50rem) {
+    .assinatura__lockup {
+      width: min(24rem, 16vw, 30vh);
+    }
+
+    .assinatura__selo {
+      width: min(5.5rem, 4vw, 8vh);
+    }
+  }
 </style>

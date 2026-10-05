@@ -96,3 +96,10 @@
   --duracao-media: 600ms;
   --curva-saida: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
+
+/* Telas grandes (≥1600 px de largura e ≥800 px de altura útil): conteúdo mais largo */
+@media (min-width: 100rem) and (min-height: 50rem) {
+  :root {
+    --largura-max: min(100rem, 75vw);
+  }
+}
