@@ -7,8 +7,7 @@ export type TrilhaId =
   | 'teologia-sistematica'
   | 'teologia-para-o-dia-a-dia'
   | 'conheca-sua-biblia'
-  | 'familia-e-relacionamentos'
-  | 'treinamento-e-capacitacao';
+  | 'familia-e-relacionamentos';
 
 export interface Trilha {
   id: TrilhaId;
@@ -42,11 +41,7 @@ export const trilhas: Trilha[] = [
     nome: 'Família e relacionamentos',
     cursos: ['salve-a-sua-familia', 'namoro-cristao', 'encontre-a-pessoa-certa'],
   },
-  {
-    id: 'treinamento-e-capacitacao',
-    nome: 'Treinamento e capacitação',
-    cursos: ['flm'],
-  },
+  // "Treinamento e capacitação" (curso FLM) retirada do site a pedido do cliente (2026-10-05).
 ];
 
 export function getTrilha(id: TrilhaId): Trilha {

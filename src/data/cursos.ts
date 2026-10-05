@@ -308,17 +308,7 @@ const base: CursoBase[] = [
     status: 'disponivel',
     revisaoSensivel: true,
   },
-
-  // Treinamento e capacitação
-  {
-    slug: 'flm',
-    nome: 'FLM',
-    tituloSeo: 'FLM: formação para líderes de mesa e ministério',
-    trilha: 'treinamento-e-capacitacao',
-    chamada: 'Formação para líderes de mesa e ministério.',
-    palavraChave: 'formação de líderes cristãos',
-    status: 'disponivel',
-  },
+  // FLM e a trilha "Treinamento e capacitação" foram retirados do site a pedido do cliente (2026-10-05).
 ];
 
 // Capas: src/assets/cursos/<slug>.png (cópias de design/Capas Cursos).

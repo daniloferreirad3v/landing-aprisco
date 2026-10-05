@@ -31,7 +31,7 @@ Lista viva do que falta. Marque `[x]` quando resolver e anote a resposta ao lado
 - [ ] Manual de marca (área de respiro, tamanho mínimo, usos proibidos), se existir
 - [ ] Capas em alta resolução: 15 das 20 capas estão em 320×440 px (ficam borradas em telas grandes). Ideal: 1080×1350, como Cristologia, Escatologia, Teontologia, Antropologia e Pneumatologia
 - [ ] Padronizar a proporção das capas: há capas em 4:5 (1080×1350) e em 8:11 (320×440)
-- [ ] Capa do curso **FLM** (só existe no print da área de membros)
+- [x] ~~Capa do curso FLM~~ (curso retirado do site em 2026-10-05)
 - [ ] O arquivo `CAPAS CURSOS APRISCO.png` é a capa do Panorama do Antigo Testamento (renomear na origem, se quiser)
 - [ ] O arquivo `ESCOLA DE SEXOLOGIA BIBLICA.png` tem o nome divergente do curso ("Sexualidade"); confirmar que o nome oficial é "Escola de Sexualidade Bíblica"
 - [ ] Fonte usada no texto das capas (sans fina, parecida com Inter/Helvetica); só importa se o cliente quiser reproduzi-la no site
@@ -46,7 +46,7 @@ Lista viva do que falta. Marque `[x]` quando resolver e anote a resposta ao lado
 - [ ] Professores/fundador: nome, foto com autorização, minibiografia, formação e ministério
 - [ ] Depoimentos reais com autorização (se não houver, a seção não aparece)
 - [ ] Linha doutrinária ou declaração de fé
-- [ ] Nome completo da sigla **FLM** (capa diz "Formação para líderes de mesa e ministério")
+- [x] ~~Nome completo da sigla FLM~~ (curso retirado do site em 2026-10-05)
 - [ ] Módulos/aulas de cada curso (para "O que você vai estudar")
 - [ ] Descrição de 2–4 frases de cada curso (só há a chamada curta)
 - [ ] Revisão doutrinária do cliente em todos os textos, com atenção a: Escola de Sexualidade Bíblica, Namoro Cristão, Salve a sua Família, Encontre a Pessoa Certa, Escatologia
@@ -108,7 +108,7 @@ Lista viva do que falta. Marque `[x]` quando resolver e anote a resposta ao lado
 
 - [ ] Os 21 cursos estão com `descricao`, `paraQuem` e `aprendizados` vazios → aparecem como [PREENCHER] nas páginas de curso (Fase 3) até o cliente enviar o material
 - [ ] Cursos marcados com `revisaoSensivel` (revisão doutrinária obrigatória): Escatologia, Teologia do Corpo, Escola de Sexualidade Bíblica, Salve a sua Família, Namoro Cristão, Encontre a Pessoa Certa
-- [ ] FLM sem capa: o card mostra o nome em tipografia até chegar a imagem
+- [x] ~~FLM sem capa~~ (curso e trilha "Treinamento e capacitação" retirados do site em 2026-10-05)
 - [ ] FAQ provisório (`src/data/faq.ts`): 6 de 9 respostas com [PREENCHER] (pagamento, acesso, cancelamento, garantia, certificado, dispositivos, pré-requisitos)
 - [ ] Verificar se o checkout da Kiwify preserva UTMs antes de repassá-las no `CtaButton`
 - [ ] Os botões de compra já têm `data-cta`/`data-plano`/`data-curso` para medição; falta escolher a ferramenta de analytics
