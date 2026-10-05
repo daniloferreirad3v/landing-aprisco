@@ -1,6 +1,6 @@
 ---
 // O momento memorável do site: tipografia da marca sobre preto.
-// Slots: default = subtítulo; "acoes" = botões; "visual" = elemento à direita
+// Slots: "marca" = assinatura da escola acima do título; default = subtítulo; "acoes" = botões; "visual" = elemento à direita
 // (na home, o mural de capas). Sem "visual", mostra o selo do cordeiro.
 // Movimento: entrada do h1 junto com o visual, numa única sequência (desligada com movimento reduzido).
 interface Props {
@@ -14,6 +14,11 @@ const temVisual = Astro.slots.has('visual');
 <section class:list={['hero', temVisual && 'hero--com-visual']} aria-labelledby={id}>
   <div class="container hero__grade">
     <div class="hero__texto">
+      {Astro.slots.has('marca') && (
+        <div class="hero__marca">
+          <slot name="marca" />
+        </div>
+      )}
       <h1 id={id} class="hero__titulo">{titulo}</h1>
       <div class="hero__sub">
         <slot />
@@ -54,6 +59,11 @@ const temVisual = Astro.slots.has('visual');
     max-width: 7.5em;
     font-size: clamp(2.5rem, 12vw, 6.5rem);
     overflow-wrap: normal;
+  }
+
+  /* A assinatura identifica a escola; o h1 é a mensagem. Respiro claro entre os dois */
+  .hero__marca {
+    margin-bottom: var(--esp-7);
   }
 
   .hero__sub {
@@ -110,7 +120,7 @@ const temVisual = Astro.slots.has('visual');
 
   @media (min-width: 64rem) {
     .hero--com-visual {
-      padding-block: var(--esp-6);
+      padding-block: var(--esp-8) var(--esp-7);
     }
   }
 

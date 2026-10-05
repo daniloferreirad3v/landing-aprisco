@@ -1,5 +1,5 @@
 // Montagem de <title> e meta description (regras em docs/03-SEO.md).
-import { formatarReais, precoAPartirDe, type Curso } from '../data/cursos';
+import { ofertaDestaque, type Curso } from '../data/cursos';
 import { site } from '../data/site';
 
 const LIMITE_TITULO = 65;
@@ -23,16 +23,16 @@ const DESCRICAO_MAX = 160;
  * para o total ficar entre 120 e 160 (ou o mais perto disso).
  */
 export function descricaoDoCurso(curso: Curso): string {
-  const preco = formatarReais(precoAPartirDe);
+  const parcela = ofertaDestaque.texto;
   const complementos =
     curso.status === 'em-breve'
       ? [
-          `Curso em preparação no Seminário Teológico APRISCO, já incluído na assinatura a partir de ${preco}/mês.`,
+          `Curso em preparação no Seminário Teológico APRISCO, já incluído na assinatura anual em ${parcela}.`,
           'Em preparação e já incluído na assinatura do Seminário Teológico APRISCO.',
           'Em preparação no APRISCO, já incluído na assinatura.',
         ]
       : [
-          `Curso online do Seminário Teológico APRISCO, incluído na assinatura a partir de ${preco}/mês.`,
+          `Curso online do Seminário Teológico APRISCO, incluído na assinatura anual em ${parcela}.`,
           'Curso online incluído na assinatura do Seminário Teológico APRISCO.',
           'Curso online do APRISCO, incluído na assinatura.',
         ];

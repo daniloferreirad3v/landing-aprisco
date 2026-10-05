@@ -3,10 +3,22 @@
 // Em tamanhos pequenos o "SEMINÁRIO TEOLÓGICO" ficaria ilegível (na marca ele tem a
 // largura de "APRISCO", ~17% da altura), por isso aparece só como texto acessível.
 // O lockup completo está em public/og/default.jpg.
+// soSelo: só o cordeiro (cabeçalho, pedido do cliente em 2026-10-05); o nome fica para leitores de tela.
+interface Props {
+  soSelo?: boolean;
+}
+
+const { soSelo = false } = Astro.props;
 ---
-<span class="logo">
+<span class:list={['logo', soSelo && 'logo--so-selo']}>
   <img class="logo__selo" src="/logo/cordeiro-selo-branco.svg" alt="" width="458" height="458" />
-  <span class="logo__nome"><span class="sr-only">Seminário Teológico </span>APRISCO</span>
+  {
+    soSelo ? (
+      <span class="sr-only">Seminário Teológico APRISCO</span>
+    ) : (
+      <span class="logo__nome"><span class="sr-only">Seminário Teológico </span>APRISCO</span>
+    )
+  }
 </span>
 
 <style>
@@ -20,6 +32,11 @@
   .logo__selo {
     width: 2.25rem;
     height: 2.25rem;
+  }
+
+  .logo--so-selo .logo__selo {
+    width: 2.5rem;
+    height: 2.5rem;
   }
 
   .logo__nome {

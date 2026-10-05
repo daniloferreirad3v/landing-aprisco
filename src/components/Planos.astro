@@ -1,10 +1,12 @@
 ---
 // Seção de planos da assinatura. Destino de todos os botões "Quero assinar".
-// Valores e links vêm de cursos.ts (assinatura.planos). O equivalente mensal e a
-// diferença do anual são CALCULADOS dos preços confirmados, nunca digitados.
+// Valores e links vêm de cursos.ts (assinatura.planos).
+// Hierarquia (pedido do cliente): o anual é a oferta principal, em card, com ênfase na
+// parcela; o mensal aparece logo abaixo como alternativa discreta, em segundo plano.
+// Preço à vista e total a prazo do anual continuam informados em letra menor:
+// regras de oferta parcelada (CDC / Decreto 5.903/2006).
 import CtaButton from './CtaButton.astro';
-import { assinatura, formatarReais, getPlano, type Plano } from '../data/cursos';
-import { cursos } from '../data/cursos';
+import { formatarNumero, formatarReais, getPlano, ofertaDestaque } from '../data/cursos';
 
 interface Props {
   titulo?: string;
@@ -17,61 +19,44 @@ const idTitulo = 'titulo-planos';
 
 const mensal = getPlano('mensal');
 const anual = getPlano('anual');
-const equivalenteMensal = Math.round((anual.valor / 12) * 100) / 100;
-const diferencaAnual = mensal.valor * 12 - anual.valor;
-
-// Anual primeiro: é o de melhor custo e o que a pessoa vê antes no celular.
-const ordem: Plano[] = [anual, mensal];
-const destaque = (p: Plano) => p.id === 'anual' && diferencaAnual > 0;
+// "Melhor custo" só aparece se a parcela do anual for de fato menor que o mensal.
+const melhorCusto = ofertaDestaque.parcela < mensal.valor;
 ---
 <section id="planos" class:list={['planos', `planos--${variante}`]} aria-labelledby={idTitulo}>
   <div class="planos__cabeca">
     <h2 id={idTitulo}>{titulo}</h2>
     <p class="planos__intro">
-      Os dois planos dão acesso aos {cursos.length} cursos do APRISCO, inclusive aos que estão em preparação, assim
-      que forem liberados.
+      A assinatura dá acesso a todos os cursos do APRISCO, inclusive aos que estão em preparação, assim que forem
+      liberados.
     </p>
   </div>
 
-  <ul class="planos__lista lista-limpa">
-    {ordem.map((plano) => (
-      <li>
-        <article class:list={['plano', destaque(plano) && 'plano--destaque']} aria-labelledby={`plano-${plano.id}`}>
-          <div class="plano__topo">
-            <h3 id={`plano-${plano.id}`} class="plano__nome">{plano.nome}</h3>
-            {destaque(plano) && <p class="plano__selo">Melhor custo</p>}
-          </div>
-          <p class="plano__preco">
-            <span class="plano__valor">{formatarReais(plano.valor)}</span>
-            <span class="plano__periodo">{plano.periodo}</span>
-          </p>
-          {plano.id === 'anual' ? (
-            <ul class="plano__detalhes lista-limpa">
-              <li>Equivale a {formatarReais(equivalenteMensal)} por mês à vista</li>
-              {plano.parcelamento && <li>Ou {plano.parcelamento.replace(/^ou /, '')}</li>}
-              {diferencaAnual > 0 && (
-                <li>{formatarReais(diferencaAnual)} a menos que 12 meses do plano mensal</li>
-              )}
-            </ul>
-          ) : (
-            <ul class="plano__detalhes lista-limpa">
-              <li>Pagamento mês a mês</li>
-            </ul>
-          )}
-          <div class="plano__acao">
-            <CtaButton
-              plano={plano.id}
-              curso={curso}
-              largura="total"
-              variante={destaque(plano) ? 'principal' : 'secundario'}
-            >
-              Assinar o {plano.nome.toLowerCase()}
-            </CtaButton>
-          </div>
-        </article>
-      </li>
-    ))}
-  </ul>
+  <article class="plano" aria-labelledby="plano-anual">
+    <div class="plano__topo">
+      <h3 id="plano-anual" class="plano__nome">{anual.nome}</h3>
+      {melhorCusto && <p class="plano__selo">Melhor custo</p>}
+    </div>
+    <p class="plano__preco">
+      <span class="plano__periodo">{ofertaDestaque.quantidade}x de</span>
+      <span class="plano__moeda">R$</span>
+      <span class="plano__valor">{formatarNumero(ofertaDestaque.parcela)}</span>
+    </p>
+    <ul class="plano__detalhes lista-limpa">
+      <li>ou {formatarReais(anual.valor)} à vista</li>
+      <li>total a prazo: {formatarReais(ofertaDestaque.totalAPrazo)}</li>
+    </ul>
+    <div class="plano__acao">
+      <CtaButton plano="anual" curso={curso} largura="total">Assinar o plano anual</CtaButton>
+    </div>
+  </article>
+
+  <section class="alternativa" aria-labelledby="plano-mensal">
+    <h3 id="plano-mensal" class="alternativa__titulo">Prefere pagar mês a mês?</h3>
+    <p class="alternativa__texto">
+      {mensal.nome}: {formatarReais(mensal.valor)} {mensal.periodo}.
+    </p>
+    <CtaButton plano="mensal" curso={curso} variante="link">Assinar o plano mensal</CtaButton>
+  </section>
 
   <p class="planos__nota">Pagamento processado pela Kiwify. Você escolhe o plano e conclui a compra na página dela.</p>
 </section>
@@ -87,23 +72,14 @@ const destaque = (p: Plano) => p.id === 'anual' && diferencaAnual > 0;
     color: var(--cor-texto-suave);
   }
 
-  .planos__lista {
-    display: grid;
-    gap: var(--esp-4);
-  }
-
+  /* Plano anual: o card principal */
   .plano {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    max-width: 30rem;
     padding: var(--esp-5);
-    border: var(--fio) solid var(--cor-fio);
-    border-radius: var(--raio);
-    background: var(--cor-superficie);
-  }
-
-  .plano--destaque {
     border: 2px solid var(--cor-destaque);
+    border-radius: var(--raio);
     background: var(--cor-preto);
   }
 
@@ -136,9 +112,15 @@ const destaque = (p: Plano) => p.id === 'anual' && diferencaAnual > 0;
     margin-top: var(--esp-4);
   }
 
+  .plano__moeda {
+    font-family: var(--fonte-display);
+    font-size: var(--fs-h3);
+    line-height: 1;
+  }
+
   .plano__valor {
     font-family: var(--fonte-display);
-    font-size: clamp(2.5rem, 2rem + 2.5vw, 3.5rem);
+    font-size: clamp(3rem, 2.25rem + 3vw, 4.25rem);
     line-height: 1;
   }
 
@@ -155,35 +137,40 @@ const destaque = (p: Plano) => p.id === 'anual' && diferencaAnual > 0;
     font-size: var(--fs-pequeno);
   }
 
-  .plano--destaque .plano__detalhes li:first-child {
-    color: var(--cor-texto);
-    font-weight: var(--peso-forte);
-  }
-
   .plano__acao {
-    margin-top: auto;
     padding-top: var(--esp-5);
   }
 
+  /* Plano mensal: alternativa em segundo plano, sem card */
+  .alternativa {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: var(--esp-2);
+    max-width: 30rem;
+    margin-top: var(--esp-5);
+    color: var(--cor-texto-suave);
+    font-size: var(--fs-pequeno);
+  }
+
+  .alternativa__titulo {
+    flex-basis: 100%;
+    font-size: var(--fs-pequeno);
+    font-weight: var(--peso-forte);
+    color: var(--cor-texto);
+  }
+
+  .alternativa__texto {
+    margin-top: var(--esp-1);
+  }
+
   .planos__nota {
-    margin-top: var(--esp-4);
+    margin-top: var(--esp-5);
     color: var(--cor-texto-suave);
     font-size: var(--fs-mini);
   }
 
   .planos--compacta .planos__cabeca {
     margin-bottom: var(--esp-5);
-  }
-
-  @media (min-width: 40rem) {
-    .planos__lista {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  @media (min-width: 64rem) {
-    .planos--completa .planos__lista {
-      max-width: 52rem;
-    }
   }
 </style>

@@ -11,15 +11,16 @@ interface Props {
   prioridade?: boolean;
   compacto?: boolean;
   link?: boolean;
+  emais?: boolean; // card "E mais" no fim da fileira (vitrine da home): a fileira não "acaba"
 }
 
-const { trilha, nivel = 'h3', prioridade = false, compacto = false, link = true } = Astro.props;
+const { trilha, nivel = 'h3', prioridade = false, compacto = false, link = true, emais = false } = Astro.props;
 const Titulo = nivel;
 const nivelCard = nivel === 'h2' ? 'h3' : 'h4';
 const cursos = cursosDaTrilha(trilha.id);
 const idTitulo = `trilha-${trilha.id}`;
 ---
-<section class="trilha" aria-labelledby={idTitulo}>
+<section class:list={['trilha', emais && 'trilha--emais']} aria-labelledby={idTitulo}>
   <Titulo id={idTitulo} class="trilha__titulo">{trilha.nome}</Titulo>
   <ul class="trilha__cursos lista-limpa">
     {cursos.map((curso, i) => (
@@ -27,6 +28,15 @@ const idTitulo = `trilha-${trilha.id}`;
         <CursoCard curso={curso} nivel={nivelCard} prioridade={prioridade && i < 2} compacto={compacto} link={link} />
       </li>
     ))}
+    {emais && (
+      <li class="trilha__mais">
+        <div class="mais">
+          <p class="mais__titulo">E mais</p>
+          <p class="mais__texto">Cursos novos entram na sua assinatura assim que são liberados.</p>
+          <a class="mais__link" href="#planos">Ver os planos</a>
+        </div>
+      </li>
+    )}
   </ul>
 </section>
 
@@ -73,6 +83,40 @@ const idTitulo = `trilha-${trilha.id}`;
     }
   }
 
+  /* Card "E mais": mesmo formato das capas, em superfície, sem imagem */
+  .mais {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--esp-2);
+    aspect-ratio: 4 / 5;
+    padding: var(--esp-4);
+    border: var(--fio) solid var(--cor-fio);
+    border-radius: var(--raio);
+    background: var(--cor-superficie);
+  }
+
+  .mais__titulo {
+    font-family: var(--fonte-display);
+    font-size: var(--fs-h2);
+    text-transform: uppercase;
+    line-height: var(--lh-display);
+  }
+
+  .mais__texto {
+    color: var(--cor-texto-suave);
+    font-size: var(--fs-mini);
+    line-height: 1.45;
+  }
+
+  .mais__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--alvo-toque);
+    font-size: var(--fs-pequeno);
+    font-weight: var(--peso-forte);
+  }
+
   @media (min-width: 64rem) {
     .trilha__cursos {
       grid-auto-flow: row;
@@ -80,6 +124,13 @@ const idTitulo = `trilha-${trilha.id}`;
       overflow: visible;
       margin-inline: 0;
       padding-inline: 0;
+    }
+  }
+
+  /* Com o card "E mais", a fileira do desktop tem 6 colunas (5 cursos + 1) */
+  @media (min-width: 64rem) {
+    .trilha--emais .trilha__cursos {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
     }
   }
 </style>

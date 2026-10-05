@@ -11,6 +11,7 @@
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import MuralCapas from '../components/MuralCapas.astro';
+import AssinaturaMarca from '../components/AssinaturaMarca.astro';
 import CtaButton from '../components/CtaButton.astro';
 import TrilhaSection from '../components/TrilhaSection.astro';
 import Planos from '../components/Planos.astro';
@@ -19,7 +20,7 @@ import BarraAssinatura from '../components/BarraAssinatura.astro';
 import Preencher from '../components/Preencher.astro';
 import { site } from '../data/site';
 import { trilhas } from '../data/trilhas';
-import { cursos, formatarReais, precoAPartirDe } from '../data/cursos';
+import { formatarNumero, ofertaDestaque } from '../data/cursos';
 import { faqGeral } from '../data/faq';
 import { montarTitulo } from '../lib/seo';
 
@@ -27,40 +28,44 @@ const title = montarTitulo('Seminário Teológico Online');
 const description =
   'Estude teologia de maneira profunda e descomplicada. Cursos online de Bíblia, doutrina, família e vida cristã no Seminário Teológico APRISCO.';
 
-const totalCursos = cursos.length;
-const emPreparacao = cursos.filter((c) => c.status === 'em-breve').length;
-const preco = formatarReais(precoAPartirDe);
+// Oferta em destaque: plano anual parcelado (pedido do cliente). Sem contagem de cursos no texto.
+const parcela = formatarNumero(ofertaDestaque.parcela);
 
 const inclui = [
   {
-    titulo: `${totalCursos} cursos em ${trilhas.length} trilhas`,
+    titulo: 'Todos os cursos do catálogo',
     texto: 'De crescimento espiritual e leitura da Bíblia a teologia sistemática, família e liderança.',
   },
   {
     titulo: 'Cursos novos sem custo extra',
-    texto: `${emPreparacao} cursos estão em preparação e entram na sua assinatura assim que forem liberados.`,
+    texto: 'Os cursos em preparação entram na sua assinatura assim que forem liberados.',
   },
   {
     titulo: 'Estudo online',
     texto: 'As aulas ficam na área de membros da Kiwify. Você escolhe por onde começar.',
   },
   {
-    titulo: 'Plano mensal ou anual',
-    texto: `A partir de ${preco} por mês. O anual sai mais em conta.`,
+    titulo: 'Plano anual ou mensal',
+    texto: `No plano anual, ${ofertaDestaque.texto}.`,
   },
 ];
 ---
 <Base title={title} description={description}>
   <Hero titulo="Estude teologia de maneira profunda e descomplicada.">
+    <AssinaturaMarca slot="marca" />
     <p>
       Cursos online de teologia bíblica para quem quer conhecer a Deus com profundidade e viver a fé no dia a dia.
     </p>
     <p class="hero-oferta">
-      Acesso aos <strong>{totalCursos} cursos</strong> a partir de <strong>{preco} por mês</strong>.
+      <span class="hero-oferta__texto">Acesso a todos os cursos no plano anual</span>
+      <span class="hero-oferta__preco">
+        {ofertaDestaque.quantidade}x de <span class="hero-oferta__moeda">R$</span>
+        <strong class="hero-oferta__valor">{parcela}</strong>
+      </span>
     </p>
     <Fragment slot="acoes">
       <CtaButton>Quero assinar o APRISCO</CtaButton>
-      <a class="link-forte" href="#cursos">Ver os {totalCursos} cursos</a>
+      <a class="link-forte" href="#cursos">Ver os cursos</a>
     </Fragment>
     <MuralCapas slot="visual" />
   </Hero>
@@ -103,10 +108,10 @@ const inclui = [
     <div class="vitrine__cabeca">
       <h2 id="titulo-trilhas">Escolha por onde começar</h2>
       <p>
-        {totalCursos} cursos em {trilhas.length} trilhas, todos incluídos na assinatura.
+        Todos incluídos na assinatura.
       </p>
     </div>
-    {trilhas.map((trilha, i) => <TrilhaSection trilha={trilha} nivel="h3" prioridade={i === 0} compacto link={false} />)}
+    {trilhas.map((trilha, i) => <TrilhaSection trilha={trilha} nivel="h3" prioridade={i === 0} compacto link={false} emais />)}
   </section>
 
   <section class="faixa" aria-labelledby="titulo-como-funciona">
@@ -181,7 +186,7 @@ const inclui = [
     <div class="container secao final__conteudo">
       <img class="final__selo" src="/logo/cordeiro-selo-branco.svg" alt="" width="458" height="458" loading="lazy" />
       <h2 id="titulo-final">Construa uma vida profunda a partir do conhecimento de Deus.</h2>
-      <p>{totalCursos} cursos, a partir de {preco} por mês.</p>
+      <p>Todos os cursos no plano anual por {ofertaDestaque.texto}.</p>
       <CtaButton>Quero assinar o APRISCO</CtaButton>
     </div>
   </section>
@@ -197,12 +202,30 @@ const inclui = [
     font-weight: var(--peso-forte);
   }
 
+  /* Oferta: a parcela do anual é o número em destaque (pedido do cliente) */
   .hero-oferta {
+    display: grid;
+    gap: var(--esp-1);
     color: var(--cor-texto);
   }
 
-  .hero-oferta strong {
+  .hero-oferta__preco {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3em;
     font-weight: var(--peso-forte);
+  }
+
+  .hero-oferta__moeda {
+    font-family: var(--fonte-display);
+    font-size: 1.5rem;
+  }
+
+  .hero-oferta__valor {
+    font-family: var(--fonte-display);
+    font-size: clamp(2.5rem, 2rem + 2vw, 3.25rem);
+    font-weight: 400;
+    line-height: 1;
   }
 
   /* Manifesto: o problema, com as palavras do cliente */

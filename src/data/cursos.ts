@@ -20,7 +20,7 @@ export interface Plano {
   nome: string;
   valor: number; // em reais
   periodo: string; // como aparece ao lado do valor
-  parcelamento?: string;
+  parcelas?: { quantidade: number; valor: number }; // parcelamento, igual ao da página da Kiwify
   linkKiwify: string; // "" = indisponível (o CtaButton mostra a alternativa)
 }
 
@@ -40,7 +40,7 @@ export const assinatura = {
       nome: 'Plano anual',
       valor: 192,
       periodo: 'à vista, por ano',
-      parcelamento: 'ou 12x de R$ 19,86',
+      parcelas: { quantidade: 12, valor: 19.86 },
       linkKiwify: 'https://pay.kiwify.com.br/Rcvmvex',
     },
   ] satisfies Plano[],
@@ -52,9 +52,6 @@ export function getPlano(id: PlanoId): Plano {
   return plano;
 }
 
-/** Menor preço mensal anunciado ("a partir de"). Usa o valor do plano mensal. */
-export const precoAPartirDe = getPlano('mensal').valor;
-
 export function formatarReais(valor: number): string {
   return valor.toLocaleString('pt-BR', {
     style: 'currency',
@@ -62,6 +59,28 @@ export function formatarReais(valor: number): string {
     minimumFractionDigits: Number.isInteger(valor) ? 0 : 2,
   });
 }
+
+/** Valor só com centavos, sem "R$" (ex.: "19,86"), para destacar o número. */
+export function formatarNumero(valor: number): string {
+  return valor.toLocaleString('pt-BR', { minimumFractionDigits: Number.isInteger(valor) ? 0 : 2 });
+}
+
+/**
+ * Oferta de destaque do site (pedido do cliente, 2026-10-05): o plano anual parcelado,
+ * com ênfase no valor da parcela. O preço à vista e o total a prazo são CALCULADOS e
+ * continuam informados no card do plano (exigência das regras de oferta parcelada).
+ */
+const anual = getPlano('anual');
+if (!anual.parcelas) throw new Error('O plano anual precisa de `parcelas` para a oferta de destaque.');
+export const ofertaDestaque = {
+  plano: anual,
+  quantidade: anual.parcelas.quantidade,
+  parcela: anual.parcelas.valor,
+  aVista: anual.valor,
+  totalAPrazo: Math.round(anual.parcelas.quantidade * anual.parcelas.valor * 100) / 100,
+  /** "12x de R$ 19,86" */
+  texto: `${anual.parcelas.quantidade}x de ${formatarReais(anual.parcelas.valor)}`,
+};
 
 // ---------------------------------------------------------------------------
 // Cursos

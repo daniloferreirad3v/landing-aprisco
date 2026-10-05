@@ -14,7 +14,7 @@ interface Props {
   plano?: PlanoId;
   destino?: string;
   curso?: string; // slug, só para medição
-  variante?: 'principal' | 'secundario';
+  variante?: 'principal' | 'secundario' | 'link'; // link = opção discreta (ex.: plano mensal)
   largura?: 'auto' | 'total';
 }
 
@@ -89,6 +89,22 @@ const classes = ['botao', `botao--${variante}`, largura === 'total' && 'botao--t
 
   .botao--secundario:hover {
     border-color: var(--cor-destaque);
+    color: var(--cor-destaque);
+  }
+
+  /* Opção em segundo plano: aparência de link, mantendo área de toque de 44 px */
+  .botao--link {
+    min-height: var(--alvo-toque);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--cor-texto);
+    font-size: var(--fs-pequeno);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .botao--link:hover {
     color: var(--cor-destaque);
   }
 

@@ -4,7 +4,7 @@
 // Regra: só afirma o que está confirmado (preço, planos, acesso a todos os cursos,
 // compra pela Kiwify). O que não se sabe vai em `pendente` e aparece como [PREENCHER].
 
-import { formatarReais, getPlano } from './cursos';
+import { formatarReais, getPlano, ofertaDestaque } from './cursos';
 
 export interface ItemFaq {
   pergunta: string;
@@ -25,7 +25,7 @@ export const faqGeral: ItemFaq[] = [
   },
   {
     pergunta: 'Quanto custa?',
-    resposta: `Há dois planos. O mensal custa ${formatarReais(mensal.valor)} por mês. O anual custa ${formatarReais(anual.valor)} à vista${anual.parcelamento ? ` ${anual.parcelamento}` : ''}.`,
+    resposta: `Há dois planos. O anual sai em ${ofertaDestaque.texto} (total de ${formatarReais(ofertaDestaque.totalAPrazo)}) ou ${formatarReais(anual.valor)} à vista. O mensal custa ${formatarReais(mensal.valor)} por mês.`,
   },
   {
     pergunta: 'Onde eu faço o pagamento?',

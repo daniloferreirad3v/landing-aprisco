@@ -1,0 +1,52 @@
+---
+// Assinatura completa da marca, como nas peças (design/6.png):
+// "SEMINÁRIO TEOLÓGICO" espaçado, com a mesma largura de "APRISCO", + selo do cordeiro.
+// Feita em SVG com as fontes reais: textLength força as duas linhas à mesma largura em
+// qualquer tamanho de tela. O nome também está em texto para leitores de tela e buscadores.
+// Proporções medidas no lockup original (APRISCO em Anton 200 ≈ 622 de largura; linha de
+// cima em Montserrat 34 com tracking ≈ 0,3em; ~20 de respiro entre as linhas).
+import { site } from '../data/site';
+---
+<p class="assinatura">
+  <span class="sr-only">{site.nome}</span>
+  <svg class="assinatura__lockup" viewBox="0 0 622 218" aria-hidden="true" focusable="false">
+    <text
+      x="0"
+      y="25"
+      textLength="618"
+      lengthAdjust="spacing"
+      font-family="Montserrat, 'Montserrat Reserva', sans-serif"
+      font-weight="500"
+      font-size="34"
+      fill="currentColor">SEMINÁRIO TEOLÓGICO</text>
+    <text
+      x="-4"
+      y="216"
+      font-family="Anton, 'Arial Narrow', Impact, sans-serif"
+      font-size="200"
+      letter-spacing="2"
+      fill="currentColor">APRISCO</text>
+  </svg>
+  <img class="assinatura__selo" src="/logo/cordeiro-selo-branco.svg" alt="" width="458" height="458" />
+</p>
+
+<style>
+  .assinatura {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 0.5rem + 2vw, 2rem);
+    color: var(--cor-texto);
+    max-inline-size: none;
+  }
+
+  .assinatura__lockup {
+    width: clamp(14rem, 11rem + 6vw, 17rem);
+    height: auto;
+    overflow: visible;
+  }
+
+  .assinatura__selo {
+    width: clamp(3.25rem, 2.75rem + 1.5vw, 4rem);
+    height: auto;
+  }
+</style>

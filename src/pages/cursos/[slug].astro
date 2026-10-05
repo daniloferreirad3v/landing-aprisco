@@ -17,8 +17,7 @@ import JsonLd from '../../components/JsonLd.astro';
 import {
   cursos,
   cursosRelacionados,
-  formatarReais,
-  precoAPartirDe,
+  ofertaDestaque,
   trilhasDoCurso,
   urlDoCurso,
   type Curso,
@@ -92,7 +91,7 @@ const dadosCurso = {
         <div class="curso__acao">
           <CtaButton curso={curso.slug}>Quero assinar e estudar {curso.nome}</CtaButton>
           <p class="curso__preco">
-            Incluído na assinatura, a partir de {formatarReais(precoAPartirDe)} por mês.
+            Incluído na assinatura. Plano anual em {ofertaDestaque.texto}.
           </p>
         </div>
       </div>
