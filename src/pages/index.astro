@@ -45,8 +45,8 @@ const inclui = [
     texto: 'As aulas ficam na área de membros da Kiwify. Você escolhe por onde começar.',
   },
   {
-    titulo: 'Plano anual ou mensal',
-    texto: `No plano anual, ${ofertaDestaque.texto}.`,
+    titulo: 'Assinatura simples',
+    texto: `Acesso completo por ${ofertaDestaque.texto}.`,
   },
 ];
 ---
@@ -58,7 +58,7 @@ const inclui = [
     </p>
     <Fragment slot="acoes">
       <p class="hero-oferta">
-        <span class="hero-oferta__texto">Todos os cursos no plano anual</span>
+        <span class="hero-oferta__texto">Acesso a todos os cursos por</span>
         <span class="hero-oferta__preco">
           {ofertaDestaque.quantidade}x de <span class="hero-oferta__moeda">R$</span>
           <strong class="hero-oferta__valor">{parcela}</strong>
@@ -119,8 +119,8 @@ const inclui = [
       <h2 id="titulo-como-funciona">Como funciona</h2>
       <ol class="passos lista-limpa">
         <li>
-          <h3>Escolha o plano</h3>
-          <p>Mensal ou anual. Os dois dão acesso a todos os cursos.</p>
+          <h3>Clique em "Assinar agora"</h3>
+          <p>Você vai direto para a página de pagamento.</p>
         </li>
         <li>
           <h3>Pague na Kiwify</h3>
@@ -186,7 +186,7 @@ const inclui = [
     <div class="container secao final__conteudo">
       <img class="final__selo" src="/logo/cordeiro-selo-branco.svg" alt="" width="458" height="458" loading="lazy" />
       <h2 id="titulo-final">Construa uma vida profunda a partir do conhecimento de Deus.</h2>
-      <p>Todos os cursos no plano anual por {ofertaDestaque.texto}.</p>
+      <p>Acesso a todos os cursos por {ofertaDestaque.texto}.</p>
       <CtaButton>Assinar agora</CtaButton>
     </div>
   </section>

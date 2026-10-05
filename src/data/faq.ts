@@ -25,7 +25,7 @@ export const faqGeral: ItemFaq[] = [
   },
   {
     pergunta: 'Quanto custa?',
-    resposta: `Há dois planos. O anual sai em ${ofertaDestaque.texto} (total de ${formatarReais(ofertaDestaque.totalAPrazo)}) ou ${formatarReais(anual.valor)} à vista. O mensal custa ${formatarReais(mensal.valor)} por mês.`,
+    resposta: `A assinatura sai por ${ofertaDestaque.texto} (total de ${formatarReais(ofertaDestaque.totalAPrazo)}) ou ${formatarReais(anual.valor)} à vista por ano. Se preferir, também dá para assinar mês a mês por ${formatarReais(mensal.valor)}.`,
   },
   {
     pergunta: 'Onde eu faço o pagamento?',

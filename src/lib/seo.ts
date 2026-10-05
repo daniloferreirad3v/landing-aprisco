@@ -27,12 +27,12 @@ export function descricaoDoCurso(curso: Curso): string {
   const complementos =
     curso.status === 'em-breve'
       ? [
-          `Curso em preparação no Seminário Teológico APRISCO, já incluído na assinatura anual em ${parcela}.`,
+          `Curso em preparação no Seminário Teológico APRISCO, já incluído na assinatura por ${parcela}.`,
           'Em preparação e já incluído na assinatura do Seminário Teológico APRISCO.',
           'Em preparação no APRISCO, já incluído na assinatura.',
         ]
       : [
-          `Curso online do Seminário Teológico APRISCO, incluído na assinatura anual em ${parcela}.`,
+          `Curso online do Seminário Teológico APRISCO, incluído na assinatura por ${parcela}.`,
           'Curso online incluído na assinatura do Seminário Teológico APRISCO.',
           'Curso online do APRISCO, incluído na assinatura.',
         ];

@@ -2,8 +2,7 @@
 // ÚNICO componente que gera links de compra (CLAUDE.md, regra 4).
 //
 // - Com `plano`: abre o checkout daquele plano na Kiwify (URL vinda de cursos.ts).
-// - Sem `plano`: leva à seção de planos (`destino`, padrão "#planos"), onde a pessoa
-//   escolhe mensal ou anual antes de pagar.
+// - Sem `plano`: leva à seção de assinatura (`destino`, padrão "#assinatura").
 //
 // É um <a> (navegação), nunca <button>. Mesma aba, sem target="_blank".
 // Os atributos data-cta/data-plano/data-curso servem para medir cliques (analytics).
@@ -18,7 +17,7 @@ interface Props {
   largura?: 'auto' | 'total';
 }
 
-const { plano, destino = '#planos', curso, variante = 'principal', largura = 'auto' } = Astro.props;
+const { plano, destino = '#assinatura', curso, variante = 'principal', largura = 'auto' } = Astro.props;
 
 const link = plano ? getPlano(plano).linkKiwify : destino;
 const externo = Boolean(plano);
@@ -40,7 +39,7 @@ const classes = ['botao', `botao--${variante}`, largura === 'total' && 'botao--t
       class:list={classes}
       href={link}
       rel={externo ? 'noopener' : undefined}
-      data-cta={plano ? `checkout-${plano}` : 'ver-planos'}
+      data-cta={plano ? `checkout-${plano}` : 'ir-para-assinatura'}
       data-plano={plano}
       data-curso={curso}
     >

@@ -1,5 +1,7 @@
 ---
-// Seção de planos da assinatura. Destino de todos os botões "Assinar agora" (texto padrão de compra no site).
+// Seção de assinatura (#assinatura). Destino de todos os botões "Assinar agora".
+// Linguagem de assinatura única, sem "escolha de plano" (pedido do cliente, 2026-10-05):
+// a oferta é o anual parcelado; o mensal aparece só como alternativa discreta.
 // Valores e links vêm de cursos.ts (assinatura.planos).
 // Hierarquia (pedido do cliente): o anual é a oferta principal, em card, com ênfase na
 // parcela; o mensal aparece logo abaixo como alternativa discreta, em segundo plano.
@@ -14,27 +16,24 @@ interface Props {
   variante?: 'completa' | 'compacta';
 }
 
-const { titulo = 'Escolha seu plano', curso, variante = 'completa' } = Astro.props;
-const idTitulo = 'titulo-planos';
+const { titulo = 'Acesso a todos os cursos', curso, variante = 'completa' } = Astro.props;
+const idTitulo = 'titulo-assinatura';
 
 const mensal = getPlano('mensal');
 const anual = getPlano('anual');
-// "Melhor custo" só aparece se a parcela do anual for de fato menor que o mensal.
-const melhorCusto = ofertaDestaque.parcela < mensal.valor;
 ---
-<section id="planos" class:list={['planos', `planos--${variante}`]} aria-labelledby={idTitulo}>
+<section id="assinatura" class:list={['planos', `planos--${variante}`]} aria-labelledby={idTitulo}>
   <div class="planos__cabeca">
     <h2 id={idTitulo}>{titulo}</h2>
     <p class="planos__intro">
-      A assinatura dá acesso a todos os cursos do APRISCO, inclusive aos que estão em preparação, assim que forem
+      Uma assinatura, todos os cursos do APRISCO, inclusive os que estão em preparação, assim que forem
       liberados.
     </p>
   </div>
 
-  <article class="plano" aria-labelledby="plano-anual">
+  <article class="plano" aria-labelledby="oferta-assinatura">
     <div class="plano__topo">
-      <h3 id="plano-anual" class="plano__nome">{anual.nome}</h3>
-      {melhorCusto && <p class="plano__selo">Melhor custo</p>}
+      <h3 id="oferta-assinatura" class="plano__nome">Assinatura APRISCO</h3>
     </div>
     <p class="plano__preco">
       <span class="plano__periodo">{ofertaDestaque.quantidade}x de</span>
@@ -49,15 +48,13 @@ const melhorCusto = ofertaDestaque.parcela < mensal.valor;
     </div>
   </article>
 
-  <section class="alternativa" aria-labelledby="plano-mensal">
-    <h3 id="plano-mensal" class="alternativa__titulo">Prefere pagar mês a mês?</h3>
-    <p class="alternativa__texto">
-      {mensal.nome}: {formatarReais(mensal.valor)} {mensal.periodo}.
-    </p>
-    <CtaButton plano="mensal" curso={curso} variante="link">Assinar o plano mensal</CtaButton>
+  <section class="alternativa" aria-labelledby="mes-a-mes">
+    <h3 id="mes-a-mes" class="alternativa__titulo">Prefere pagar mês a mês?</h3>
+    <p class="alternativa__texto">{formatarReais(mensal.valor)} {mensal.periodo}.</p>
+    <CtaButton plano="mensal" curso={curso} variante="link">Assinar mês a mês</CtaButton>
   </section>
 
-  <p class="planos__nota">Pagamento processado pela Kiwify. Você escolhe o plano e conclui a compra na página dela.</p>
+  <p class="planos__nota">Pagamento processado pela Kiwify. Ao clicar em "Assinar agora", você conclui a compra na página dela.</p>
 </section>
 
 <style>
