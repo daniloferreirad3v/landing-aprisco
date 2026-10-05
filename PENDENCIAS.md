@@ -83,6 +83,10 @@ Lista viva do que falta. Marque `[x]` quando resolver e anote a resposta ao lado
 - [ ] Palavra-chave principal da home: proposta "seminário teológico online" (validar)
 - [ ] Validar as palavras-chave propostas para os 21 cursos (campo `palavraChave` em `src/data/cursos.ts`; o build impede duas páginas com a mesma)
 
+## Oferta parcelada (2026-10-05)
+
+- [ ] O card do plano anual mostra "12x de R$ 19,86" e "ou R$ 192 à vista", sem o total a prazo (R$ 238,32), por decisão do cliente. As regras de oferta parcelada (CDC / Decreto 5.903/2006) pedem preço à vista, parcelas e total a prazo juntos: **confirmar com o jurídico**. O total ainda aparece na resposta "Quanto custa?" do FAQ
+
 ## Single page (2026-10-05)
 
 - [ ] Páginas de curso sem link da home: o Google as encontra pelo sitemap e pelos links entre cursos relacionados. Para cada curso ranquear bem, o ideal é ter descrição real (300+ palavras) e, se possível, links de fora (Instagram, anúncios)

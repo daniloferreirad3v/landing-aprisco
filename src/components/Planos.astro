@@ -3,8 +3,8 @@
 // Valores e links vêm de cursos.ts (assinatura.planos).
 // Hierarquia (pedido do cliente): o anual é a oferta principal, em card, com ênfase na
 // parcela; o mensal aparece logo abaixo como alternativa discreta, em segundo plano.
-// Preço à vista e total a prazo do anual continuam informados em letra menor:
-// regras de oferta parcelada (CDC / Decreto 5.903/2006).
+// O preço à vista do anual aparece em letra menor. O total a prazo foi retirado do card a
+// pedido do cliente (2026-10-05); continua no FAQ. Ver PENDENCIAS.md (regras de oferta parcelada).
 import CtaButton from './CtaButton.astro';
 import { formatarNumero, formatarReais, getPlano, ofertaDestaque } from '../data/cursos';
 
@@ -43,7 +43,6 @@ const melhorCusto = ofertaDestaque.parcela < mensal.valor;
     </p>
     <ul class="plano__detalhes lista-limpa">
       <li>ou {formatarReais(anual.valor)} à vista</li>
-      <li>total a prazo: {formatarReais(ofertaDestaque.totalAPrazo)}</li>
     </ul>
     <div class="plano__acao">
       <CtaButton plano="anual" curso={curso} largura="total">Assinar agora</CtaButton>
