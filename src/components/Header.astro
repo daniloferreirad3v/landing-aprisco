@@ -120,6 +120,20 @@ import { navegacao, site } from '../data/site';
     border-bottom: var(--fio) solid var(--cor-fio);
   }
 
+  /* O menu do celular desce suavemente ao abrir */
+  @media (prefers-reduced-motion: no-preference) {
+    .menu[open] .menu__lista {
+      animation: menu-desce 220ms var(--curva-saida);
+    }
+  }
+
+  @keyframes menu-desce {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+
   .menu__lista li + li {
     border-top: var(--fio) solid var(--cor-fio);
   }

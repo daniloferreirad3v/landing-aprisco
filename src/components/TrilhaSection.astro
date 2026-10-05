@@ -24,12 +24,12 @@ const idTitulo = `trilha-${trilha.id}`;
   <Titulo id={idTitulo} class="trilha__titulo">{trilha.nome}</Titulo>
   <ul class="trilha__cursos lista-limpa">
     {cursos.map((curso, i) => (
-      <li>
+      <li class="revela" style={`--revela-i: ${i}`}>
         <CursoCard curso={curso} nivel={nivelCard} prioridade={prioridade && i < 2} compacto={compacto} link={link} />
       </li>
     ))}
     {emais && (
-      <li class="trilha__mais">
+      <li class="trilha__mais revela" style={`--revela-i: ${cursos.length}`}>
         <div class="mais">
           <p class="mais__titulo">E mais</p>
           <p class="mais__texto">Cursos novos entram na sua assinatura assim que são liberados.</p>

@@ -132,9 +132,26 @@ const temVisual = Astro.slots.has('visual');
     }
   }
 
+  /* Abertura orquestrada: assinatura → título → subtítulo → botão e preço, em cascata curta.
+     Só posição e opacidade; com movimento reduzido, tudo aparece parado. */
   @media (prefers-reduced-motion: no-preference) {
+    .hero__marca,
+    .hero__titulo,
+    .hero__sub,
+    .hero__acoes {
+      animation: hero-entrada 700ms var(--curva-saida) both;
+    }
+
     .hero__titulo {
-      animation: hero-entrada var(--duracao-media) var(--curva-saida) both;
+      animation-delay: 90ms;
+    }
+
+    .hero__sub {
+      animation-delay: 220ms;
+    }
+
+    .hero__acoes {
+      animation-delay: 340ms;
     }
   }
 

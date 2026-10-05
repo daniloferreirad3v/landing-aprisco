@@ -5,6 +5,8 @@
 
 html {
   background: var(--cor-fundo);
+  /* permite animar até "auto" (FAQ abrindo); ignorado onde não há suporte */
+  interpolate-size: allow-keywords;
   /* o header é fixo: as âncoras param logo abaixo dele */
   scroll-padding-top: calc(var(--altura-header) + var(--esp-4));
 }
@@ -134,6 +136,61 @@ strong {
   border-radius: var(--raio);
   color: var(--cor-aviso);
   font-size: 0.9em;
+}
+
+/* Revelações ao rolar (CSS puro, animation-timeline: view()).
+   Uso: class="revela" (sobe), "revela revela--linha" (texto descoberto de baixo pra cima),
+   "revela revela--zoom" (leve aproximação). --revela-i (0, 1, 2…) cria a cascata.
+   Sem suporte (ex.: Firefox) ou com movimento reduzido, o conteúdo aparece parado.
+   As propriedades ficam separadas e a linha do tempo numa regra à parte: o minificador
+   junta tudo num "animation:" abreviado, que não aceita animation-timeline. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .revela {
+      animation-name: revela-subindo;
+      animation-fill-mode: both;
+      animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+
+    .revela--linha {
+      animation-name: revela-linha;
+    }
+
+    .revela--zoom {
+      animation-name: revela-zoom;
+    }
+
+    html .revela {
+      animation-timeline: view();
+      animation-range: entry calc(var(--revela-i, 0) * 7%) cover calc(24% + var(--revela-i, 0) * 7%);
+    }
+  }
+}
+
+@keyframes revela-subindo {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}
+
+/* O recorte começa acima da linha (-0.35em): acentos como o de "FÉ" ultrapassam a caixa
+   da linha (line-height curto da Anton) e seriam cortados */
+@keyframes revela-linha {
+  from {
+    clip-path: inset(-0.35em 0 100% 0);
+    transform: translateY(0.35em);
+  }
+  to {
+    clip-path: inset(-0.35em 0 -0.2em 0);
+  }
+}
+
+@keyframes revela-zoom {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
 }
 
 /* Movimento reduzido: tudo instantâneo */

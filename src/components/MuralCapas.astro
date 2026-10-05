@@ -86,17 +86,53 @@ const colunas = slugs.map((col) => col.map(getCurso).filter((c) => c.capa));
   }
 
   /* Único movimento orquestrado do hero: as colunas sobem devagar ao carregar */
+  /* Depois de subir, as colunas derivam devagar em sentidos opostos, sem parar:
+     a estante "respira". A subida usa `translate`; a deriva usa `transform`
+     (que guarda o desencontro de cada coluna), então as duas não se anulam. */
   @media (prefers-reduced-motion: no-preference) {
-    .mural__coluna {
-      animation: mural-sobe 1200ms var(--curva-saida) both;
+    .mural__coluna--1 {
+      animation:
+        mural-sobe 1200ms var(--curva-saida) 200ms both,
+        mural-deriva-1 26s ease-in-out 1400ms infinite alternate;
     }
 
     .mural__coluna--2 {
-      animation-delay: 120ms;
+      animation:
+        mural-sobe 1200ms var(--curva-saida) 320ms both,
+        mural-deriva-2 30s ease-in-out 1500ms infinite alternate;
     }
 
     .mural__coluna--3 {
-      animation-delay: 240ms;
+      animation:
+        mural-sobe 1200ms var(--curva-saida) 440ms both,
+        mural-deriva-3 28s ease-in-out 1600ms infinite alternate;
+    }
+  }
+
+  @keyframes mural-deriva-1 {
+    from {
+      transform: translateY(-12%);
+    }
+    to {
+      transform: translateY(-20%);
+    }
+  }
+
+  @keyframes mural-deriva-2 {
+    from {
+      transform: translateY(-34%);
+    }
+    to {
+      transform: translateY(-26%);
+    }
+  }
+
+  @keyframes mural-deriva-3 {
+    from {
+      transform: translateY(4%);
+    }
+    to {
+      transform: translateY(-4%);
     }
   }
 

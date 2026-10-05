@@ -72,8 +72,11 @@ const inclui = [
 
   <section id="sobre" class="manifesto" aria-labelledby="titulo-manifesto">
     <div class="container secao manifesto__grade">
-      <h2 id="titulo-manifesto" class="manifesto__titulo">Uma fé rasa, uma vida rasa.</h2>
-      <div class="manifesto__texto">
+      <h2 id="titulo-manifesto" class="manifesto__titulo">
+        <span class="manifesto__linha revela revela--linha">Uma fé rasa,</span>{' '}
+        <span class="manifesto__linha revela revela--linha" style="--revela-i: 1">uma vida rasa.</span>
+      </h2>
+      <div class="manifesto__texto revela" style="--revela-i: 1">
         <p class="manifesto__pergunta">Como aplicar uma teologia clássica e sólida aos dilemas da atualidade?</p>
         <p>
           O Seminário Teológico APRISCO está comprometido com uma teologia bíblica que responde aos dilemas da
@@ -87,8 +90,8 @@ const inclui = [
   <section class="container secao" aria-labelledby="titulo-inclui">
     <h2 id="titulo-inclui">O que a assinatura inclui</h2>
     <ul class="inclui lista-limpa">
-      {inclui.map((item) => (
-        <li class="inclui__item">
+      {inclui.map((item, i) => (
+        <li class="inclui__item revela" style={`--revela-i: ${i}`}>
           <svg class="inclui__marca" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
             <path d="M4 12.5l5 5L20 6.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
           </svg>
@@ -118,22 +121,22 @@ const inclui = [
     <div class="container secao">
       <h2 id="titulo-como-funciona">Como funciona</h2>
       <ol class="passos lista-limpa">
-        <li>
+        <li class="revela">
           <h3>Clique em "Assinar agora"</h3>
           <p>Você vai direto para a página de pagamento.</p>
         </li>
-        <li>
+        <li class="revela" style="--revela-i: 1">
           <h3>Pague na Kiwify</h3>
           <p>A compra é processada pela Kiwify, a plataforma onde ficam os cursos.</p>
         </li>
-        <li>
+        <li class="revela" style="--revela-i: 2">
           <h3>Acesse a área de membros</h3>
           <p>
             Os cursos ficam na área de membros da Kiwify.{' '}
             <Preencher oque="como e quando o acesso chega ao aluno" />
           </p>
         </li>
-        <li>
+        <li class="revela" style="--revela-i: 3">
           <h3>Estude no seu ritmo</h3>
           <p>Comece pela trilha que fizer mais sentido para você agora.</p>
         </li>
@@ -184,9 +187,9 @@ const inclui = [
 
   <section class="final" aria-labelledby="titulo-final">
     <div class="container secao final__conteudo">
-      <img class="final__selo" src="/logo/cordeiro-selo-branco.svg" alt="" width="458" height="458" loading="lazy" />
-      <h2 id="titulo-final">Construa uma vida profunda a partir do conhecimento de Deus.</h2>
-      <p>Acesso a todos os cursos por {ofertaDestaque.texto}.</p>
+      <img class="final__selo revela" src="/logo/cordeiro-selo-branco.svg" alt="" width="458" height="458" loading="lazy" />
+      <h2 id="titulo-final" class="revela" style="--revela-i: 1">Construa uma vida profunda a partir do conhecimento de Deus.</h2>
+      <p class="revela" style="--revela-i: 2">Acesso a todos os cursos por {ofertaDestaque.texto}.</p>
       <CtaButton>Assinar agora</CtaButton>
     </div>
   </section>
@@ -271,6 +274,10 @@ const inclui = [
   .manifesto__grade {
     display: grid;
     gap: var(--esp-6);
+  }
+
+  .manifesto__linha {
+    display: block;
   }
 
   .manifesto__titulo {

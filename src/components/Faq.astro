@@ -79,4 +79,22 @@ const { itens, titulo = 'Perguntas frequentes', id = 'titulo-faq' } = Astro.prop
     padding-bottom: var(--esp-5);
     color: var(--cor-texto-suave);
   }
+
+  /* A resposta abre deslizando (navegadores com ::details-content; nos outros, abre direto) */
+  @media (prefers-reduced-motion: no-preference) {
+    .faq__item::details-content {
+      block-size: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition:
+        block-size 320ms var(--curva-saida),
+        opacity 320ms ease,
+        content-visibility 320ms allow-discrete;
+    }
+
+    .faq__item[open]::details-content {
+      block-size: auto;
+      opacity: 1;
+    }
+  }
 </style>
