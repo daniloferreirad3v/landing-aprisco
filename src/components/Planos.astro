@@ -1,5 +1,5 @@
 ---
-// Seção de planos da assinatura. Destino de todos os botões "Quero assinar".
+// Seção de planos da assinatura. Destino de todos os botões "Assinar agora" (texto padrão de compra no site).
 // Valores e links vêm de cursos.ts (assinatura.planos).
 // Hierarquia (pedido do cliente): o anual é a oferta principal, em card, com ênfase na
 // parcela; o mensal aparece logo abaixo como alternativa discreta, em segundo plano.
@@ -46,7 +46,7 @@ const melhorCusto = ofertaDestaque.parcela < mensal.valor;
       <li>total a prazo: {formatarReais(ofertaDestaque.totalAPrazo)}</li>
     </ul>
     <div class="plano__acao">
-      <CtaButton plano="anual" curso={curso} largura="total">Assinar o plano anual</CtaButton>
+      <CtaButton plano="anual" curso={curso} largura="total">Assinar agora</CtaButton>
     </div>
   </article>
 

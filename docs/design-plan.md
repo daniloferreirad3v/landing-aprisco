@@ -7,7 +7,7 @@ Fonte: leitura da pasta `/design` (peças 1–6, logos, 20 capas, prints da áre
 
 | Decisão | Efeito no design |
 |---|---|
-| Venda **por assinatura**, com **um checkout por plano** | Os botões gerais ("Quero assinar o APRISCO" no hero, no CTA final e na página de curso) **não vão direto ao checkout**: levam à seção **Planos**. Só os dois botões dentro de Planos ("Assinar o plano mensal" / "Assinar o plano anual") abrem a Kiwify. Na página de curso, o bloco Planos se repete em versão compacta, para a compra não exigir voltar à home. Não há preço por curso. |
+| Venda **por assinatura**, com **um checkout por plano** | Os botões gerais ("Assinar agora" no hero, no CTA final, na barra do celular e na página de curso) **não vão direto ao checkout**: levam à seção **Planos**. Só os dois botões dentro de Planos ("Assinar o plano mensal" / "Assinar o plano anual") abrem a Kiwify. Na página de curso, o bloco Planos se repete em versão compacta, para a compra não exigir voltar à home. Não há preço por curso. |
 | Cadeado = **curso não liberado** | Selo "Em breve" na capa. A página do curso existe e **mantém o botão de assinar**, porque a assinatura já dá acesso a todos os cursos, inclusive os em preparação. O texto diz "Em preparação. Quem assina já tem acesso garantido quando for liberado." Não divulga data. |
 | Planos: mensal R$ 37 / anual R$ 192 (ou 12x R$ 19,86) | Nova seção **"Planos"** na home, antes do FAQ: dois blocos lado a lado (empilhados no celular), sem "mais popular" nem preço riscado. O anual mostra só os números reais da Kiwify; a economia ("equivale a R$ 16/mês") fica de fora até o cliente aprovar o texto. Os valores ficam em `cursos.ts` (`assinatura.planos`). |
 | FAQ provisório | Perguntas reais de quem vai assinar. Respostas baseadas nos dados confirmados (preço, acesso a todos os cursos, compra pela Kiwify); o que não se sabe (cancelamento, certificado, dispositivos) fica com `[PREENCHER]` visível. Os dados ficam marcados com `rascunho: true`. |
@@ -79,7 +79,7 @@ Conceito geral: **uma página de estudo à noite.** Fundo escuro, fotografia de 
 | Seção | Conceito em uma frase |
 |---|---|
 | Header | Wordmark compacto à esquerda, quatro links à direita; no celular, menu com `<details>` sem JS. |
-| Hero | O momento memorável: fundo preto puro, `h1` enorme em Anton quebrado em 3–4 linhas à esquerda, como nas peças 4 e 6, o cordeiro como selo à direita, o botão "Quero assinar o APRISCO" e um link de texto "Ver os cursos". |
+| Hero | O momento memorável: fundo preto puro, `h1` enorme em Anton quebrado em 3–4 linhas à esquerda, como nas peças 4 e 6, o cordeiro como selo à direita, o botão "Assinar agora" e um link de texto "Ver os cursos". |
 | Para quem é | Quatro perfis em lista de texto simples, com duas colunas no desktop, sem ícones nem cards. |
 | Trilhas | Seis prateleiras como na área de membros: título da trilha em Anton e uma fileira de capas; no celular, rolagem horizontal com a próxima capa aparecendo pela metade. |
 | Como funciona | Faixa em `--cor-superficie` com 3–4 passos numerados (é uma sequência real: escolher → comprar na Kiwify → receber o acesso por e-mail → estudar). Só entra o que for confirmado. |
@@ -104,7 +104,7 @@ Conceito geral: **uma página de estudo à noite.** Fundo escuro, fotografia de 
 │■                             ■│
 │■ Uma fé rasa, uma vida rasa. ■│  subtítulo Montserrat
 │■ [PREENCHER: subtítulo]      ■│
-│■ [ Quero assinar o APRISCO ] ■│  botão coral, texto escuro
+│■ [ Assinar agora           ] ■│  botão coral, texto escuro
 │■   Ver os cursos ↓           ■│  link de texto
 │■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■│
 ├───────────────────────────────┤
@@ -160,7 +160,7 @@ Conceito geral: **uma página de estudo à noite.** Fundo escuro, fotografia de 
 │    UMA FÉ RASA,               │  CTA final, centralizado
 │    UMA VIDA RASA.             │
 │  Construa uma vida profunda…  │
-│  [ Quero assinar o APRISCO ]  │
+│  [ Assinar agora           ]  │
 ├───────────────────────────────┤
 │■ logo · links · contato      ■│  rodapé preto
 │■ privacidade · termos · CNPJ ■│
@@ -180,7 +180,7 @@ Conceito geral: **uma página de estudo à noite.** Fundo escuro, fotografia de 
 │■  PROFUNDA E                                              ( o )     ■│
 │■  DESCOMPLICADA.                                          selo      ■│
 │■  Uma fé rasa, uma vida rasa.                                       ■│
-│■  [ Quero assinar o APRISCO ]   Ver os cursos ↓                     ■│
+│■  [ Assinar agora           ]   Ver os cursos ↓                     ■│
 │■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■│
 │                                                                      │
 │  CRESCIMENTO ESPIRITUAL                          Ver a trilha (5) →  │
@@ -209,8 +209,8 @@ Conceito geral: **uma página de estudo à noite.** Fundo escuro, fotografia de 
 │ Descrição de 2–4 frases…      │  [PREENCHER] se não houver
 │ Incluído na assinatura ·      │  texto suave
 │ a partir de R$ 37/mês         │
-│ [ Quero assinar e estudar   ] │  CtaButton → checkout da
-│ [ Cristologia               ] │  assinatura (em breve: aviso
+│ [ Assinar agora             ] │  CtaButton → checkout da
+│                               │  assinatura (em breve: aviso
 │                               │  "em preparação" + mesmo botão)
 │ ┌───────────────────────────┐ │
 │ │ capa 4:5 (largura 100%)   │ │  img lazy=false (LCP)
@@ -221,7 +221,7 @@ Conceito geral: **uma página de estudo à noite.** Fundo escuro, fotografia de 
 │ COMO FUNCIONA                 │  h2 · formato/acesso/certificado
 │ QUEM ENSINA                   │  h2
 │ PERGUNTAS FREQUENTES          │  h2 · details
-│ [ Quero assinar e estudar … ] │  botão final
+│ [ Assinar agora             ] │  botão final
 │ CURSOS RELACIONADOS           │  h2 · aside, 2–3 cards
 └───────────────────────────────┘
 ```
@@ -239,7 +239,7 @@ Conceito geral: **uma página de estudo à noite.** Fundo escuro, fotografia de 
 │  CRISTOLOGIA                                  │   capa 4:5       │   │
 │  Os mistérios de Cristo na Palavra de Deus.   │                  │   │
 │  Descrição de 2–4 frases…                     │                  │   │
-│  [ Quero assinar e estudar Cristologia ]      │                  │   │
+│  [ Assinar agora                       ]      │                  │   │
 │                                               └──────────────────┘   │
 ├──────────────────────────────────────────────────────────────────────┤
 │  O QUE VOCÊ VAI ESTUDAR     (coluna de leitura 68ch)                 │
@@ -321,3 +321,10 @@ Objetivo: dar à home cara de página de vendas de alta conversão sem inventar 
 
 Mantido de fora por falta de dado real: contador de alunos, depoimentos, garantia, urgência.
 Movimento: entrada do h1 + subida das colunas do mural numa única sequência de carregamento.
+
+---
+
+## 11. Texto padrão de compra (2026-10-05, decisão do cliente)
+
+Todos os botões que levam à compra dizem **"Assinar agora"**: hero, "O que a assinatura inclui", fechamento, barra fixa do celular, páginas de curso e o botão do plano anual. A exceção é a alternativa discreta "Assinar o plano mensal".
+
