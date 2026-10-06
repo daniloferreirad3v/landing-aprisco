@@ -28,6 +28,11 @@ const { itens, titulo = 'Perguntas frequentes', id = 'titulo-faq' } = Astro.prop
             {item.resposta && item.pendente && ' '}
             {item.pendente && <Preencher oque={item.pendente} />}
           </p>
+          {item.lista && (
+            <ul class="faq__pontos">
+              {item.lista.map((ponto) => <li>{ponto}</li>)}
+            </ul>
+          )}
         </div>
       </details>
     ))}
@@ -78,6 +83,17 @@ const { itens, titulo = 'Perguntas frequentes', id = 'titulo-faq' } = Astro.prop
   .faq__resposta {
     padding-bottom: var(--esp-5);
     color: var(--cor-texto-suave);
+  }
+
+  .faq__pontos {
+    display: grid;
+    gap: var(--esp-2);
+    margin-top: var(--esp-3);
+    padding-left: var(--esp-4);
+  }
+
+  .faq__pontos li {
+    list-style: disc;
   }
 
   /* A resposta abre deslizando (navegadores com ::details-content; nos outros, abre direto) */

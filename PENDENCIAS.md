@@ -19,9 +19,9 @@ Lista viva do que falta. Marque `[x]` quando resolver e anote a resposta ao lado
 - [ ] Nome oficial do plano/assinatura, se houver
 - [x] A assinatura dá acesso a todos os cursos, inclusive os ainda não liberados
 - [ ] Previsão de lançamento dos cursos "em breve" (só se o cliente quiser divulgar)
-- [ ] Cancelamento: como funciona (texto para o FAQ)
+- [x] Cancelamento: livre, "cancele quando quiser" (texto do cliente no FAQ, 2026-10-06)
 - [ ] CTA definitivo do hero
-- [ ] **FAQ definitivo:** o FAQ atual é PROVISÓRIO (rascunho). Substituir todas as respostas antes do lançamento
+- [x] **FAQ definitivo:** textos enviados pelo cliente em 2026-10-06 e aplicados em `src/data/faq.ts` (nenhuma resposta com [PREENCHER])
 
 ## Pendências de identidade visual (pasta /design)
 
@@ -40,8 +40,8 @@ Lista viva do que falta. Marque `[x]` quando resolver e anote a resposta ao lado
 ## Pendências de conteúdo
 
 - [x] Preço da assinatura (ver acima; o site precisa continuar igual à Kiwify se o preço mudar)
-- [ ] Garantia: prazo e regras (o que a Kiwify de fato oferece)
-- [ ] Certificado: existe? carga horária? regras?
+- [x] Garantia: 7 dias (garantia do consumidor), com reembolso (cliente, 2026-10-06)
+- [x] Certificado: de reconhecimento de conclusão; não conta como carga horária de bacharelado em Teologia (cliente, 2026-10-06)
 - [ ] Formato dos cursos (videoaulas, material em PDF, tempo de acesso, suporte)
 - [ ] Professores/fundador: nome, foto com autorização, minibiografia, formação e ministério
 - [ ] Depoimentos reais com autorização (se não houver, a seção não aparece)
@@ -88,7 +88,8 @@ Lista viva do que falta. Marque `[x]` quando resolver e anote a resposta ao lado
 ## Dados do cliente a manter atualizados (2026-10-06)
 
 - [ ] **"+80 aulas disponíveis hoje"** (seção "O que a assinatura inclui", em `src/pages/index.astro`): número informado pelo cliente. Revisar sempre que entrarem cursos novos, para o site não prometer menos nem mais do que existe
-- [ ] **"cancele quando quiser"**: o cliente informou que o cancelamento é livre. A resposta "Posso cancelar quando quiser?" no FAQ (`src/data/faq.ts`) ainda está como [PREENCHER] — confirmar o texto e preencher
+- [x] ~~"cancele quando quiser" no FAQ~~ (texto do cliente aplicado em 2026-10-06)
+- [ ] **Parcela do plano anual:** o texto do FAQ enviado pelo cliente diz "R$ 19,90 mês em 12x", mas a Kiwify e o `cursos.ts` usam **R$ 19,86**. O site mostra 19,86 (valor real). Se a Kiwify mudar para 19,90, atualizar `cursos.ts`
 
 ## Oferta parcelada (2026-10-05)
 
@@ -116,6 +117,6 @@ Lista viva do que falta. Marque `[x]` quando resolver e anote a resposta ao lado
 - [ ] Os 21 cursos estão com `descricao`, `paraQuem` e `aprendizados` vazios → aparecem como [PREENCHER] nas páginas de curso (Fase 3) até o cliente enviar o material
 - [ ] Cursos marcados com `revisaoSensivel` (revisão doutrinária obrigatória): Escatologia, Teologia do Corpo, Escola de Sexualidade Bíblica, Salve a sua Família, Namoro Cristão, Encontre a Pessoa Certa
 - [x] ~~FLM sem capa~~ (curso e trilha "Treinamento e capacitação" retirados do site em 2026-10-05)
-- [ ] FAQ provisório (`src/data/faq.ts`): 6 de 9 respostas com [PREENCHER] (pagamento, acesso, cancelamento, garantia, certificado, dispositivos, pré-requisitos)
+- [x] ~~FAQ provisório (`src/data/faq.ts`)~~ (respostas definitivas enviadas pelo cliente em 2026-10-06)
 - [ ] Verificar se o checkout da Kiwify preserva UTMs antes de repassá-las no `CtaButton`
 - [ ] Os botões de compra já têm `data-cta`/`data-plano`/`data-curso` para medição; falta escolher a ferramenta de analytics
