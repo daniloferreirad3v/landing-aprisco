@@ -45,7 +45,6 @@ Identificação das fontes (provável, **confirmar**): **Anton** (wordmark e tí
 | `--cor-texto` | `#F4F1EC` | Texto principal (branco quente, igual ao das capas) | derivado das capas | 17,7:1 no fundo |
 | `--cor-texto-suave` | `#A3A09B` | Chamadas, legendas, metadados | derivado | 7,6:1 no fundo; 6,9:1 na superfície |
 | `--cor-roxo` | `#4C059E` | Botão principal e selos (sempre preenchido, com texto branco) | cor de marca definida pelo cliente (2026-10-06) | 11,5:1 com branco em cima; 1,7:1 no fundo, por isso nunca é usado como texto ou traço |
-| `--cor-roxo-profundo` | `#3A0478` | Botão de destaque menos intenso (CTA do manifesto) | escurecimento do roxo da marca | 14,3:1 com branco em cima |
 | `--cor-destaque` | `#7C3AED` | Traços: borda do card em destaque, linha sob a capa em foco, ícones, números dos passos, foco de teclado | clareamento mínimo do roxo da marca | 3,5:1 no fundo (atende o mínimo de 3:1 de elemento não textual e de texto grande) |
 | `--cor-aviso` | `#E8C27A` | Selo "Em breve" e mensagens de atenção | derivado (âmbar quente, coerente com as fotos) | 11,8:1 no fundo |
 

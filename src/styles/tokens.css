@@ -43,8 +43,6 @@
      em cima: 11,5:1. Sobre o fundo quase preto ele some (1,7:1), então não serve para
      texto, linha nem borda. */
   --cor-roxo: #4c059e;
-  /* roxo mais fundo: preenchimento discreto, para um botão existir sem gritar (14,3:1) */
-  --cor-roxo-profundo: #3a0478;
   --cor-sobre-roxo: #ffffff;
   /* Roxo de traço: o tom mais escuro que ainda se enxerga sobre o fundo (3,5:1).
      Usado em borda, linha, ícone, número grande e foco de teclado — nunca em texto

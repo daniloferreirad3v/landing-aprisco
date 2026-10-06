@@ -153,11 +153,11 @@ const classes = ['botao', `botao--${variante}`, largura === 'total' && 'botao--t
     border-color: var(--cor-destaque);
   }
 
-  /* Preenchido, porém menos intenso: roxo mais fundo, texto branco (14,3:1).
-     Ao passar o mouse, vai para o roxo cheio da marca.
-     Texto em caixa-alta fica menor e mais espaçado para não "gritar". */
+  /* Mesma cor do botão principal (um roxo só nos botões, pedido do cliente em
+     2026-10-06); fica menos intenso pelo tamanho: texto em caixa-alta menor e mais
+     espaçado, para não "gritar". */
   .botao--suave {
-    background: var(--cor-roxo-profundo);
+    background: var(--cor-roxo);
     color: var(--cor-sobre-roxo);
     /* No celular ocupava quase a largura toda em 2 linhas: letra e respiro menores,
        mantendo a altura mínima de toque (44 px) */
@@ -168,7 +168,7 @@ const classes = ['botao', `botao--${variante}`, largura === 'total' && 'botao--t
   }
 
   .botao--suave:hover {
-    background: var(--cor-roxo);
+    background: var(--cor-destaque);
     color: var(--cor-sobre-roxo);
   }
 
