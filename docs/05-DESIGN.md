@@ -1,12 +1,15 @@
 # 05 — Direção visual e processo de design
 
-## Passo zero: leia a pasta `/design`
+## Passo zero: conheça a identidade atual
 
-A identidade da marca vive em `/design` (veja `design/LEIA-ME.md`). **Antes de escrever qualquer CSS ou componente, leia tudo o que estiver lá**: logo, paleta, tipografia, manual de identidade, referências e fotos.
+A identidade de origem vive em `/design` (peças do Canva, capas, logo e prints; veja
+`design/LEIA-ME.md`). Os valores **em uso** estão em `src/styles/tokens.css`, e o estado atual está
+resumido em `docs/projeto/06-visual-e-animacoes.md`.
 
-- Valores oficiais da pasta `/design` **sempre vencem** qualquer valor deste documento.
-- Se faltar logo, paleta ou fontes, **pare e pergunte**. Não invente a marca.
-- Extraia tudo para `src/styles/tokens.css` (cores, fontes, espaçamentos, raios) e use só esses tokens no resto do CSS.
+- **Os tokens e as decisões do cliente vencem** os valores das peças. Exemplo: as peças usam coral,
+  mas o cliente definiu o **roxo `#4C059E`** como cor primária (2026-10-06).
+- Nunca altere arquivos de `/design`. Se faltar algo da marca, **pergunte**; não invente.
+- Use só os tokens no CSS (cores, fontes, espaços, raios).
 
 ## O que a marca já mostra (observado na área de membros da Kiwify)
 
@@ -14,8 +17,8 @@ Ponto de partida para entender o clima. Confirme e substitua pelos valores ofici
 
 - **Fundo escuro**, quase preto, com fotografia em tons dessaturados e escurecidos.
 - **Wordmark "APRISCO"** em sans-serif condensada, pesada, em caixa-alta; "SEMINÁRIO TEOLÓGICO" em letras espaçadas acima; **cordeiro** como emblema dentro de um círculo.
-- **Cor de destaque** em coral/salmão, usada de forma contida (barras de progresso, linhas de base dos cards). Aproximadamente `#F28B82`; **extrair o valor real do arquivo de identidade**.
-- **Capas dos cursos** em formato retrato (proporção próxima de 2:3), com foto escurecida e título tipográfico grande sobre ela.
+- **Cor de destaque** das peças: coral/salmão (`#F98080`), usada de forma contida. **No site foi substituída pelo roxo** por decisão do cliente: `#4C059E` preenchido (botões, selo) e `#7C3AED` em traços (bordas, linhas, foco). Texto nunca é roxo.
+- **Capas dos cursos** em formato retrato (4:5 ou 8:11), com foto escurecida e título tipográfico grande sobre ela.
 - **Organização por trilhas** (categorias com título e uma fileira de capas).
 - Tom visual: sério, contemplativo, editorial. Não é "igreja colorida" nem "startup".
 
@@ -23,9 +26,11 @@ Isso é **referência de clima**, não de layout. O site público precisa vender
 
 ## Processo em quatro passos
 
-### 1. Plano de design (escrever em `docs/design-plan.md` antes de codar)
+### 1. Plano de design (`docs/design-plan.md`)
 
-Em poucas linhas, defina:
+O plano já existe e é mantido em `docs/design-plan.md`. Só registre lá decisões **definitivas**,
+aprovadas pelo cliente. Para um projeto novo, o plano define:
+
 
 - **Cor:** 4 a 6 valores nomeados em hex (fundo, superfície, texto, texto secundário, destaque, estado/erro), tirados de `/design`.
 - **Tipografia:** as famílias e o papel de cada uma. Use uma ou duas; se duas, bem distintas (por exemplo, a condensada pesada da marca para títulos e uma sans ou serifada legível para leitura). Escala tipográfica definida (ex.: 1,125 ou 1,2), com limite de linha em torno de 65–75 caracteres.
@@ -41,7 +46,8 @@ Antes de codar, compare o plano com os padrões que qualquer gerador de páginas
 - Evite um rótulo em caixa-alta espaçada acima de cada título (o "eyebrow"). Só use se carregar informação (por exemplo, o nome da trilha em um card).
 - Evite destacar uma única palavra do título em outra cor ou itálico.
 - Evite numerar seções (01/02/03) quando o conteúdo não é uma sequência.
-- Evite gradientes decorativos, brilhos e animações de entrada em todas as seções.
+- Evite gradientes decorativos. O brilho existe só nos botões de compra (pedido do cliente).
+- Animações de rolagem: o cliente pediu fade sutil nas seções; recortes e "cortinas" foram recusados.
 
 Registre no `design-plan.md` o que você mudou e por quê.
 
@@ -54,7 +60,7 @@ Registre no `design-plan.md` o que você mudou e por quê.
 
 ### 4. Crítica
 
-Tire capturas de tela (Playwright, se disponível) em 375, 768 e 1280 px e critique como diretor de arte:
+Tire capturas de tela (Playwright, se disponível) em 375 e 1366 px (e 320, 768 e 1024 quando mexer em layout) e critique como diretor de arte:
 
 - O primeiro olhar entende **o que é a escola** e **o que fazer**?
 - Há um único elemento memorável? O resto está quieto e disciplinado?
@@ -62,37 +68,43 @@ Tire capturas de tela (Playwright, se disponível) em 375, 768 e 1280 px e criti
 - Contraste do texto sobre foto passa em 4,5:1?
 - Os cards de curso são legíveis no celular?
 
-## Direção por seção
+## Direção por seção (como está)
 
 | Seção | Intenção visual |
 |---|---|
-| **Hero** | O momento memorável. Abre com o que é mais característico do universo da escola: a palavra, o estudo, o cordeiro. Fotografia escurecida com título tipográfico forte e um único botão principal. O `h1` é texto real, legível, não parte da imagem. |
-| **Trilhas e cursos** | Fileiras por categoria, como na área de membros, mas com **título e uma linha de descrição visíveis em texto** (não só na imagem). Capas em retrato; no celular, rolagem horizontal com a próxima capa "espiando" ou grade de 2 colunas. |
-| **Como funciona** | Poucos passos reais (só se a informação existir). Sequência numerada aqui **é** apropriada, porque é um processo. |
-| **Quem ensina** | Foto real, nome, formação/ministério em poucas linhas. Rosto e voz humana geram confiança. |
-| **Depoimentos** | Só reais e autorizados. Se não houver, omitir a seção inteira. |
-| **FAQ** | `<details>` estilizados, sem animação chamativa; a resposta aparece ao abrir. |
-| **CTA final** | Frase direta + botão. Sem urgência falsa. |
-| **Rodapé** | Links úteis, contato, redes, políticas, razão social/CNPJ (se houver). |
+| **Topo** | O momento memorável: assinatura da marca, `h1` tipográfico forte e o mural de capas reais (a "estante" da escola). Sem botão nem preço (decisão do cliente). No celular, o mural vira fundo da primeira tela, com véu escuro para o texto passar de 4,5:1 |
+| **Por que escolher** | Quatro frases em litania sobre faixa de superfície, sem ícone nem card; o espaço organiza |
+| **Manifesto ("Uma fé rasa")** | Título enorme revelado de baixo para cima; texto e botão discreto ao lado |
+| **O que a assinatura inclui** | Quatro itens com ✓ roxo |
+| **Trilhas e cursos** | Fileiras por trilha, como na área de membros, com o nome do curso em texto. Celular: rolagem horizontal com a próxima capa "espiando". Card "E mais" no fim. Na home as capas não são links |
+| **Como funciona** | Quatro passos reais, numerados (é um processo) |
+| **Planos** | Card anual grande, em destaque; card mensal pequeno, em segundo plano; bandeiras de pagamento sob o botão do anual |
+| **Quem ensina / Depoimentos** | Só com material real; hoje não existem |
+| **FAQ** | `<details>` estilizados; a resposta desliza ao abrir |
+| **Fechamento** | Cordeiro, frase direta e botão. Sem urgência falsa |
+| **Rodapé** | Marca, navegação em duas colunas, selo "Pagamento 100% seguro", políticas, copyright (CNPJ quando houver) |
 
 ## Tipografia: diretrizes
 
-- A marca usa um título condensado pesado: se a fonte for licenciada ou open source, inclua em `public/fonts/` (woff2). Se for proprietária sem licença web, **pergunte** e proponha uma alternativa parecida.
+- Títulos em **Anton** (condensada pesada, caixa-alta) e texto em **Montserrat**, ambas OFL, em `public/fonts/` (woff2). Uma troca para EB Garamond + Hanken Grotesk foi testada e revertida pelo cliente.
 - Texto de leitura em tamanho de pelo menos 16 px no celular (idealmente 17–18 px), altura de linha 1,5–1,7.
 - Caixa-alta apenas onde a marca exige (wordmark, títulos de destaque). Textos de interface e parágrafos em caixa normal (sentence case).
 - Peso, largura e espaçamento são ferramentas de hierarquia; não use mais de 3 pesos.
 
 ## Botões e microcópia
 
-- Botão principal: verbo + objeto. "Quero me inscrever", "Ver o curso de Cristologia", "Falar no WhatsApp".
-- O mesmo nome de ação em todo o fluxo (se o botão diz "Inscrever-se", o rótulo seguinte não vira "Comprar").
-- Estados: normal, hover, foco visível, ativo, desabilitado ("Em breve").
+- Rótulos em uso (definidos pelo cliente, em maiúsculas, sem "!"): **ASSINAR AGORA** (botão principal), **QUERO COMEÇAR AGORA** e **QUERO COMEÇAR MEUS ESTUDOS AGORA** (seções 2 e 3), **ASSINAR** (plano mensal). Alternativa quando falta link: "Falar no WhatsApp".
+- O mesmo nome de ação em todo o fluxo: o passo 1 de "Como funciona" diz "Clique em ASSINAR AGORA".
+- Estados: normal, hover (sobe 2 px e clareia), foco visível, ativo (afunda), indisponível ("Assinatura indisponível no momento").
 - Mensagens de erro dizem o que houve e como resolver, sem se desculpar de forma vaga.
 
 ## Motion
 
-- No máximo **um** momento orquestrado (por exemplo, uma revelação suave do hero ao carregar). Nada de fade-in em todas as seções nem hover animado em todos os cards.
-- Movimento que responde a uma ação (abrir FAQ, abrir menu) é bem-vindo.
+- Um momento orquestrado ao carregar: a entrada do topo e o mural de capas.
+- Ao rolar, **fade sutil** com subida curta nos blocos (pedido do cliente); a revelação termina perto do meio da tela.
+- Brilho lento nos botões de compra, passando por trás do texto.
+- Movimento que responde a uma ação (hover da capa, abrir FAQ, abrir menu) é bem-vindo.
+- Detalhes e armadilhas: `docs/projeto/06-visual-e-animacoes.md` e `docs/projeto/08-armadilhas.md`.
 - Tudo desligado quando `prefers-reduced-motion: reduce`.
 
 ## Qualidade mínima

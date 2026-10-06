@@ -1,68 +1,71 @@
 # 02 — Estrutura do projeto, rotas e componentes
 
+Descrição mais completa (fluxo dos dados, SEO, deploy) em `docs/projeto/02-arquitetura.md` e
+`docs/projeto/04-componentes.md`.
+
 ## Pastas
 
 ```
-aprisco-site/
+landing-aprisco/
+├── AGENTS.md                     # ponto de entrada para agentes de IA
 ├── CLAUDE.md
-├── PROMPT-INICIAL.md
-├── PENDENCIAS.md                 # lista viva do que falta (criar na Fase 0)
+├── PROMPT-INICIAL.md             # registro das fases de construção
+├── PENDENCIAS.md                 # lista viva do que falta
 ├── .claude/skills/               # skills de SEO e design
-├── design/                       # identidade visual (LER ANTES DE TUDO)
-├── docs/                         # estes documentos
+├── design/                       # identidade de origem (nunca alterar)
+├── docs/                         # estes documentos + design-plan.md + projeto/
 ├── public/
-│   ├── favicon.svg
-│   ├── favicon.ico
-│   ├── apple-touch-icon.png
+│   ├── favicon.svg, favicon.ico, apple-touch-icon.png
 │   ├── og/default.jpg            # 1200x630
-│   ├── robots.txt
-│   └── fonts/                    # fontes locais (woff2)
+│   ├── logo/                     # cordeiro em SVG (branco/preto) e PNG
+│   └── fonts/                    # Anton e Montserrat (woff2, OFL)
 ├── src/
-│   ├── assets/                   # imagens processadas pelo Astro
-│   │   ├── cursos/               # capas por curso
-│   │   └── professor/
+│   ├── assets/cursos/            # capas por curso (<slug>.png), processadas pelo Astro
 │   ├── components/
-│   │   ├── Header.astro
-│   │   ├── Footer.astro
+│   │   ├── Header.astro          # cabeçalho fixo; só o cordeiro + menu
+│   │   ├── Footer.astro          # marca, navegação, selo de pagamento seguro, links legais
+│   │   ├── Logo.astro            # cordeiro via <svg><use>
+│   │   ├── AssinaturaMarca.astro # "SEMINÁRIO TEOLÓGICO / APRISCO" + cordeiro (topo)
 │   │   ├── Hero.astro
+│   │   ├── MuralCapas.astro      # mural de capas do topo
 │   │   ├── CursoCard.astro
-│   │   ├── TrilhaSection.astro   # uma categoria + seus cards
+│   │   ├── TrilhaSection.astro   # uma trilha + seus cards (+ card "E mais")
 │   │   ├── CtaButton.astro       # único componente que gera links de compra
+│   │   ├── Planos.astro          # cards anual e mensal (#assinatura)
+│   │   ├── FormasPagamento.astro # fichas Visa, Mastercard, Elo, Pix
 │   │   ├── Faq.astro             # <details>/<summary>
-│   │   ├── Depoimentos.astro     # só renderiza se houver depoimentos reais
-│   │   ├── Breadcrumbs.astro
+│   │   ├── Breadcrumbs.astro     # visível + JSON-LD BreadcrumbList
+│   │   ├── Preencher.astro       # marcador [PREENCHER: ...]
 │   │   └── JsonLd.astro
-│   ├── content/                  # blog em Markdown/MDX (Fase 4)
-│   │   └── blog/
 │   ├── data/
-│   │   ├── site.ts               # nome, domínio, redes, contato
-│   │   ├── trilhas.ts            # categorias e ordem
-│   │   └── cursos.ts             # FONTE ÚNICA dos cursos e links Kiwify
+│   │   ├── site.ts               # nome, descrições, contato, CNPJ, menu
+│   │   ├── trilhas.ts            # trilhas e a ordem dos cursos
+│   │   ├── cursos.ts             # FONTE ÚNICA: cursos, planos, preços, links Kiwify
+│   │   └── faq.ts                # perguntas e respostas (texto do cliente)
+│   ├── lib/seo.ts                # montagem de <title> e description
 │   ├── layouts/
-│   │   ├── Base.astro            # <head> completo + skip link + slot
-│   │   └── Artigo.astro          # layout do blog
+│   │   ├── Base.astro            # <head> completo + skip link + header/main/footer
+│   │   └── Pagina.astro          # páginas de texto (políticas)
 │   ├── pages/
-│   │   ├── index.astro
-│   │   ├── cursos/
-│   │   │   ├── index.astro       # catálogo completo
-│   │   │   └── [slug].astro      # página de cada curso (gerada de cursos.ts)
-│   │   ├── sobre.astro
-│   │   ├── contato.astro
-│   │   ├── blog/
-│   │   │   ├── index.astro
-│   │   │   └── [...slug].astro
+│   │   ├── index.astro           # home, página única
+│   │   ├── cursos/[slug].astro   # página de cada curso (gerada de cursos.ts)
 │   │   ├── politica-de-privacidade.astro
 │   │   ├── termos-de-uso.astro
-│   │   └── 404.astro
+│   │   ├── 404.astro
+│   │   ├── teste.astro           # vitrine de componentes; noindex; REMOVER antes do lançamento
+│   │   └── robots.txt.ts         # gerado a partir de `site`
 │   └── styles/
-│       ├── tokens.css            # variáveis extraídas de /design
+│       ├── tokens.css            # todas as cores, fontes, tamanhos e espaços
 │       ├── reset.css
-│       └── global.css
-├── astro.config.mjs              # com `site` definido
-├── vercel.json                   # redirects e cabeçalhos (Fase 5)
+│       └── global.css            # base, utilitários e animações de rolagem
+├── astro.config.mjs              # `site` resolvido por variável de ambiente
+├── vercel.json                   # cabeçalhos, cache e noindex em *.vercel.app
 ├── tsconfig.json
 └── package.json
 ```
+
+Não existem: catálogo (`/cursos`), `/sobre`, `/contato`, blog (`src/content`, `/blog`, layout de
+artigo), componente de depoimentos nem barra fixa de assinatura.
 
 ## Fonte única de dados: `src/data/cursos.ts`
 
@@ -72,67 +75,68 @@ Todo curso é um objeto. Páginas, cards, sitemap e dados estruturados leem daqu
 export interface Curso {
   slug: string;              // vira /cursos/<slug>
   nome: string;              // nome de exibição
-  trilha: TrilhaId;          // categoria
-  chamada: string;           // frase curta (1 linha), para cards e meta description
-  descricao: string;         // 2–4 frases, para o topo da página do curso
-  paraQuem: string[];        // lista de perfis
-  aprendizados: string[];    // o que o aluno vai estudar
-  formato?: string;          // [PREENCHER] ex.: videoaulas + material
-  cargaHoraria?: string;     // [PREENCHER] só se existir
-  professor?: string;        // referência ao cadastro de professores
-  capa: string;              // arquivo em src/assets/cursos/
-  palavraChave: string;      // termo principal da página (ver 03-SEO.md)
+  tituloSeo: string;         // início do <title>
+  trilha: TrilhaId;          // trilha principal
+  chamada: string;           // frase curta transcrita da capa
+  descricao: string;         // 2–4 frases; "" = [PREENCHER]
+  paraQuem: string[];        // [] = [PREENCHER]
+  aprendizados: string[];    // módulos/temas; [] = [PREENCHER]
+  formato?: string;          // ausente = [PREENCHER]
+  cargaHoraria?: string;     // ausente = [PREENCHER]
+  professor?: string;
+  palavraChave: string;      // termo principal da página (única entre os cursos)
   status: 'disponivel' | 'em-breve';
+  revisaoSensivel?: boolean; // tema que exige revisão doutrinária
+  capa?: ImageMetadata;      // ligada automaticamente: src/assets/cursos/<slug>.png
 }
 
-// Modelo de venda confirmado em 2026-10-05: ASSINATURA.
-// Um único checkout libera os cursos; preço e link ficam na assinatura, não no curso.
-export const assinatura: {
-  nome: string;              // [PREENCHER] nome do plano na Kiwify
-  planos: Array<{            // confirmados em 2026-10-05
-    id: 'mensal' | 'anual';
-    valor: number;           // mensal 37.00 · anual 192.00
-    parcelas?: string;       // anual: "12x de R$ 19,86"
-    linkKiwify: string;      // um checkout por plano; "" = indisponível
-  }>;
+// Venda por ASSINATURA: preço e link ficam nos planos, não no curso.
+export const assinatura = {
+  incluiCursosEmPreparacao: true,
+  planos: [
+    { id: 'mensal', nome: 'Plano mensal', valor: 37, periodo: 'por mês', linkKiwify: '…' },
+    { id: 'anual', nome: 'Plano anual', valor: 192, periodo: 'à vista, por ano',
+      parcelas: { quantidade: 12, valor: 19.86 }, linkKiwify: '…' },
+  ],
 };
+// ofertaDestaque: o anual parcelado ("12x de R$ 19,86"), com à vista e total a prazo calculados.
 ```
 
 Regras:
 
-- Se `assinatura.linkKiwify` estiver vazio, o `CtaButton` mostra a alternativa (WhatsApp/contato), **nunca** um botão quebrado.
-- Curso `em-breve` mantém a página pública, mas não promete prazo de lançamento nem que entra na assinatura, até isso ser confirmado.
-- Um curso que aparece em duas prateleiras (como "Como ler a sua Bíblia") tem **uma única página e uma única URL**. A ligação com a segunda categoria é só um link. Páginas duplicadas prejudicam o SEO.
+- Se o `linkKiwify` de um plano estiver vazio, o `CtaButton` mostra a alternativa (WhatsApp, se
+  houver, ou "Assinatura indisponível no momento"), **nunca** um botão quebrado.
+- Curso `em-breve` mantém a página pública, sem prometer prazo de lançamento. A assinatura dá
+  acesso a ele (confirmado pelo cliente). Na vitrine aparece igual aos outros.
+- Um curso que aparece em duas trilhas (como "Como ler a sua Bíblia") tem **uma única página e uma
+  única URL**.
+- O build quebra se houver slug duplicado, trilha com curso inexistente, curso fora de trilha ou
+  `palavraChave` repetida.
 
 ## Rotas e intenção de cada página
 
-> **Atualização 2026-10-05: single page.** A tabela abaixo é o plano original. Hoje existem:
-> `/` (home com as seções #cursos, #sobre, #planos, #duvidas e #contato), `/cursos/[slug]`
-> (portas de entrada pelo Google, sem links da home), `/politica-de-privacidade`, `/termos-de-uso` e `/404`.
-> `/cursos`, `/sobre`, `/contato` e o blog foram removidos.
-
-| Rota | Função | Palavra-chave principal (definir) |
+| Rota | Função | Palavra-chave principal |
 |---|---|---|
-| `/` | Landing de vendas institucional | `[PREENCHER]` ex.: seminário teológico online |
-| `/cursos` | Catálogo por trilhas | cursos de teologia online |
-| `/cursos/[slug]` | Venda de um curso | termo do curso (ex.: curso de cristologia) |
-| `/sobre` | Quem somos, doutrina, professores | nome da marca |
-| `/contato` | Canais de atendimento | nome da marca + contato |
-| `/blog` e `/blog/[slug]` | Tráfego orgânico | perguntas reais do público |
-| `/politica-de-privacidade`, `/termos-de-uso` | Confiança e LGPD | não ranqueiam |
+| `/` | Landing de vendas em página única: topo, por que escolher, manifesto (`#sobre`), o que inclui, vitrine (`#cursos`), como funciona, planos (`#assinatura`), dúvidas (`#duvidas`), fechamento | proposta: seminário teológico online (validar) |
+| `/cursos/[slug]` | Porta de entrada pelo Google e anúncios; vende a assinatura a partir de um curso. Não recebe link da home | termo do curso (`palavraChave`) |
+| `/politica-de-privacidade`, `/termos-de-uso` | Confiança e LGPD (rascunhos) | não ranqueiam |
+| `/404` | Página não encontrada (`noindex`) | — |
 
 ## Componente `CtaButton.astro`
 
-Único lugar que cria o link de compra. Responsabilidades:
+Único lugar que cria o link de compra:
 
-- Receber `curso` (ou o link geral) e o texto do botão.
-- Renderizar um `<a>` (é navegação, não ação de formulário) com texto específico: "Quero me inscrever no curso de Cristologia", em vez de só "Clique aqui".
-- Se o curso estiver `em-breve`, renderizar a alternativa (lista de espera/WhatsApp).
-- Preservar parâmetros UTM da URL de origem, **somente se** a Kiwify aceitar esse repasse no checkout (verificar na documentação da Kiwify antes de implementar).
+- Sem `plano` e sem `destino`, leva ao **checkout anual** (todo botão de compra do site).
+- `plano="mensal"` leva ao checkout mensal (só o card mensal).
+- `destino` serve para navegação interna, sem checkout.
+- Renderiza um `<a>` (é navegação, não formulário) com rótulo de ação: "ASSINAR AGORA",
+  "QUERO COMEÇAR AGORA", "ASSINAR". Nunca "Clique aqui".
+- Atributos `data-cta`, `data-plano` e `data-curso` prontos para analytics.
+- Repassar UTMs ao checkout **somente se** a Kiwify aceitar (ainda não verificado; ver `PENDENCIAS.md`).
 
 ## Convenções
 
 - Nomes de arquivo e rotas em minúsculas, sem acento, com hífen: `/cursos/escola-de-oracao`.
 - Componentes em PascalCase. Variáveis CSS em `--kebab-case`.
-- Texto de interface e conteúdo em pt-BR; nomes de código em inglês ou português de forma consistente (preferir português para dados do domínio, como `cursos`, `trilhas`).
-- Commits pequenos, mensagem no imperativo.
+- Texto de interface e conteúdo em pt-BR; nomes de dados do domínio em português (`cursos`, `trilhas`).
+- Commits pequenos, um assunto por commit, mensagem em português no imperativo.

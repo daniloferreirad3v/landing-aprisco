@@ -10,19 +10,23 @@ O Google não se importa com onde o site está hospedado. Ele avalia o HTML que 
 4. **Cada página única tem seu próprio `title`, `description`, `h1`, canonical e imagem de compartilhamento.**
 5. **Nunca prometa o que não existe.** Dado estruturado ou meta tag que contradiz o conteúdo visível prejudica o site.
 
-## Mapa de palavras-chave (preencher e manter atualizado)
+## Mapa de palavras-chave
 
-| Página | Palavra-chave principal | Variações / buscas relacionadas | Intenção |
-|---|---|---|---|
-| `/` | `[PREENCHER]` | seminário teológico online, estudar teologia online | comercial |
-| `/cursos/fundamentos-da-fe` | `[PREENCHER]` | | comercial |
-| `/cursos/escola-de-oracao` | curso de oração | como aprender a orar | comercial |
-| `/cursos/cristologia` | curso de cristologia | quem é Jesus teologia | comercial |
-| `/cursos/escatologia` | curso de escatologia | fim dos tempos bíblico | comercial |
-| `/cursos/como-ler-a-sua-biblia` | como ler a Bíblia | estudo bíblico para iniciantes | comercial/informacional |
-| … | | | |
+A palavra-chave de cada curso fica no campo `palavraChave` de `src/data/cursos.ts` (fonte única), e o
+build **quebra** se duas páginas usarem a mesma. As atuais são propostas e precisam ser validadas
+com o cliente (`PENDENCIAS.md`).
 
-Regra: duas páginas não podem disputar a mesma palavra-chave principal (canibalização). Se duas parecem iguais, uma delas deve virar artigo de blog que aponta para a outra.
+| Página | Palavra-chave principal | Intenção |
+|---|---|---|
+| `/` | proposta: seminário teológico online (validar) | comercial |
+| `/cursos/escola-de-oracao` | curso de oração | comercial |
+| `/cursos/cristologia` | curso de cristologia | comercial |
+| `/cursos/escatologia` | curso de escatologia | comercial |
+| `/cursos/como-ler-a-sua-biblia` | como ler a Bíblia | comercial/informacional |
+| … (demais cursos) | ver `cursos.ts` | comercial |
+
+Regra: duas páginas não podem disputar a mesma palavra-chave principal (canibalização). Se duas
+parecem iguais, ajuste uma delas para uma variação mais específica.
 
 ## `<head>` de cada página (componente `Base.astro`)
 
@@ -30,8 +34,8 @@ Itens obrigatórios:
 
 - `<html lang="pt-BR">`
 - `<meta charset="utf-8">` e `<meta name="viewport" content="width=device-width, initial-scale=1">`
-- `<title>` único, de preferência até cerca de 60 caracteres, com a palavra-chave no início e a marca no fim. Fórmula: `Curso de Cristologia | Seminário Teológico APRISCO`.
-- `<meta name="description">` único, entre 140 e 160 caracteres, escrito para convencer o clique (a descrição não é fator direto de ranking, mas influencia o clique).
+- `<title>` único, até 65 caracteres, com a palavra-chave no início e a marca no fim. Fórmula: `Curso de Cristologia | Seminário Teológico APRISCO`. A função `montarTitulo` (`src/lib/seo.ts`) encurta a marca para "APRISCO" quando passa do limite.
+- `<meta name="description">` único, entre 120 e 165 caracteres (nas páginas de curso, montado por `descricaoDoCurso`), escrito para convencer o clique (a descrição não é fator direto de ranking, mas influencia o clique).
 - `<link rel="canonical">` com URL **absoluta** e igual à versão oficial (o `site` do `astro.config.mjs` precisa estar definido).
 - `<meta name="robots" content="noindex, nofollow">` **somente** em páginas que não devem aparecer no Google (404, páginas de teste). Nunca em produção por engano.
 - `theme-color` com a cor de fundo da marca.
@@ -160,15 +164,7 @@ Regras do `Course`:
 
 ### Em subpáginas: `BreadcrumbList`
 
-Casa com o componente `Breadcrumbs.astro` (ex.: Início › Cursos › Cristologia).
-
-### No catálogo: `ItemList`
-
-Lista dos cursos com nome e URL de cada um.
-
-### No blog: `BlogPosting`
-
-Título, data de publicação e de modificação (ISO 8601), autor real, imagem, `mainEntityOfPage`.
+Gerado pelo componente `Breadcrumbs.astro` a partir da mesma lista do visível (ex.: Início › Cristologia; não existe página de catálogo no meio).
 
 ### Sobre o FAQ
 
@@ -185,19 +181,20 @@ Valide tudo no **Teste de Resultados Pesquisáveis** do Google (Rich Results Tes
 
 - `astro.config.mjs` com `site: 'https://[DOMINIO]'` e `trailingSlash` definido de forma consistente (escolha `'never'` ou `'always'` e mantenha).
 - **Sitemap** com `@astrojs/sitemap`. Excluir 404 e páginas noindex.
-- **`public/robots.txt`:**
+- **`robots.txt`** gerado por `src/pages/robots.txt.ts` a partir de `site` (o domínio fica num lugar só):
   ```
   User-agent: *
   Allow: /
 
   Sitemap: https://[DOMINIO]/sitemap-index.xml
   ```
+- **Demonstração fora do Google:** o `vercel.json` envia `X-Robots-Tag: noindex` para qualquer `*.vercel.app`. O domínio oficial não recebe esse cabeçalho.
 - **Domínio canônico único:** escolha com ou sem `www` e redirecione o outro com 301 (configurar na Vercel).
 - **HTTPS** sempre; nenhuma referência `http://` no código.
-- **404 personalizada** com links úteis (volta para a home e para o catálogo).
+- **404 personalizada** com links úteis (volta para a home e para os cursos, `/#cursos`).
 - **URLs** curtas, em minúsculas, sem acento, com a palavra-chave: `/cursos/escola-de-oracao`.
 - Se uma URL mudar, adicionar redirecionamento 301 em `astro.config.mjs` ou `vercel.json`.
-- **Links internos:** a home aponta para cada curso; cada curso aponta para cursos relacionados e para artigos do blog; cada artigo aponta para o curso relacionado. Âncora descritiva ("curso de cristologia"), nunca "clique aqui".
+- **Links internos:** cada página de curso aponta para cursos relacionados e para as trilhas na home (`/#trilha-<id>`). As capas da home **não** são links (decisão do single page): o Google encontra as páginas de curso pelo sitemap e pelos relacionados. Âncora descritiva ("curso de cristologia"), nunca "clique aqui".
 - **Links externos** para a Kiwify: `<a href="..." rel="noopener">`. Mesma aba, sem `target="_blank"`, para não quebrar o fluxo de compra no celular.
 
 ## Performance (Core Web Vitals)
@@ -205,10 +202,10 @@ Valide tudo no **Teste de Resultados Pesquisáveis** do Google (Rich Results Tes
 Metas: **LCP < 2,5 s**, **INP < 200 ms**, **CLS < 0,1**, medidas no celular.
 
 - Imagens com `astro:assets` (`<Image />`/`<Picture />`): AVIF/WebP, `width` e `height` sempre, `sizes` corretos.
-- A imagem principal da dobra (hero) usa `loading="eager"` e `fetchpriority="high"`. Todas as outras, `loading="lazy"` e `decoding="async"`.
-- O hero é um `<img>` real (ou `<Picture>`), **não** `background-image` em CSS, para o navegador priorizar.
-- Fontes em `woff2` locais, no máximo 2 famílias e 3–4 pesos, com `font-display: swap` e `<link rel="preload">` só para a fonte do título.
-- JavaScript no cliente: o mínimo. Menu mobile pode ser feito com `<details>` ou CSS. Se precisar de script, uma "ilha" Astro pequena.
+- Imagens da primeira tela (mural de capas do topo) usam `loading="eager"`. Todas as outras, `loading="lazy"` e `decoding="async"`. As capas da vitrine **não** são prioritárias: ela fica longe do topo.
+- O topo é tipográfico (o `h1` é o maior elemento) com o mural de capas em `<img>` reais, **não** `background-image` em CSS.
+- Fontes em `woff2` locais: Anton e Montserrat (variável 400–600), com `font-display: swap`, `<link rel="preload">` nas duas e uma fonte de reserva com métricas ajustadas (evita o pulo de layout; CLS 0).
+- JavaScript no cliente: o mínimo. O menu do celular é `<details>`; o único script fecha o menu ao tocar num link. Animações de rolagem são CSS puro (`animation-timeline`).
 - Sem bibliotecas de animação. Sem carrosséis automáticos.
 - CSS crítico enxuto; evite arquivos gigantes.
 - Testar no PageSpeed Insights e no Lighthouse (celular) a cada fase.
@@ -219,24 +216,7 @@ Metas: **LCP < 2,5 s**, **INP < 200 ms**, **CLS < 0,1**, medidas no celular.
 - Responder às perguntas que a pessoa tem antes de comprar: para quem é, o que vai estudar, como funciona, quanto tempo, o que acontece depois de comprar, como pedir reembolso.
 - **Não duplicar textos** entre páginas de curso. Cada descrição é única.
 - Imagens com `alt` descritivo (ver `04-HTML-SEMANTICO.md`).
-- Datas visíveis e `dateModified` nos artigos do blog, mantidos atualizados.
-- **E-E-A-T** (experiência, especialização, autoridade, confiança): página "Sobre" com professores reais, declaração de fé (se houver), contato, política de privacidade e termos. Para conteúdo religioso e de relacionamento/família, a credibilidade do autor pesa.
-
-### Blog: ideias de clusters (sugestões, validar doutrinariamente com o cliente)
-
-| Cluster | Artigo (pergunta real) | Aponta para |
-|---|---|---|
-| Ler a Bíblia | Como ler a Bíblia: por onde começar | `/cursos/como-ler-a-sua-biblia` |
-| Ler a Bíblia | Panorama do Antigo e do Novo Testamento em linguagem simples | cursos de panorama |
-| Doutrinas | O que é cristologia e por que importa | `/cursos/cristologia` |
-| Doutrinas | O que é escatologia? Visão geral dos temas | `/cursos/escatologia` |
-| Doutrinas | Quem é o Espírito Santo segundo a Bíblia (pneumatologia) | `/cursos/pneumatologia` |
-| Vida prática | O que é cosmovisão cristã | `/cursos/cosmovisao-crista` |
-| Vida prática | Fé e trabalho: como viver a vocação | `/cursos/fe-e-trabalho` |
-| Família | Princípios bíblicos para o namoro | `/cursos/namoro-cristao` |
-| Oração | Como aprender a orar: o exemplo de Jesus | `/cursos/escola-de-oracao` |
-
-Cada artigo: um `h1`, introdução que responde direto, subtítulos `h2` em forma de pergunta quando fizer sentido, conclusão com chamada para o curso relacionado, autor real e data.
+- **E-E-A-T** (experiência, especialização, autoridade, confiança): seção "Sobre" da home (hoje o manifesto) e, quando houver material real, professores, declaração de fé e depoimentos; política de privacidade e termos. Para conteúdo religioso e de relacionamento/família, a credibilidade do autor pesa.
 
 ## Medição
 
@@ -247,13 +227,13 @@ Cada artigo: um `h1`, introdução que responde direto, subtítulos `h2` em form
 
 ## Checklist de SEO por página (cola no PR)
 
-- [ ] `title` único (≈60 caracteres) com a palavra-chave
-- [ ] `description` única (140–160 caracteres)
+- [ ] `title` único (≤ 65 caracteres) com a palavra-chave
+- [ ] `description` única (120–165 caracteres)
 - [ ] Canonical absoluto correto
 - [ ] Um `h1`, hierarquia `h2`/`h3` sem pulos
 - [ ] Open Graph e Twitter Card com imagem 1200×630
 - [ ] JSON-LD correto e validado
-- [ ] Imagens com `alt`, `width`, `height`; hero com `fetchpriority="high"`
+- [ ] Imagens com `alt`, `width`, `height`; `eager` só na primeira tela, `lazy` no resto
 - [ ] Links internos relevantes com âncora descritiva
 - [ ] Está no sitemap; não está bloqueada no robots
 - [ ] Lighthouse mobile: Performance, Acessibilidade, SEO e Boas práticas acima de 90
