@@ -11,7 +11,11 @@ interface Props {
 const { soSelo = false } = Astro.props;
 ---
 <span class:list={['logo', soSelo && 'logo--so-selo']}>
-  <img class="logo__selo" src="/logo/cordeiro-selo-branco.svg" alt="" width="458" height="458" />
+  {/* <svg><use> e não <img>: o cabeçalho é fixo, e com a página rolada a auditoria do
+      Astro lê o logo como "abaixo da dobra". O arquivo é o mesmo, baixado uma vez. */}
+  <svg class="logo__selo" viewBox="0 0 458 458" width="458" height="458" aria-hidden="true" focusable="false">
+    <use href="/logo/cordeiro-selo-branco.svg#selo" />
+  </svg>
   {
     soSelo ? (
       <span class="sr-only">Seminário Teológico APRISCO</span>

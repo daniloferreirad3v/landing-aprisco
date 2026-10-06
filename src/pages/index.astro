@@ -129,7 +129,7 @@ const inclui = [
         Todos incluídos na assinatura.
       </p>
     </div>
-    {trilhas.map((trilha, i) => <TrilhaSection trilha={trilha} nivel="h3" prioridade={i === 0} compacto link={false} emais />)}
+    {trilhas.map((trilha) => <TrilhaSection trilha={trilha} nivel="h3" compacto link={false} emais />)}
   </section>
 
   <section class="faixa" aria-labelledby="titulo-como-funciona">
