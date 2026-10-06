@@ -34,7 +34,7 @@ export const faqGeral: ItemFaq[] = [
   {
     pergunta: 'Onde eu faço meu pagamento?',
     resposta:
-      'Basta clicar em "Assinar agora". O pagamento é feito na Kiwify, plataforma que processa a compra e hospeda a área de membros. O site do APRISCO não recebe nem guarda seus dados de pagamento. Você pode pagar com cartão, Pix ou boleto.',
+      'Basta clicar em "ASSINAR AGORA". O pagamento é feito na Kiwify, plataforma que processa a compra e hospeda a área de membros. O site do APRISCO não recebe nem guarda seus dados de pagamento. Você pode pagar com cartão, Pix ou boleto.',
   },
   {
     pergunta: 'Como recebo o acesso depois de assinar?',
