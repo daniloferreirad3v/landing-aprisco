@@ -69,8 +69,11 @@ a {
   text-underline-offset: 0.2em;
 }
 
+/* O texto continua no creme (o roxo é escuro demais para texto sobre o fundo);
+   quem responde ao mouse é o sublinhado */
 a:hover {
-  color: var(--cor-destaque);
+  text-decoration-color: var(--cor-destaque);
+  text-decoration-thickness: 2px;
 }
 
 strong {
@@ -116,8 +119,8 @@ strong {
   left: var(--esp-2);
   z-index: 100;
   padding: var(--esp-3) var(--esp-4);
-  background: var(--cor-destaque);
-  color: var(--cor-sobre-destaque);
+  background: var(--cor-roxo);
+  color: var(--cor-sobre-roxo);
   font-weight: var(--peso-forte);
   border-radius: var(--raio);
   transform: translateY(-200%);

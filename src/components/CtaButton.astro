@@ -82,14 +82,16 @@ const classes = ['botao', `botao--${variante}`, largura === 'total' && 'botao--t
     transform: translateY(0) scale(0.98);
   }
 
+  /* Roxo da marca com texto branco (11,5:1); ao passar o mouse, clareia para o roxo
+     claro com texto escuro */
   .botao--principal {
-    background: var(--cor-destaque);
-    color: var(--cor-sobre-destaque);
+    background: var(--cor-roxo);
+    color: var(--cor-sobre-roxo);
   }
 
   .botao--principal:hover {
-    background: var(--cor-texto);
-    color: var(--cor-sobre-destaque);
+    background: var(--cor-destaque);
+    color: var(--cor-sobre-roxo);
   }
 
   .botao--secundario {
@@ -100,15 +102,14 @@ const classes = ['botao', `botao--${variante}`, largura === 'total' && 'botao--t
 
   .botao--secundario:hover {
     border-color: var(--cor-destaque);
-    color: var(--cor-destaque);
   }
 
-  /* Preenchido, porém menos intenso: coral clareado, texto escuro (contraste 10,8:1).
-     Ao passar o mouse, vai para o coral cheio.
+  /* Preenchido, porém menos intenso: roxo mais fundo, texto branco (14,3:1).
+     Ao passar o mouse, vai para o roxo cheio da marca.
      Texto em caixa-alta fica menor e mais espaçado para não "gritar". */
   .botao--suave {
-    background: var(--cor-destaque-suave);
-    color: var(--cor-sobre-destaque);
+    background: var(--cor-roxo-profundo);
+    color: var(--cor-sobre-roxo);
     /* No celular ocupava quase a largura toda em 2 linhas: letra e respiro menores,
        mantendo a altura mínima de toque (44 px) */
     min-height: var(--alvo-toque);
@@ -118,8 +119,8 @@ const classes = ['botao', `botao--${variante}`, largura === 'total' && 'botao--t
   }
 
   .botao--suave:hover {
-    background: var(--cor-destaque);
-    color: var(--cor-sobre-destaque);
+    background: var(--cor-roxo);
+    color: var(--cor-sobre-roxo);
   }
 
   @media (min-width: 48rem) {
@@ -144,7 +145,8 @@ const classes = ['botao', `botao--${variante}`, largura === 'total' && 'botao--t
   }
 
   .botao--link:hover {
-    color: var(--cor-destaque);
+    text-decoration-color: var(--cor-destaque);
+    text-decoration-thickness: 2px;
   }
 
   .botao--total {

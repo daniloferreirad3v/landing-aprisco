@@ -26,6 +26,8 @@ Lista viva do que falta. Marque `[x]` quando resolver e anote a resposta ao lado
 ## Pendências de identidade visual (pasta /design)
 
 - [ ] `design/identidade.md` não existe (paleta e fontes deste plano foram extraídas das imagens; confirmar)
+- [ ] **Roxo `#4C059E` (2026-10-06):** cor primária definida pelo cliente, em lugar do coral `#F98080` que vinha das peças. As peças da pasta `/design` (capas, logo, imagem de compartilhamento) continuam no visual antigo: confirmar se serão refeitas no roxo
+- [x] ~~Confirmar o tom de apoio do roxo~~ (2026-10-06: o cliente pediu a família toda escura, sem puxar para o rosa; traços e ícones usam `#7C3AED` e o botão discreto usa `#3A0478`. O `#4C059E` puro tem 1,7:1 sobre o fundo e só funciona preenchido)
 - [ ] Logo em **SVG**: símbolo (cordeiro no círculo) e wordmark completo ("SEMINÁRIO TEOLÓGICO / APRISCO"). Hoje só há PNG 2560×1440 com o símbolo no centro de um quadro vazio; o wordmark existe apenas dentro de `6.png`
   - Alternativa, se não houver SVG: vetorizar o PNG do cordeiro (pedir aprovação do resultado)
 - [ ] Manual de marca (área de respiro, tamanho mínimo, usos proibidos), se existir

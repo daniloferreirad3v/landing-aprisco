@@ -44,13 +44,17 @@ Identificação das fontes (provável, **confirmar**): **Anton** (wordmark e tí
 | `--cor-superficie` | `#161618` | Blocos de FAQ, faixa "como funciona", campo de formulário | derivado (um degrau acima do fundo) | — |
 | `--cor-texto` | `#F4F1EC` | Texto principal (branco quente, igual ao das capas) | derivado das capas | 17,7:1 no fundo |
 | `--cor-texto-suave` | `#A3A09B` | Chamadas, legendas, metadados | derivado | 7,6:1 no fundo; 6,9:1 na superfície |
-| `--cor-destaque` | `#F98080` | Botão principal, linha sob a capa em foco, links em hover | área de membros | 8,0:1 no fundo |
+| `--cor-roxo` | `#4C059E` | Botão principal e selos (sempre preenchido, com texto branco) | cor de marca definida pelo cliente (2026-10-06) | 11,5:1 com branco em cima; 1,7:1 no fundo, por isso nunca é usado como texto ou traço |
+| `--cor-roxo-profundo` | `#3A0478` | Botão de destaque menos intenso (CTA do manifesto) | escurecimento do roxo da marca | 14,3:1 com branco em cima |
+| `--cor-destaque` | `#7C3AED` | Traços: borda do card em destaque, linha sob a capa em foco, ícones, números dos passos, foco de teclado | clareamento mínimo do roxo da marca | 3,5:1 no fundo (atende o mínimo de 3:1 de elemento não textual e de texto grande) |
 | `--cor-aviso` | `#E8C27A` | Selo "Em breve" e mensagens de atenção | derivado (âmbar quente, coerente com as fotos) | 11,8:1 no fundo |
 
 Regras:
-- **Botão principal:** fundo coral com **texto escuro** (`#09090B`, 8,0:1). Texto branco sobre coral reprova (2,5:1).
-- Coral aparece em no máximo **3 lugares por tela**: botão, linha da capa em foco e o foco de teclado. Nada de títulos coloridos.
-- Erro de formulário: texto `--cor-texto` com ícone e borda coral. A cor nunca é o único sinal.
+- **Botão principal:** fundo roxo da marca com **texto branco** (11,5:1). O roxo da marca é escuro: sobre o fundo quase preto ele tem 1,7:1, então só aparece preenchido — nunca como texto, linha ou borda.
+- **Tudo que é traço sobre o escuro** (linha da capa, borda do card em destaque, ícones, números dos passos, foco de teclado) usa `#7C3AED`: é o roxo mais escuro que ainda se enxerga no fundo. Tons mais claros passariam a legibilidade de texto, mas puxam para o lilás/rosa — decisão do cliente (2026-10-06) é manter a família escura.
+- **Texto nunca é roxo.** Links, perguntas do FAQ e rótulos continuam no creme; o que responde ao mouse é o sublinhado (roxo) ou o ícone, não a cor do texto.
+- O roxo aparece em no máximo **3 lugares por tela**: botão, linha da capa em foco e o foco de teclado. Nada de títulos coloridos.
+- Erro de formulário: texto `--cor-texto` com ícone e borda em roxo claro. A cor nunca é o único sinal.
 - Texto sobre foto: overlay preto mínimo de 60% na área do texto, verificado em 4,5:1 na Fase 5.
 
 ---
@@ -104,7 +108,7 @@ Conceito geral: **uma página de estudo à noite.** Fundo escuro, fotografia de 
 │■                             ■│
 │■ Uma fé rasa, uma vida rasa. ■│  subtítulo Montserrat
 │■ [PREENCHER: subtítulo]      ■│
-│■ [ Assinar agora           ] ■│  botão coral, texto escuro
+│■ [ Assinar agora           ] ■│  botão roxo, texto branco
 │■   Ver os cursos ↓           ■│  link de texto
 │■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■│
 ├───────────────────────────────┤
@@ -120,7 +124,7 @@ Conceito geral: **uma página de estudo à noite.** Fundo escuro, fotografia de 
 │ │capa  ││capa  ││ca           │  (scroll-snap), 3ª capa
 │ │ 4:5  ││      ││             │  aparece pela metade
 │ └──────┘└──────┘└───          │
-│ ━━━━━━                        │  linha coral só no foco
+│ ━━━━━━                        │  linha roxa só no foco
 │ Fundamentos  Escola de        │  h4 com link (texto real)
 │ da Fé        Oração           │
 │ Introdução…  Aprenda a…       │  chamada, texto suave
@@ -249,7 +253,7 @@ Conceito geral: **uma página de estudo à noite.** Fundo escuro, fotografia de 
 
 ### Decisões de componente
 
-- **CursoCard:** capa + `h3`/`h4` com o link + chamada. Um único link por card, com a área de clique estendida por `::after`. Sem sombra, sem cantos muito arredondados (raio de 4 px, como nas capas). A linha coral de 3 px sob a capa aparece **só em hover e foco**; é a citação direta da área de membros, com outro significado (seleção, em vez de progresso).
+- **CursoCard:** capa + `h3`/`h4` com o link + chamada. Um único link por card, com a área de clique estendida por `::after`. Sem sombra, sem cantos muito arredondados (raio de 4 px, como nas capas). A linha roxa de 3 px sob a capa aparece **só em hover e foco**; é a citação direta da área de membros, com outro significado (seleção, em vez de progresso).
 - **Curso em duas trilhas** ("Como ler a sua Bíblia"): mesmo card nas duas prateleiras, apontando para a mesma URL.
 - **Selo "Em breve":** texto em `--cor-aviso` sobre a capa, com fundo escuro; não usa o ícone de cadeado da Kiwify, que no site sugeriria "conteúdo bloqueado".
 - **Capas com texto aplicado:** o nome e a chamada sempre se repetem em HTML abaixo da capa. Na capa, `alt` = "Capa do curso Cristologia".
@@ -259,7 +263,7 @@ Conceito geral: **uma página de estudo à noite.** Fundo escuro, fotografia de 
 
 ## 5. Princípios
 
-1. **A marca já é escura; o site herda, não decora.** Preto e coral vêm da marca real, sem gradientes nem brilho.
+1. **A marca já é escura; o site herda, não decora.** Preto e roxo vêm da marca real, sem gradientes nem brilho.
 2. **Fala alto uma vez.** Só o hero usa Anton em escala grande. O resto é leitura calma em Montserrat.
 3. **O catálogo é o produto.** As capas são a parte mais rica do material; ganham espaço e não competem com nenhum ornamento.
 4. **Toda informação está em texto.** Nada importante fica só dentro da imagem.
@@ -271,12 +275,12 @@ Conceito geral: **uma página de estudo à noite.** Fundo escuro, fotografia de 
 
 | Padrão genérico que apareceu no primeiro rascunho | O que mudou | Por quê |
 |---|---|---|
-| Fundo `#0B0B0B` + um acento vibrante "porque escuro é elegante" | `#000000`/`#09090B` + coral `#F98080`, amostrados das peças | É a marca real, não um tema |
+| Fundo `#0B0B0B` + um acento vibrante "porque escuro é elegante" | `#000000`/`#09090B` + o roxo `#4C059E` definido pelo cliente (antes, o coral `#F98080` amostrado das peças) | É a marca real, não um tema |
 | Eyebrow em caixa-alta espaçada acima de cada `h2` ("NOSSOS CURSOS") | Removido. O tracking largo fica só no "SEMINÁRIO TEOLÓGICO" do logo e no nome da trilha dentro do card, onde carrega informação | Evitar o rótulo decorativo repetido |
 | Cards arredondados (12–16 px) com sombra em tudo, inclusive "Para quem é" e FAQ | Só os cursos usam card. "Para quem é" virou lista, FAQ virou linhas com fio. Raio de 4 px, sem sombra | Card só onde há um objeto clicável |
 | Ícones ilustrativos nos perfis de "Para quem é" | Removidos; o texto basta | Ícone genérico não acrescenta informação |
-| Destacar uma palavra do `h1` em coral ("PROFUNDA") | Removido; o `h1` é todo na mesma cor | Padrão de página gerada; o peso da Anton já dá ênfase |
-| Fade-in em todas as seções e hover que levanta o card | Um único movimento: o `h1` do hero sobe 12 px e aparece em 600 ms. Hover do card = só a linha coral. Tudo desligado com `prefers-reduced-motion` | "Gastar a ousadia em um lugar só" |
+| Destacar uma palavra do `h1` em cor ("PROFUNDA") | Removido; o `h1` é todo na mesma cor | Padrão de página gerada; o peso da Anton já dá ênfase |
+| Fade-in em todas as seções e hover que levanta o card | Um único movimento: o `h1` do hero sobe 12 px e aparece em 600 ms. Hover do card = só a linha roxa. Tudo desligado com `prefers-reduced-motion` | "Gastar a ousadia em um lugar só" |
 | Seções numeradas 01/02/03 | Numeração só em "Como funciona", que é sequência real | Número tem que significar ordem |
 | Cadeado da Kiwify nas capas | Selo "Em breve" em texto | No site, cadeado sugere acesso negado, não lançamento |
 | Hero com vídeo ou carrossel automático (como na área de membros) | Uma foto fixa | Peso no LCP e sem ganho de clareza |
@@ -287,7 +291,7 @@ Conceito geral: **uma página de estudo à noite.** Fundo escuro, fotografia de 
 ## 7. Motion
 
 - Único momento orquestrado: entrada do `h1` do hero (opacidade 0→1 e deslocamento de 12 px, 600 ms, ease-out), só CSS.
-- Respostas a ação: abrir FAQ (o ícone `+` gira 45°), abrir o menu, linha coral no foco e hover do card.
+- Respostas a ação: abrir FAQ (o ícone `+` gira 45°), abrir o menu, linha roxa no foco e hover do card.
 - `@media (prefers-reduced-motion: reduce)`: tudo instantâneo.
 
 ---

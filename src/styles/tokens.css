@@ -39,12 +39,20 @@
   --cor-superficie: #161618;
   --cor-texto: #f4f1ec;
   --cor-texto-suave: #a3a09b;
-  --cor-destaque: #f98080;
-  /* coral clareado (70% destaque + 30% branco): botão de destaque mais leve */
-  --cor-destaque-suave: #fba6a6;
+  /* Roxo da marca. Vive preenchido (botão principal, selo), sempre com texto branco
+     em cima: 11,5:1. Sobre o fundo quase preto ele some (1,7:1), então não serve para
+     texto, linha nem borda. */
+  --cor-roxo: #4c059e;
+  /* roxo mais fundo: preenchimento discreto, para um botão existir sem gritar (14,3:1) */
+  --cor-roxo-profundo: #3a0478;
+  --cor-sobre-roxo: #ffffff;
+  /* Roxo de traço: o tom mais escuro que ainda se enxerga sobre o fundo (3,5:1).
+     Usado em borda, linha, ícone, número grande e foco de teclado — nunca em texto
+     corrido, que continua no creme. Qualquer tom mais claro puxaria para o rosa. */
+  --cor-destaque: #7c3aed;
+  --cor-sobre-destaque: #ffffff;
   --cor-aviso: #e8c27a;
   --cor-fio: rgb(244 241 236 / 0.14);
-  --cor-sobre-destaque: #09090b;
 
   /* Tipografia */
   --fonte-display: 'Anton', 'Arial Narrow', Impact, sans-serif;
