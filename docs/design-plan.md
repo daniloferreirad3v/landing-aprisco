@@ -1,20 +1,14 @@
 # Plano de design — Seminário Teológico APRISCO
 
-Status: **proposta revisada após as respostas do cliente, aguardando aprovação** (Fase 0, 2026-10-05).
-Fonte: leitura da pasta `/design` (peças 1–6, logos, 20 capas, prints da área de membros). Não existe `design/identidade.md`, então os valores abaixo foram **extraídos das imagens**.
+Status: **em uso**. Descreve o design como está no site (revisado em 2026-10-06), com o raciocínio por
+trás de cada escolha. Só recebe decisões **definitivas**, aprovadas pelo cliente; experimentos não
+entram aqui. Os valores exatos vivem em `src/styles/tokens.css`; o resumo técnico (animações,
+acessibilidade) está em `docs/projeto/06-visual-e-animacoes.md`, e a lista de decisões com datas, em
+`docs/projeto/07-decisoes.md`.
 
-## 0. Decisões do cliente que mudam o plano (2026-10-05)
-
-| Decisão | Efeito no design |
-|---|---|
-| Venda **por assinatura**, com **um checkout por plano** | Os botões gerais ("Assinar agora" no hero, no CTA final, na barra do celular e na página de curso) **não vão direto ao checkout**: levam à seção **Planos**. Só os dois botões dentro de Planos ("Assinar o plano mensal" / "Assinar o plano anual") abrem a Kiwify. Na página de curso, o bloco Planos se repete em versão compacta, para a compra não exigir voltar à home. Não há preço por curso. |
-| Cadeado = **curso não liberado** | Selo "Em breve" na capa. A página do curso existe e **mantém o botão de assinar**, porque a assinatura já dá acesso a todos os cursos, inclusive os em preparação. O texto diz "Em preparação. Quem assina já tem acesso garantido quando for liberado." Não divulga data. |
-| Planos: mensal R$ 37 / anual R$ 192 (ou 12x R$ 19,86) | Nova seção **"Planos"** na home, antes do FAQ: dois blocos lado a lado (empilhados no celular), sem "mais popular" nem preço riscado. O anual mostra só os números reais da Kiwify; a economia ("equivale a R$ 16/mês") fica de fora até o cliente aprovar o texto. Os valores ficam em `cursos.ts` (`assinatura.planos`). |
-| FAQ provisório | Perguntas reais de quem vai assinar. Respostas baseadas nos dados confirmados (preço, acesso a todos os cursos, compra pela Kiwify); o que não se sabe (cancelamento, certificado, dispositivos) fica com `[PREENCHER]` visível. Os dados ficam marcados com `rascunho: true`. |
-| Fontes das peças do Canva | Anton + Montserrat, como abaixo. |
-| **Não há fotos sem texto** | Hero **tipográfico sobre preto**, na linha da peça `6.png`. A primeira tela fica sem imagem, o que também acelera o carregamento (o LCP passa a ser o texto). O componente aceita foto depois, se aparecer. |
-| Frases das peças como promessa | `h1` = "Estude teologia de maneira profunda e descomplicada."; CTA final = "Uma fé rasa, uma vida rasa." |
-| Logo sem SVG | Cordeiro vetorizado a partir do PNG (para aprovação) e wordmark montado como **texto real** em Anton + Montserrat, mais nítido e legível pelo Google. |
+Fonte original: leitura da pasta `/design` (peças 1–6, logos, 20 capas, prints da área de membros).
+Não existe `design/identidade.md`; os valores iniciais foram **extraídos das imagens** e depois
+ajustados por decisão do cliente (a cor de acento).
 
 ---
 
@@ -25,36 +19,39 @@ Fonte: leitura da pasta `/design` (peças 1–6, logos, 20 capas, prints da áre
 | Wordmark | "APRISCO" em sans condensada muito pesada, caixa-alta; "SEMINÁRIO TEOLÓGICO" acima, em sans geométrica com tracking largo | `1.png`, `2.png`, `6.png` |
 | Símbolo | Cordeiro em silhueta dentro de círculo de traço fino, à direita do wordmark | `logo-*.png`, todas as peças |
 | Fundo | Preto puro `#000000` nas peças; `#09090B` na área de membros | amostra de pixel |
-| Destaque | Coral `#F98080` (barra sob as capas) | amostra de pixel em `Prints Aprisco (2).png` |
-| Fotografia | Bíblias abertas, anotações, café, tablet; tudo escurecido e dessaturado, com overlay preto de 50–70% | `1.png` a `4.png` |
+| Destaque das peças | Coral `#F98080` (barra sob as capas). **Substituído no site pelo roxo** (ver Paleta) | amostra de pixel em `Prints Aprisco (2).png` |
+| Fotografia | Bíblias abertas, anotações, café, tablet; tudo escurecido e dessaturado | `1.png` a `4.png` |
 | Títulos de campanha | Mesma condensada pesada, caixa-alta, alinhada à esquerda, quebrada em 2–4 linhas | `3.png`, `4.png`, `5.png` |
 | Capas | Retrato, foto escurecida, título em sans fina caixa-alta + chamada pequena | `Capas Cursos/` |
 | Tom | Sério, contemplativo, editorial, com uma provocação pontual (`5.png`: Santa Ceia com computadores) | |
 
-Identificação das fontes (provável, **confirmar**): **Anton** (wordmark e títulos) e **Montserrat** (subtítulo espaçado e textos de apoio). As duas são do Google Fonts, licença SIL OFL, com uso web liberado.
+Fontes identificadas: **Anton** (wordmark e títulos) e **Montserrat** (subtítulo espaçado e textos de
+apoio), ambas SIL OFL, com uso web liberado.
 
 ---
 
 ## 2. Paleta
 
-| Token | Hex | Uso | Origem | Contraste |
-|---|---|---|---|---|
-| `--cor-preto` | `#000000` | Hero, faixas de marca, rodapé | peças da marca | — |
-| `--cor-fundo` | `#09090B` | Fundo geral das páginas | área de membros | — |
-| `--cor-superficie` | `#161618` | Blocos de FAQ, faixa "como funciona", campo de formulário | derivado (um degrau acima do fundo) | — |
-| `--cor-texto` | `#F4F1EC` | Texto principal (branco quente, igual ao das capas) | derivado das capas | 17,7:1 no fundo |
-| `--cor-texto-suave` | `#A3A09B` | Chamadas, legendas, metadados | derivado | 7,6:1 no fundo; 6,9:1 na superfície |
-| `--cor-roxo` | `#4C059E` | Botão principal e selos (sempre preenchido, com texto branco) | cor de marca definida pelo cliente (2026-10-06) | 11,5:1 com branco em cima; 1,7:1 no fundo, por isso nunca é usado como texto ou traço |
-| `--cor-destaque` | `#7C3AED` | Traços: borda do card em destaque, linha sob a capa em foco, ícones, números dos passos, foco de teclado | clareamento mínimo do roxo da marca | 3,5:1 no fundo (atende o mínimo de 3:1 de elemento não textual e de texto grande) |
-| `--cor-aviso` | `#E8C27A` | Selo "Em breve" e mensagens de atenção | derivado (âmbar quente, coerente com as fotos) | 11,8:1 no fundo |
+| Token | Hex | Uso | Contraste |
+|---|---|---|---|
+| `--cor-preto` | `#000000` | Topo, fechamento, cabeçalho, rodapé | — |
+| `--cor-fundo` | `#09090B` | Fundo geral | — |
+| `--cor-superficie` | `#161618` | Faixas ("Por que escolher", "Como funciona"), card mensal, card "E mais" | — |
+| `--cor-texto` | `#F4F1EC` | Texto principal (branco quente, igual ao das capas) | 17,7:1 no fundo |
+| `--cor-texto-suave` | `#A3A09B` | Apoio, legendas | 7,6:1 no fundo; 6,9:1 na superfície |
+| `--cor-roxo` | `#4C059E` | Botões de compra, selo "Melhor custo", skip link — **sempre preenchido**, com texto branco | 11,5:1 com branco em cima; 1,7:1 no fundo |
+| `--cor-destaque` | `#7C3AED` | **Traços**: borda do card anual, linha sob a capa, ✓, números dos passos, foco de teclado, sublinhado no hover | 3,5:1 no fundo (mínimo de 3:1 para não-texto e texto grande) |
+| `--cor-aviso` | `#E8C27A` | Marcador `[PREENCHER]` | 11,8:1 no fundo |
 
 Regras:
-- **Botão principal:** fundo roxo da marca com **texto branco** (11,5:1). O roxo da marca é escuro: sobre o fundo quase preto ele tem 1,7:1, então só aparece preenchido — nunca como texto, linha ou borda.
-- **Tudo que é traço sobre o escuro** (linha da capa, borda do card em destaque, ícones, números dos passos, foco de teclado) usa `#7C3AED`: é o roxo mais escuro que ainda se enxerga no fundo. Tons mais claros passariam a legibilidade de texto, mas puxam para o lilás/rosa — decisão do cliente (2026-10-06) é manter a família escura.
-- **Texto nunca é roxo.** Links, perguntas do FAQ e rótulos continuam no creme; o que responde ao mouse é o sublinhado (roxo) ou o ícone, não a cor do texto.
-- O roxo aparece em no máximo **3 lugares por tela**: botão, linha da capa em foco e o foco de teclado. Nada de títulos coloridos.
-- Erro de formulário: texto `--cor-texto` com ícone e borda em roxo claro. A cor nunca é o único sinal.
-- Texto sobre foto: overlay preto mínimo de 60% na área do texto, verificado em 4,5:1 na Fase 5.
+- O roxo da marca (definido pelo cliente em 2026-10-06, no lugar do coral) é escuro: sobre o fundo
+  tem 1,7:1, então **só aparece preenchido**.
+- Tudo que é traço usa `#7C3AED`, o roxo mais escuro que ainda se enxerga no fundo. Tons mais claros
+  puxam para o lilás/rosa e foram **recusados pelo cliente**.
+- **Texto nunca é roxo.** Links e perguntas do FAQ ficam em creme; o que responde ao mouse é o
+  sublinhado ou o ícone.
+- Todos os botões de compra usam o mesmo roxo; a variante discreta muda só o tamanho.
+- Texto sobre imagem (topo no celular): véu preto e medição pixel a pixel; pior ponto atual 4,97:1.
 
 ---
 
@@ -62,272 +59,214 @@ Regras:
 
 | Papel | Família | Pesos | Uso |
 |---|---|---|---|
-| Display | **Anton** | 400 (único peso) | `h1`, `h2`, títulos de trilha. Sempre caixa-alta, porque é assim que a marca usa |
-| Texto e interface | **Montserrat** | 400, 600 | Parágrafos, botões, menu, chamadas, FAQ. Caixa normal |
-| Assinatura | Montserrat 500 com tracking 0,3em | 500 | Apenas o "SEMINÁRIO TEOLÓGICO" do logo e o rótulo da trilha dentro do card (carrega informação) |
+| Display | **Anton** | 400 (único) | `h1`, `h2`, títulos de trilha, "APRISCO" da assinatura, valores de preço. Sempre caixa-alta |
+| Texto e interface | **Montserrat** (variável) | 400–600 | Parágrafos, botões, menu, FAQ. Caixa normal, exceto os botões de compra (caixa-alta, pedido do cliente) |
+| Assinatura | Montserrat 500, tracking 0,3em | 500 | Só o "SEMINÁRIO TEOLÓGICO" da marca |
 
-- Total: 2 famílias, 4 arquivos woff2 (Anton 400 e Montserrat 400/500/600), hospedados em `public/fonts/`, com subset latin, `font-display: swap` e preload só da Anton.
-- Escala com razão 1,25, fluida com `clamp()`:
-  - corpo 17 px (celular) → 18 px (desktop), altura de linha 1,6
-  - `h3` 22 → 26 · `h2` 32 → 48 · `h1` 44 → 88 (Anton com altura de linha 0,95, como nas peças)
-- Largura de leitura: `max-inline-size: 68ch` em todo texto corrido.
-- Anton nunca em parágrafo nem em texto menor que 22 px (perde a legibilidade).
+- 2 arquivos woff2 em `public/fonts/` (Anton e Montserrat variável), subset latin, `font-display:
+  swap`, preload dos dois e uma fonte de reserva com métricas ajustadas (CLS 0).
+- Escala fluida com `clamp()`: corpo 17 → 18 px (altura de linha 1,6); `h3` 22 → 26; `h2` 32 → 48;
+  `h1` 44 → 88 (Anton com altura de linha 0,95, como nas peças).
+- Largura de leitura: `68ch` no texto corrido. Medidas da Anton em `em` (o `ch` é estreito demais nela).
+- Anton nunca em parágrafo.
+- Uma troca para EB Garamond + Hanken Grotesk foi testada e revertida a pedido do cliente.
 
 ---
 
 ## 4. Layout
 
-Conceito geral: **uma página de estudo à noite.** Fundo escuro, fotografia de Bíblia aberta, tipografia condensada que fala alto uma vez e depois dá espaço para ler. Texto corrido à esquerda; centralizado só o CTA final.
+Conceito: **uma página de estudo à noite.** Fundo escuro, tipografia condensada que fala alto no topo
+e depois dá espaço para ler. A home é **uma página só** (single page), na ordem de uma página de vendas.
 
-| Seção | Conceito em uma frase |
+| Seção | Conceito |
 |---|---|
-| Header | Wordmark compacto à esquerda, quatro links à direita; no celular, menu com `<details>` sem JS. |
-| Hero | O momento memorável: fundo preto puro, `h1` enorme em Anton quebrado em 3–4 linhas à esquerda, como nas peças 4 e 6, o cordeiro como selo à direita, o botão "Assinar agora" e um link de texto "Ver os cursos". |
-| Para quem é | Quatro perfis em lista de texto simples, com duas colunas no desktop, sem ícones nem cards. |
-| Trilhas | Seis prateleiras como na área de membros: título da trilha em Anton e uma fileira de capas; no celular, rolagem horizontal com a próxima capa aparecendo pela metade. |
-| Como funciona | Faixa em `--cor-superficie` com 3–4 passos numerados (é uma sequência real: escolher → comprar na Kiwify → receber o acesso por e-mail → estudar). Só entra o que for confirmado. |
-| Quem ensina | Foto grande em P&B ao lado de uma bio curta; some se não houver professor confirmado. |
-| Depoimentos | Só com depoimentos reais. Sem eles, a seção não é renderizada. |
-| FAQ | `<details>` em linhas separadas por fio fino, sem cards. |
-| CTA final | A frase de campanha "Uma fé rasa, uma vida rasa." em Anton, centralizada, com um botão. |
-| Rodapé | Fundo preto, logo, links, contato em `<address>`, políticas, CNPJ. |
+| Cabeçalho | Fixo. Só o cordeiro à esquerda (o nome ao lado ficava redundante); Cursos, Sobre, Dúvidas à direita; no celular, `<details>` |
+| Topo | O momento memorável: assinatura da marca, `h1` enorme em Anton e o **mural de capas reais** (a "estante" da escola). Sem botão nem preço. No celular, o mural vira fundo com véu escuro e o texto fica por cima |
+| Por que escolher | Faixa de superfície; título à esquerda e as quatro frases do cliente numa coluna à direita, com o botão logo abaixo delas. Sem ícone, card ou fio |
+| Uma fé rasa (`#sobre`) | Título gigante em duas linhas, revelado de baixo para cima; texto e botão discreto ao lado |
+| O que a assinatura inclui | Quatro itens com ✓ roxo, em duas colunas no desktop; botão |
+| Vitrine (`#cursos`) | Cinco prateleiras como na área de membros: título da trilha em Anton e uma fileira de capas com o nome em texto. Celular: rolagem horizontal com a próxima capa "espiando". Card "E mais" no fim. Na home as capas não são links |
+| Como funciona | Faixa de superfície com quatro passos numerados (é uma sequência real), em duas colunas |
+| Planos (`#assinatura`) | Cabeçalho centralizado; card **anual grande** (borda roxa, selo, "12x de R$ 19,86" em 6 rem, botão, bandeiras de pagamento) ao lado do card **mensal pequeno** (cinza, "R$ 37 por mês", botão "ASSINAR") |
+| Dúvidas (`#duvidas`) | `<details>` em linhas separadas por fio fino, sem cards |
+| Fechamento | Cordeiro, frase em Anton centralizada e o botão. Sem linha de preço |
+| Rodapé | Fundo preto; marca e navegação em duas colunas; linha de base com copyright à esquerda e selo "Pagamento 100% seguro" + políticas à direita |
 
 ### Wireframe: home, celular (375 px)
 
 ```
 ┌───────────────────────────────┐
-│ SEMINÁRIO TEOLÓGICO  [☰ Menu] │  header, 56 px
-│ APRISCO (o)                   │
+│ (o)                  [☰ Menu] │  cabeçalho fixo: só o cordeiro
 ├───────────────────────────────┤
-│■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■│  fundo preto #000
-│■ ESTUDE TEOLOGIA             ■│  (sem foto: LCP = texto)
-│■ DE MANEIRA                  ■│  h1 Anton, ~44 px
-│■ PROFUNDA E                  ■│
-│■ DESCOMPLICADA.          (o) ■│  cordeiro = selo
-│■                             ■│
-│■ Uma fé rasa, uma vida rasa. ■│  subtítulo Montserrat
-│■ [PREENCHER: subtítulo]      ■│
-│■ [ Assinar agora           ] ■│  botão roxo, texto branco
-│■   Ver os cursos ↓           ■│  link de texto
-│■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■│
-├───────────────────────────────┤
-│ PARA QUEM É                   │  h2 Anton
-│ — Quem quer ler a Bíblia ...  │  lista simples
-│ — Líderes de mesa e célula... │
-│ — Casais e famílias ...       │
-├───────────────────────────────┤
-│ ESCOLHA POR ONDE COMEÇAR      │  h2
+│▓▓▓▓▓ capas ao fundo, véu ▓▓▓▓▓│  primeira tela: mural como fundo
+│ SEMINÁRIO TEOLÓGICO           │
+│ APRISCO (o)                   │  assinatura (menor que o h1)
 │                               │
-│ CRESCIMENTO ESPIRITUAL        │  h3 Anton menor
-│ ┌──────┐┌──────┐┌───          │  rolagem horizontal
-│ │capa  ││capa  ││ca           │  (scroll-snap), 3ª capa
-│ │ 4:5  ││      ││             │  aparece pela metade
-│ └──────┘└──────┘└───          │
-│ ━━━━━━                        │  linha roxa só no foco
-│ Fundamentos  Escola de        │  h4 com link (texto real)
-│ da Fé        Oração           │
-│ Introdução…  Aprenda a…       │  chamada, texto suave
-│                               │
-│ TEOLOGIA SISTEMÁTICA …        │  (repete para 6 trilhas)
+│ ESTUDE TEOLOGIA DE            │  h1 Anton
+│ MANEIRA PROFUNDA              │
+│ E DESCOMPLICADA.              │
+│ Para conhecer a Deus, …       │  parágrafo em creme
+│▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓│
 ├───────────────────────────────┤
-│░ COMO FUNCIONAM OS CURSOS    ░│  faixa superfície
-│░ 1  Escolha o curso          ░│  ol numerada (sequência real)
-│░ 2  Inscreva-se pela Kiwify  ░│
-│░ 3  Receba o acesso por email░│  [só o que for confirmado]
-│░ 4  Estude no seu ritmo      ░│
+│ POR QUE ESCOLHER A APRISCO?   │  faixa #161618
+│ A APRISCO capacita …          │
+│ A APRISCO treina …            │
+│ A APRISCO prepara …           │
+│ A APRISCO levanta …           │
+│ [QUERO COMEÇAR AGORA]         │
 ├───────────────────────────────┤
-│ QUEM ENSINA                   │  some se não houver dado
-│ [foto P&B]                    │
-│ Nome · formação · ministério  │
+│ UMA FÉ RASA,                  │  manifesto (#sobre)
+│ UMA VIDA RASA.                │
+│ Teologia Clássica e Sólida …  │
+│ [QUERO COMEÇAR MEUS ESTUDOS]  │
 ├───────────────────────────────┤
-│ PLANOS                        │  h2
-│ Acesso a todos os cursos,     │
-│ inclusive os em preparação.   │
-│ ┌───────────────────────────┐ │
-│ │ Mensal                    │ │  h3 Montserrat 600
-│ │ R$ 37 /mês                │ │  número em Anton
-│ │ [ Assinar o plano mensal ]│ │
-│ └───────────────────────────┘ │
-│ ┌───────────────────────────┐ │
-│ │ Anual                     │ │
-│ │ R$ 192 à vista            │ │
-│ │ ou 12x de R$ 19,86        │ │
-│ │ [ Assinar o plano anual  ]│ │
-│ └───────────────────────────┘ │
+│ O QUE A ASSINATURA INCLUI     │
+│ ✓ … ✓ … ✓ … ✓ …               │
+│ [ASSINAR AGORA]               │
 ├───────────────────────────────┤
-│ PERGUNTAS FREQUENTES          │
-│ ─────────────────────────── + │  <details>
-│ Como recebo o acesso?         │
-│ ─────────────────────────── + │
+│ ESCOLHA POR ONDE COMEÇAR      │  vitrine (#cursos)
+│ CRESCIMENTO ESPIRITUAL        │
+│ ┌────┐┌────┐┌──             → │  rolagem horizontal
+│ │capa││capa││E MAIS           │
+│ └────┘└────┘└──               │
+│ (5 trilhas)                   │
 ├───────────────────────────────┤
-│    UMA FÉ RASA,               │  CTA final, centralizado
-│    UMA VIDA RASA.             │
-│  Construa uma vida profunda…  │
-│  [ Assinar agora           ]  │
+│ COMO FUNCIONA   1 2 3 4       │  faixa #161618
 ├───────────────────────────────┤
-│■ logo · links · contato      ■│  rodapé preto
-│■ privacidade · termos · CNPJ ■│
+│ ACESSO A TODOS OS CURSOS      │  planos (#assinatura)
+│ ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┓ │
+│ ┃ Plano anual  [Melhor custo]┃ │
+│ ┃ 12x de R$ 19,86            ┃ │
+│ ┃ ou R$ 192 à vista          ┃ │
+│ ┃ [ASSINAR AGORA]            ┃ │
+│ ┃ VISA  MC  elo  pix         ┃ │
+│ ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ │
+│ ┌ Plano mensal  R$ 37 ──────┐ │
+│ └ [ASSINAR] ────────────────┘ │
+├───────────────────────────────┤
+│ DÚVIDAS ANTES DE ASSINAR  +   │  FAQ (#duvidas)
+├───────────────────────────────┤
+│ (o) CONSTRUA UMA VIDA …       │  fechamento
+│ [ASSINAR AGORA]               │
+├───────────────────────────────┤
+│ APRISCO · navegação 2 col.    │  rodapé
+│ 🔒 Pagamento 100% seguro      │
+│ Política · Termos · ©         │
 └───────────────────────────────┘
 ```
 
-### Wireframe: home, desktop (1280 px), hero e trilha
+### Wireframe: home, desktop (1366 px), topo e planos
 
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
-│ SEMINÁRIO TEOLÓGICO                 Cursos  Quem somos  Blog  Contato│
-│ APRISCO (o)                                                          │
+│ (o)                                       Cursos   Sobre   Dúvidas   │
 ├──────────────────────────────────────────────────────────────────────┤
-│■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■│
-│■  ESTUDE TEOLOGIA                                    fundo preto puro■│
-│■  DE MANEIRA                                                        ■│
-│■  PROFUNDA E                                              ( o )     ■│
-│■  DESCOMPLICADA.                                          selo      ■│
-│■  Uma fé rasa, uma vida rasa.                                       ■│
-│■  [ Assinar agora           ]   Ver os cursos ↓                     ■│
-│■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■│
-│                                                                      │
-│  CRESCIMENTO ESPIRITUAL                          Ver a trilha (5) →  │
-│  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐              │
-│  │        │ │        │ │        │ │        │ │        │  grade de 5  │
-│  │  4:5   │ │        │ │        │ │        │ │        │              │
-│  └────────┘ └────────┘ └────────┘ └────────┘ └────────┘              │
-│  Fundamentos Escola de  Como ler a Caráter    Dons                   │
-│  da Fé       Oração     sua Bíblia Cristão    Espirituais            │
-│  Introdução… Aprenda a… Aprendendo Desenvol…  Descubra…              │
+│ SEMINÁRIO TEOLÓGICO                       ┌────┐ ┌────┐  ┌────┐      │
+│ APRISCO (o)                               │capa│ │capa│  │capa│      │
+│ ESTUDE TEOLOGIA DE                        └────┘ │    │  └────┘      │
+│ MANEIRA PROFUNDA                          ┌────┐ └────┘  ┌────┐      │
+│ E DESCOMPLICADA.                          │capa│ ┌────┐  │capa│      │
+│ Para conhecer a Deus, …                   └────┘ │capa│  └────┘      │
+│                                            mural: 3 colunas que      │
+│                                            "respiram"                │
+├──────────────────────────────────────────────────────────────────────┤
+│                    ACESSO A TODOS OS CURSOS                          │
+│              Uma assinatura, todos os cursos …                       │
+│   ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓  ┌───────────────────────┐  │
+│   ┃ Plano anual          [Melhor custo]┃  │ Plano mensal          │  │
+│   ┃ 12x de R$ 19,86                    ┃  │ R$ 37 por mês         │  │
+│   ┃ ou R$ 192 à vista                  ┃  │ [ASSINAR]             │  │
+│   ┃ [        ASSINAR AGORA           ] ┃  └───────────────────────┘  │
+│   ┃     VISA   MC   elo   pix          ┃                             │
+│   ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛                             │
 └──────────────────────────────────────────────────────────────────────┘
 ```
 
-### Wireframe: página de curso, celular
-
-```
-┌───────────────────────────────┐
-│ header                        │
-├───────────────────────────────┤
-│ Início › Cursos › Cristologia │  breadcrumbs
-│ Teologia sistemática          │  link para a trilha (texto suave)
-│ CURSO DE                      │  h1 Anton
-│ CRISTOLOGIA                   │
-│ Os mistérios de Cristo na     │  chamada
-│ Palavra de Deus.              │
-│ Descrição de 2–4 frases…      │  [PREENCHER] se não houver
-│ Incluído na assinatura ·      │  texto suave
-│ a partir de R$ 37/mês         │
-│ [ Assinar agora             ] │  CtaButton → checkout da
-│                               │  assinatura (em breve: aviso
-│                               │  "em preparação" + mesmo botão)
-│ ┌───────────────────────────┐ │
-│ │ capa 4:5 (largura 100%)   │ │  img lazy=false (LCP)
-│ └───────────────────────────┘ │
-├───────────────────────────────┤
-│ O QUE VOCÊ VAI ESTUDAR        │  h2 · ol de módulos
-│ PARA QUEM É ESTE CURSO        │  h2 · ul
-│ COMO FUNCIONA                 │  h2 · formato/acesso/certificado
-│ QUEM ENSINA                   │  h2
-│ PERGUNTAS FREQUENTES          │  h2 · details
-│ [ Assinar agora             ] │  botão final
-│ CURSOS RELACIONADOS           │  h2 · aside, 2–3 cards
-└───────────────────────────────┘
-```
-
-### Wireframe: página de curso, desktop
+### Página de curso
 
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
-│ header                                                               │
+│ Início › Cristologia                                ┌──────────────┐ │
+│ Teologia sistemática: introdução                    │    capa      │ │
+│ CRISTOLOGIA                                         │    (4:5)     │ │
+│ Aprenda sobre os mistérios de Cristo …              │              │ │
+│ [PREENCHER: descrição]                              └──────────────┘ │
+│ [ASSINAR AGORA]  Incluído na assinatura: 12x de R$ 19,86.            │
 ├──────────────────────────────────────────────────────────────────────┤
-│ Início › Cursos › Cristologia                                        │
-│                                                                      │
-│  Teologia sistemática                         ┌──────────────────┐   │
-│  CURSO DE                                     │                  │   │
-│  CRISTOLOGIA                                  │   capa 4:5       │   │
-│  Os mistérios de Cristo na Palavra de Deus.   │                  │   │
-│  Descrição de 2–4 frases…                     │                  │   │
-│  [ Assinar agora                       ]      │                  │   │
-│                                               └──────────────────┘   │
-├──────────────────────────────────────────────────────────────────────┤
-│  O QUE VOCÊ VAI ESTUDAR     (coluna de leitura 68ch)                 │
-│  …                                                                   │
+│ O QUE VOCÊ VAI ESTUDAR · PARA QUEM É · COMO FUNCIONA (ficha)         │
+│ PLANOS (compacto) · PERGUNTAS FREQUENTES (3) · CURSOS RELACIONADOS   │
 └──────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Decisões de componente
 
-- **CursoCard:** capa + `h3`/`h4` com o link + chamada. Um único link por card, com a área de clique estendida por `::after`. Sem sombra, sem cantos muito arredondados (raio de 4 px, como nas capas). A linha roxa de 3 px sob a capa aparece **só em hover e foco**; é a citação direta da área de membros, com outro significado (seleção, em vez de progresso).
-- **Curso em duas trilhas** ("Como ler a sua Bíblia"): mesmo card nas duas prateleiras, apontando para a mesma URL.
-- **Selo "Em breve":** texto em `--cor-aviso` sobre a capa, com fundo escuro; não usa o ícone de cadeado da Kiwify, que no site sugeriria "conteúdo bloqueado".
-- **Capas com texto aplicado:** o nome e a chamada sempre se repetem em HTML abaixo da capa. Na capa, `alt` = "Capa do curso Cristologia".
-- **Proporção das capas:** exibidas em 4:5 com `object-fit: cover`. As capas 8:11 perdem ~5% em cima e embaixo, sem cortar o texto, que fica centralizado.
+- **CursoCard:** capa + `h3`/`h4` + chamada (a chamada só nas páginas de curso). Um único link por
+  card, com a área de clique estendida por `::after` (na home o card não é link). Raio de 4 px, sem
+  sombra. No hover/foco, a capa sobe 6 px e aparece a linha roxa de 3 px sob ela: citação da barra de
+  progresso da área de membros, com outro significado (seleção).
+- **Curso em duas trilhas** ("Como ler a sua Bíblia"): mesmo card nas duas prateleiras, mesma URL.
+- **Cursos em preparação:** na vitrine, iguais aos outros (sem selo, decisão do cliente). A página do
+  curso avisa que está em preparação e já incluído na assinatura. Nunca o cadeado da Kiwify, que no
+  site sugeriria "conteúdo bloqueado".
+- **Capas com texto aplicado:** o nome do curso se repete em HTML abaixo da capa; a capa tem `alt=""`.
+- **Proporção das capas:** exibidas em 4:5 com `object-fit: cover`. As capas 8:11 perdem ~5% em cima
+  e embaixo, sem cortar o texto.
+- **Card "E mais":** mesmo formato de capa, em superfície, só com "E MAIS" e "Cursos novos entram na
+  sua assinatura assim que são liberados." — a fileira não "acaba".
+- **Botões:** um roxo só. Principal ("ASSINAR AGORA") e discreto ("QUERO COMEÇAR…", letra menor),
+  ambos com o brilho lento; secundário de contorno para o mensal.
 
 ---
 
 ## 5. Princípios
 
-1. **A marca já é escura; o site herda, não decora.** Preto e roxo vêm da marca real, sem gradientes nem brilho.
-2. **Fala alto uma vez.** Só o hero usa Anton em escala grande. O resto é leitura calma em Montserrat.
-3. **O catálogo é o produto.** As capas são a parte mais rica do material; ganham espaço e não competem com nenhum ornamento.
+1. **A marca já é escura; o site herda, não decora.** Preto e roxo, sem gradientes. O único brilho é
+   o dos botões de compra.
+2. **Fala alto no topo.** O `h1` e o mural são o momento memorável; o resto é leitura calma.
+3. **O catálogo é o produto.** As capas são a parte mais rica do material e aparecem duas vezes:
+   no mural do topo e na vitrine.
 4. **Toda informação está em texto.** Nada importante fica só dentro da imagem.
-5. **Nenhum espaço vazio vira enfeite.** Se faltar um dado (professor, depoimento, preço), a seção some ou mostra `[PREENCHER]`; não é preenchida com algo genérico.
+5. **Nenhum espaço vazio vira enfeite.** Se faltar um dado (professor, depoimento), a seção não
+   existe ou mostra `[PREENCHER]`; não é preenchida com algo genérico.
 
 ---
 
 ## 6. Revisão contra o visual genérico
 
-| Padrão genérico que apareceu no primeiro rascunho | O que mudou | Por quê |
+| Padrão genérico | Como ficou | Por quê |
 |---|---|---|
-| Fundo `#0B0B0B` + um acento vibrante "porque escuro é elegante" | `#000000`/`#09090B` + o roxo `#4C059E` definido pelo cliente (antes, o coral `#F98080` amostrado das peças) | É a marca real, não um tema |
-| Eyebrow em caixa-alta espaçada acima de cada `h2` ("NOSSOS CURSOS") | Removido. O tracking largo fica só no "SEMINÁRIO TEOLÓGICO" do logo e no nome da trilha dentro do card, onde carrega informação | Evitar o rótulo decorativo repetido |
-| Cards arredondados (12–16 px) com sombra em tudo, inclusive "Para quem é" e FAQ | Só os cursos usam card. "Para quem é" virou lista, FAQ virou linhas com fio. Raio de 4 px, sem sombra | Card só onde há um objeto clicável |
-| Ícones ilustrativos nos perfis de "Para quem é" | Removidos; o texto basta | Ícone genérico não acrescenta informação |
-| Destacar uma palavra do `h1` em cor ("PROFUNDA") | Removido; o `h1` é todo na mesma cor | Padrão de página gerada; o peso da Anton já dá ênfase |
-| Fade-in em todas as seções e hover que levanta o card | Um único movimento: o `h1` do hero sobe 12 px e aparece em 600 ms. Hover do card = só a linha roxa. Tudo desligado com `prefers-reduced-motion` | "Gastar a ousadia em um lugar só" |
+| Fundo `#0B0B0B` + um acento vibrante "porque escuro é elegante" | `#000000`/`#09090B` + o roxo `#4C059E` definido pelo cliente (antes, o coral `#F98080` das peças) | É a marca, não um tema |
+| Eyebrow em caixa-alta espaçada acima de cada `h2` | Não existe. Tracking largo só no "SEMINÁRIO TEOLÓGICO" da marca | Evitar o rótulo decorativo repetido |
+| Cards arredondados com sombra em tudo | Card só para cursos e planos. FAQ em linhas com fio; "Por que escolher" e "O que inclui" sem card. Raio de 4 px, sem sombra | Card só onde há um objeto |
+| Ícones ilustrativos em listas | Só o ✓ de "O que inclui"; "Por que escolher" sem ícone | Ícone genérico não acrescenta informação |
+| Destacar uma palavra do `h1` em cor | O `h1` é todo na mesma cor | O peso da Anton já dá ênfase |
+| Animações chamativas | Fade sutil ao rolar (pedido do cliente), sem recortes nem cortinas; hover só nas capas e botões | Movimento discreto, que não distrai da leitura |
 | Seções numeradas 01/02/03 | Numeração só em "Como funciona", que é sequência real | Número tem que significar ordem |
-| Cadeado da Kiwify nas capas | Selo "Em breve" em texto | No site, cadeado sugere acesso negado, não lançamento |
-| Hero com vídeo ou carrossel automático (como na área de membros) | Uma foto fixa | Peso no LCP e sem ganho de clareza |
-| Faixa de "números" (alunos, horas, avaliações) | Não entra | Não há dados; inventar é proibido |
+| Cadeado da Kiwify nas capas | Nada na capa; aviso só na página do curso | No site, cadeado sugere acesso negado |
+| Hero com vídeo ou carrossel automático | Mural fixo de capas, com movimento lento | Peso no LCP e sem ganho de clareza |
+| Faixa de "números" (alunos, avaliações) | Não entra; só o "+80 aulas" informado pelo cliente | Não há dados; inventar é proibido |
+| Barra fixa de compra no celular | Retirada pelo cliente | Ficava aparecendo o tempo todo |
 
 ---
 
 ## 7. Motion
 
-- Único momento orquestrado: entrada do `h1` do hero (opacidade 0→1 e deslocamento de 12 px, 600 ms, ease-out), só CSS.
-- Respostas a ação: abrir FAQ (o ícone `+` gira 45°), abrir o menu, linha roxa no foco e hover do card.
+- **Ao carregar:** entrada do topo (assinatura → título → subtítulo) e subida das colunas do mural,
+  que depois "respiram" devagar em loop.
+- **Ao rolar:** fade com subida curta (16 px) nos blocos, linear, terminando perto do meio da tela,
+  em cascata. O título "Uma fé rasa" é o único descoberto em linha.
+- **Botões de compra:** brilho lento que vai e volta (ciclo de 13 s), por trás do texto.
+- **Respostas a ação:** capa sobe 6 px, botão sobe 2 px, FAQ e menu deslizam ao abrir.
 - `@media (prefers-reduced-motion: reduce)`: tudo instantâneo.
 
 ---
 
-## 8. Riscos e dependências deste plano
+## 8. Riscos e dependências
 
-- **Hero sem foto:** confirmado que não há fotos sem texto. O hero é tipográfico sobre `#000000` (como `6.png`). Se surgir uma foto, o componente `Hero` aceita a imagem sem mudar o resto.
-- **Links de checkout:** mensal `226Zzxj` e anual `Rcvmvex` (oficiais) ficam só em `cursos.ts` (`assinatura.planos[].linkKiwify`). Trocar é editar uma linha.
-- **FAQ provisório:** precisa ser substituído antes do lançamento (item do checklist da Fase 5).
-- **Dados estruturados:** preço não vai no `Course` (a assinatura não é o curso). Se fizer sentido, um `Offer` para a assinatura entra na home, com os mesmos valores da Kiwify.
-- **Capas em baixa resolução:** 15 capas com 320 px de largura servem bem no celular (grade de ~160 px), mas ficam suaves em cards desktop de ~230 px em tela retina.
-- **Fontes não confirmadas:** se não forem Anton e Montserrat, os tokens mudam, mas a estrutura não.
-
----
-
-## 9. Revisão de conversão da home (2026-10-05, pedido do cliente)
-
-Objetivo: dar à home cara de página de vendas de alta conversão sem inventar dados.
-
-| Mudança | Por quê |
-|---|---|
-| Hero com **mural de capas reais** (3 colunas desencontradas que somem no preto) no lugar do selo | Mostra o produto na primeira tela; é o elemento mais específico do APRISCO (a "estante" da área de membros). Único ponto de ousadia da página |
-| Linha de oferta no hero: "Acesso aos 21 cursos a partir de R$ 37 por mês" | Preço e tamanho do catálogo antes da rolagem. Números vêm de `cursos.ts` |
-| Seção **manifesto** com "Uma fé rasa, uma vida rasa." e a pergunta da peça 5 | Problema → solução, com as palavras do cliente |
-| **O que a assinatura inclui** (4 itens, marca de check) | Valor concreto antes do preço; só fatos confirmados |
-| Trilhas da home em versão **compacta** (capa + nome) | Vitrine do catálogo sem virar uma página de 21 textos; o detalhe fica em `/cursos` e nas páginas de curso |
-| Planos: **anual primeiro, em destaque**, com equivalente mensal (R$ 16) e diferença para 12 meses do mensal (R$ 252) | Ancoragem de preço. Valores calculados dos preços confirmados, nunca digitados |
-| **Barra fixa de assinatura** no celular (aparece após a primeira tela; sem JS) | CTA sempre ao alcance no celular, onde está a maior parte do tráfego |
-| CTA repetido após "O que inclui" e no fechamento | Pontos de decisão naturais |
-| Blog removido do menu | Fora do escopo |
-
-Mantido de fora por falta de dado real: contador de alunos, depoimentos, garantia, urgência.
-Movimento: entrada do h1 + subida das colunas do mural numa única sequência de carregamento.
-
----
-
-## 11. Texto padrão de compra (2026-10-05, decisão do cliente)
-
-Todos os botões que levam à compra dizem **"Assinar agora"**: hero, "O que a assinatura inclui", fechamento, barra fixa do celular, páginas de curso e o botão do plano anual. A exceção é a alternativa discreta "Assinar o plano mensal".
-
+- **Capas em baixa resolução:** 15 das 20 estão em 320 px de largura; ficam suaves em telas
+  grandes. Ideal: 1080×1350 (4:5).
+- **Peças de `/design` em coral:** a identidade de origem e a imagem de compartilhamento ainda usam o
+  coral; o site usa roxo. Refazer as peças é decisão do cliente.
+- **Logo sem SVG original:** o cordeiro foi vetorizado a partir do PNG (aguarda aprovação).
+- **Navegador sem `animation-timeline`** (ex.: Firefox): o conteúdo aparece parado, sem quebrar.
+- **Dados estruturados:** preço não vai no `Course` (a assinatura não é o curso).
