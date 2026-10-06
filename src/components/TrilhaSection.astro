@@ -2,7 +2,8 @@
 // Uma trilha (categoria) e seus cursos. No celular, fileira com rolagem horizontal
 // em que a próxima capa aparece pela metade; no desktop, grade.
 import CursoCard from './CursoCard.astro';
-import { cursosDaTrilha, getPlano } from '../data/cursos';
+import CtaButton from './CtaButton.astro';
+import { cursosDaTrilha } from '../data/cursos';
 import type { Trilha } from '../data/trilhas';
 
 interface Props {
@@ -33,7 +34,7 @@ const idTitulo = `trilha-${trilha.id}`;
         <div class="mais">
           <p class="mais__titulo">E mais</p>
           <p class="mais__texto">Cursos novos entram na sua assinatura assim que são liberados.</p>
-          <a class="mais__link" href={getPlano('anual').linkKiwify} rel="noopener" data-cta="checkout-anual" data-plano="anual">Assinar agora</a>
+          <CtaButton variante="link">ASSINAR AGORA</CtaButton>
         </div>
       </li>
     )}
@@ -109,12 +110,14 @@ const idTitulo = `trilha-${trilha.id}`;
     line-height: 1.45;
   }
 
-  .mais__link {
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--alvo-toque);
-    font-size: var(--fs-pequeno);
-    font-weight: var(--peso-forte);
+  /* o link de compra (CtaButton "link") segue o alinhamento do texto do card e não
+     quebra em duas linhas no card estreito do celular */
+  .mais :global(.botao--link) {
+    align-self: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+    white-space: nowrap;
+    font-size: var(--fs-mini);
   }
 
   @media (min-width: 64rem) {
