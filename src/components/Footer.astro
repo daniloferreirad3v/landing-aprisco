@@ -44,16 +44,23 @@ const whatsappUrl = contato.whatsapp ? `https://wa.me/${contato.whatsapp}` : '';
   </div>
 
   <div class="container rodape__base">
-    <p>
-      Pagamentos e área de membros pela <a href="https://kiwify.com.br" rel="noopener">Kiwify</a>.
-    </p>
-    <ul class="rodape__legal lista-limpa">
-      <li><a href="/politica-de-privacidade">Política de privacidade</a></li>
-      <li><a href="/termos-de-uso">Termos de uso</a></li>
-    </ul>
-    <p>
-      © {ano} {empresa.razaoSocial || site.nome}
-      {empresa.cnpj ? <span> · CNPJ {empresa.cnpj}</span> : <span> · <Preencher oque="razão social e CNPJ" /></span>}
+    <div class="rodape__selos">
+      <p class="rodape__seguro">
+        <svg class="rodape__cadeado" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <path d="M12 2.5 4.5 5.5v6c0 4.6 3.1 8.7 7.5 10 4.4-1.3 7.5-5.4 7.5-10v-6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+          <rect x="8.75" y="10.75" width="6.5" height="5" rx="1" fill="currentColor" />
+          <path d="M10.25 10.75V9.5a1.75 1.75 0 0 1 3.5 0v1.25" fill="none" stroke="currentColor" stroke-width="1.5" />
+        </svg>
+        Pagamento 100% seguro
+      </p>
+      <ul class="rodape__legal lista-limpa">
+        <li><a href="/politica-de-privacidade">Política de privacidade</a></li>
+        <li><a href="/termos-de-uso">Termos de uso</a></li>
+      </ul>
+    </div>
+    <p class="rodape__copy">
+      © {ano} {empresa.razaoSocial || site.nome} · Todos os direitos reservados
+      {empresa.cnpj && <span> · CNPJ {empresa.cnpj}</span>}
     </p>
   </div>
 </footer>
@@ -117,18 +124,61 @@ const whatsappUrl = contato.whatsapp ? `https://wa.me/${contato.whatsapp}` : '';
     column-gap: var(--esp-5);
   }
 
+  /* sem sublinhado (pedido do cliente); o sublinhado volta só no mouse, como resposta */
+  .rodape__legal a {
+    text-decoration: none;
+  }
+
+  .rodape__legal a:hover {
+    text-decoration: underline;
+  }
+
+  /* selo de pagamento seguro + links legais, juntos numa linha só */
+  .rodape__selos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: var(--esp-5);
+  }
+
+  .rodape__seguro {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--esp-2);
+    color: var(--cor-texto);
+    font-weight: var(--peso-medio);
+  }
+
+  .rodape__cadeado {
+    flex-shrink: 0;
+    color: var(--cor-destaque);
+  }
+
   @media (min-width: 48rem) {
     .rodape__grade {
       grid-template-columns: 2fr 1fr 1fr;
     }
 
+  }
+
+  /* desktop: uma linha só — copyright à esquerda; selo e links juntos à direita.
+     Abaixo disso não cabe sem quebrar, e cada parte fica na sua linha. */
+  @media (min-width: 64rem) {
     .rodape__base {
-      grid-template-columns: 1fr auto;
+      grid-template-columns: minmax(0, 1fr) auto;
       align-items: center;
     }
 
-    .rodape__base p:last-child {
-      grid-column: 1 / -1;
+    .rodape__copy {
+      grid-row: 1;
+      grid-column: 1;
+    }
+
+    .rodape__selos {
+      grid-row: 1;
+      grid-column: 2;
+      flex-wrap: nowrap;
+      white-space: nowrap;
     }
   }
 </style>
