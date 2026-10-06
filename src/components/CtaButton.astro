@@ -97,6 +97,52 @@ const classes = ['botao', `botao--${variante}`, largura === 'total' && 'botao--t
     color: var(--cor-sobre-roxo);
   }
 
+  /* Brilho dos botões de compra (principal e suave): uma faixa larga de luz branca
+     atravessa o botão devagar, de ponta a ponta, vai e volta, com uma pausa em cada
+     lado. Passa POR TRÁS do texto (isolation + z-index negativo), para a palavra nunca
+     perder contraste. Desligado com movimento reduzido. */
+  .botao--principal,
+  .botao--suave {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .botao--principal::after,
+    .botao--suave::after {
+      content: '';
+      position: absolute;
+      inset-block: 0;
+      left: 0;
+      z-index: -1;
+      width: 65%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgb(255 255 255 / 0.12) 20%,
+        rgb(255 255 255 / 0.26) 40%,
+        rgb(255 255 255 / 0.26) 60%,
+        rgb(255 255 255 / 0.12) 80%,
+        transparent
+      );
+      transform: translateX(-110%) skewX(-20deg);
+      animation: botao-brilho 6.5s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+  }
+
+  @keyframes botao-brilho {
+    0%,
+    12% {
+      transform: translateX(-110%) skewX(-20deg);
+    }
+    88%,
+    100% {
+      transform: translateX(200%) skewX(-20deg);
+    }
+  }
+
   .botao--secundario {
     background: transparent;
     border-color: var(--cor-texto);
