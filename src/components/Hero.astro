@@ -50,7 +50,9 @@ const temVisual = Astro.slots.has('visual');
 
   .hero__grade {
     display: grid;
-    gap: var(--esp-6);
+    /* no celular o mural entra depois do texto: respiro maior para os dois blocos
+       não parecerem um só */
+    gap: var(--esp-7);
   }
 
   /* O botão de assinar precisa aparecer sem rolar: título em 3 linhas
@@ -62,13 +64,14 @@ const temVisual = Astro.slots.has('visual');
     overflow-wrap: normal;
   }
 
-  /* A assinatura identifica a escola; o h1 é a mensagem. Respiro claro entre os dois */
+  /* A assinatura identifica a escola; o h1 é a mensagem. Respiro claro entre os dois:
+     as duas são em Anton e, coladas, lêem-se como um bloco só */
   .hero__marca {
-    margin-bottom: var(--esp-4);
+    margin-bottom: var(--esp-6);
   }
 
   .hero__sub {
-    margin-top: var(--esp-3);
+    margin-top: var(--esp-4);
     color: var(--cor-texto-suave);
     font-size: var(--fs-corpo);
     max-width: 34rem;
@@ -93,6 +96,64 @@ const temVisual = Astro.slots.has('visual');
     order: -1;
   }
 
+  /* Celular: o mural vira fundo e o texto fica por cima, numa tela só.
+     As capas são escurecidas e cobertas por um véu preto para o texto manter
+     contraste de leitura (o mural é decorativo e tem aria-hidden). */
+  @media (max-width: 47.9375rem) {
+    .hero--com-visual .hero__grade {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .hero--com-visual .hero__texto,
+    .hero--com-visual .hero__visual {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .hero--com-visual .hero__texto {
+      position: relative;
+      z-index: 1;
+      align-self: center;
+      padding-block: var(--esp-6);
+    }
+
+    /* sem o mural empilhado embaixo, a folga do fim da seção fica grande demais */
+    .hero--com-visual {
+      padding-block: var(--esp-4) var(--esp-6);
+    }
+
+    /* O mural sai do fluxo: a altura da primeira tela passa a ser a do texto, e as
+       capas preenchem exatamente essa área, de ponta a ponta da tela. */
+    .hero--com-visual .hero__grade {
+      position: relative;
+      /* a primeira tela precisa de presença: o mural ocupa a altura do bloco */
+      min-height: 62vh;
+    }
+
+    .hero--com-visual .hero__visual {
+      position: absolute;
+      inset: 0 calc(var(--margem-lateral) * -1);
+      opacity: 0.82;
+    }
+
+    .hero--com-visual .hero__visual::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgb(0 0 0 / 0.9) 50%, rgb(0 0 0 / 0.42));
+    }
+
+    .hero--com-visual .hero__visual :global(.mural) {
+      height: 100%;
+    }
+
+    /* sobre as capas, o texto de apoio vai no creme cheio: o cinza suave não
+       alcança 4,5:1 em cima de imagem */
+    .hero--com-visual .hero__sub {
+      color: var(--cor-texto);
+    }
+  }
+
   @media (min-width: 48rem) {
     .hero {
       padding-top: var(--esp-7);
@@ -102,6 +163,10 @@ const temVisual = Astro.slots.has('visual');
       grid-template-columns: 1fr auto;
       align-items: center;
       gap: var(--esp-7);
+    }
+
+    .hero__marca {
+      margin-bottom: var(--esp-4);
     }
 
     /* Botão do topo um pouco mais alto no desktop: o bloco do preço ao lado ganha a mesma

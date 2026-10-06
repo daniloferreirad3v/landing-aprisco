@@ -50,6 +50,17 @@ import { site } from '../data/site';
     height: auto;
   }
 
+  /* No celular o "APRISCO" ficava do tamanho do h1 e os dois disputavam a atenção */
+  @media (max-width: 47.9375rem) {
+    .assinatura__lockup {
+      width: 9.75rem;
+    }
+
+    .assinatura__selo {
+      width: 2.5rem;
+    }
+  }
+
   @media (min-width: 100rem) and (min-height: 50rem) {
     .assinatura__lockup {
       width: min(24rem, 16vw, 30vh);
