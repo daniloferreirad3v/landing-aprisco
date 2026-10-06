@@ -2,9 +2,9 @@
 // Home: página de vendas da assinatura, em SINGLE PAGE (decisão do cliente, 2026-10-05).
 // O menu rola até as seções: #cursos, #sobre, #planos, #duvidas, #contato.
 // As páginas de curso existem só como porta de entrada pelo Google (sem links daqui).
-// Ordem: marca + promessa + produto (mural) na 1ª tela → problema (texto do cliente)
-// → o que a assinatura inclui → vitrine dos cursos → como funciona → planos → dúvidas → fechamento.
-// Outline: h1 → h2 manifesto → h2 inclui → h2 cursos (h3 trilhas, h4 cursos) → h2 como funciona
+// Ordem: marca + promessa + produto (mural) na 1ª tela → por que escolher → problema
+// (texto do cliente) → o que a assinatura inclui → vitrine dos cursos → como funciona → planos → dúvidas → fechamento.
+// Outline: h1 → h2 por que escolher → h2 manifesto → h2 inclui → h2 cursos (h3 trilhas, h4 cursos) → h2 como funciona
 // (h3 passos) → h2 planos (h3 planos) → h2 perguntas → h2 fechamento.
 // Sem números inventados: contagens e preços vêm de cursos.ts/trilhas.ts.
 // "Quem ensina" e "Depoimentos" só entram quando houver dados reais (PENDENCIAS.md).
@@ -28,6 +28,15 @@ const title = montarTitulo('Seminário Teológico Online');
 const description =
   'Estude teologia de maneira profunda e descomplicada. Cursos online de Bíblia, doutrina, família e vida cristã no Seminário Teológico APRISCO.';
 
+
+// Texto enviado pelo cliente em 2026-10-06. A repetição de "A APRISCO" é dele, é figura
+// de linguagem (anáfora): manter.
+const porque = [
+  'A APRISCO capacita cristãos bíblica e teologicamente para viverem uma vida relevante na sociedade.',
+  'A APRISCO treina líderes teologicamente para lidarem com as dores desta geração.',
+  'A APRISCO prepara pregadores que desejam pregar sermões cheios da Palavra e do Espírito.',
+  'A APRISCO levanta cristãos que desejam amar e servir a Igreja de Cristo.',
+];
 
 // Textos enviados pelo cliente em 2026-10-06. O número de aulas ("+80") é dado factual
 // do cliente: manter atualizado (ver PENDENCIAS.md).
@@ -62,6 +71,20 @@ const inclui = [
     </p>
     <MuralCapas slot="visual" />
   </Hero>
+
+  <section class="faixa porque" aria-labelledby="titulo-porque">
+    <div class="container secao porque__grade">
+      <h2 id="titulo-porque" class="porque__titulo">Por que escolher a APRISCO?</h2>
+      <ul class="porque__lista lista-limpa">
+        {porque.map((item, i) => (
+          <li class="porque__item revela" style={`--revela-i: ${i}`}>{item}</li>
+        ))}
+      </ul>
+      <div class="porque__acao">
+        <CtaButton variante="suave">QUERO COMEÇAR AGORA</CtaButton>
+      </div>
+    </div>
+  </section>
 
   <section id="sobre" class="manifesto" aria-labelledby="titulo-manifesto">
     <div class="container secao manifesto__grade">
@@ -281,6 +304,61 @@ const inclui = [
 
   .acao-meio {
     margin-top: var(--esp-7);
+  }
+
+  /* Por que escolher: título e CTA de um lado, as quatro promessas do outro. A litania
+     ("A APRISCO...") já dá o ritmo da lista, então nada de fio, ícone ou card:
+     o que organiza é o espaço e a coluna. */
+  .porque__grade {
+    display: grid;
+    gap: var(--esp-6);
+  }
+
+  /* a seção abre logo abaixo do hero: o título entra num degrau menor que os outros
+     h2, para a página não gritar duas vezes seguidas */
+  .porque__titulo {
+    font-size: var(--fs-h3);
+    text-wrap: balance;
+  }
+
+  .porque__lista {
+    display: grid;
+    gap: var(--esp-5);
+  }
+
+  .porque__item {
+    max-inline-size: 48ch;
+    line-height: var(--lh-corpo);
+    text-wrap: pretty;
+  }
+
+  /* No celular a ordem é a da leitura: título, promessas e só então o convite.
+     No desktop, título e botão vão para a coluna da esquerda, ao lado das promessas. */
+  @media (min-width: 64rem) {
+    .porque__grade {
+      grid-template-columns: minmax(16rem, 22rem) 1fr;
+      grid-template-areas:
+        'titulo lista'
+        '.      acao';
+      column-gap: var(--esp-8);
+      row-gap: var(--esp-6);
+    }
+
+    /* o título acompanha o meio da lista; o botão fica logo abaixo dela, na mesma
+       coluna do texto, para não ficar solto no vazio da esquerda */
+    .porque__titulo {
+      grid-area: titulo;
+      align-self: center;
+    }
+
+    .porque__acao {
+      grid-area: acao;
+    }
+
+    .porque__lista {
+      grid-area: lista;
+      gap: var(--esp-6);
+    }
   }
 
   /* Vitrine */
