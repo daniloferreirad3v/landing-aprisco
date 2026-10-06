@@ -31,5 +31,4 @@ export const navegacao = [
   { href: '/#cursos', rotulo: 'Cursos' },
   { href: '/#sobre', rotulo: 'Sobre' },
   { href: '/#duvidas', rotulo: 'Dúvidas' },
-  { href: '/#contato', rotulo: 'Contato' },
 ] as const;

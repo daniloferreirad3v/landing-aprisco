@@ -1,11 +1,9 @@
 ---
 import Logo from './Logo.astro';
-import Preencher from './Preencher.astro';
 import { navegacao, site } from '../data/site';
 
 const ano = new Date().getFullYear();
-const { contato, redes, empresa } = site;
-const whatsappUrl = contato.whatsapp ? `https://wa.me/${contato.whatsapp}` : '';
+const { empresa } = site;
 ---
 <footer class="rodape">
   <div class="container rodape__grade">
@@ -23,24 +21,6 @@ const whatsappUrl = contato.whatsapp ? `https://wa.me/${contato.whatsapp}` : '';
         ))}
       </ul>
     </nav>
-
-    <div class="rodape__contato">
-      <h2 class="rodape__titulo">Atendimento</h2>
-      <address>
-        <ul class="lista-limpa">
-          <li>
-            {contato.whatsapp ? <a href={whatsappUrl}>Falar no WhatsApp</a> : <Preencher oque="WhatsApp" />}
-          </li>
-          <li>
-            {contato.email ? <a href={`mailto:${contato.email}`}>{contato.email}</a> : <Preencher oque="e-mail" />}
-          </li>
-          <li>
-            {redes.instagram ? <a href={redes.instagram}>Instagram</a> : <Preencher oque="Instagram" />}
-          </li>
-          {contato.horario && <li>{contato.horario}</li>}
-        </ul>
-      </address>
-    </div>
   </div>
 
   <div class="container rodape__base">
@@ -92,10 +72,6 @@ const whatsappUrl = contato.whatsapp ? `https://wa.me/${contato.whatsapp}` : '';
     letter-spacing: normal;
     line-height: var(--lh-titulo);
     margin-bottom: var(--esp-3);
-  }
-
-  address {
-    font-style: normal;
   }
 
   .rodape a {
@@ -156,7 +132,7 @@ const whatsappUrl = contato.whatsapp ? `https://wa.me/${contato.whatsapp}` : '';
 
   @media (min-width: 48rem) {
     .rodape__grade {
-      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-columns: 2fr 1fr;
     }
 
   }

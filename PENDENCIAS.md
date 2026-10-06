@@ -106,7 +106,7 @@ Lista viva do que falta. Marque `[x]` quando resolver e anote a resposta ao lado
 
 - [ ] Páginas de curso sem link da home: o Google as encontra pelo sitemap e pelos links entre cursos relacionados. Para cada curso ranquear bem, o ideal é ter descrição real (300+ palavras) e, se possível, links de fora (Instagram, anúncios)
 - [ ] Sobre (seção da home): hoje só tem o manifesto; declaração de fé e professores entram quando houver material
-- [ ] Contato (seção da home): canais em `src/data/site.ts`
+- [x] ~~Contato (seção da home)~~ (seção, item do menu e coluna "Atendimento" do rodapé removidos a pedido do cliente em 2026-10-06)
 
 ## Registro da Fase 3 (2026-10-05)
 
@@ -115,7 +115,7 @@ Lista viva do que falta. Marque `[x]` quando resolver e anote a resposta ao lado
 - [x] ~~Home, passo 3: como e quando o acesso chega ao aluno~~ (texto enviado pelo cliente em 2026-10-06: acesso por e-mail + app da Kiwify)
 - [ ] Páginas de curso: ficha "Como funciona" com formato e carga horária em [PREENCHER] (certificado preenchido em 2026-10-06 com a resposta do FAQ)
 - [ ] Política de Privacidade e Termos de Uso: rascunhos com aviso visível de revisão jurídica; faltam controlador, hospedagem, analytics, regras da assinatura e foro
-- [ ] Contato: canais (WhatsApp, e-mail, Instagram, horário) em `src/data/site.ts`
+- [ ] Canais (WhatsApp, e-mail) em `src/data/site.ts`: não aparecem mais na home, mas o e-mail ainda é pedido na Política de Privacidade (contato do encarregado de dados, LGPD) e o WhatsApp é a alternativa do botão de compra se um link de checkout faltar
 - [ ] Imagem de compartilhamento por curso: hoje todas usam `og/default.jpg` (capas são retrato e cortariam mal em 1200×630); gerar uma por curso é opcional
 - [x] Blog removido do escopo pelo cliente (2026-10-05); link retirado do menu
 

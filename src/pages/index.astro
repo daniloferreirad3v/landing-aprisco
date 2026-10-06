@@ -1,6 +1,7 @@
 ---
 // Home: página de vendas da assinatura, em SINGLE PAGE (decisão do cliente, 2026-10-05).
-// O menu rola até as seções: #cursos, #sobre, #planos, #duvidas, #contato.
+// O menu rola até as seções: #cursos, #sobre, #duvidas. A seção de contato saiu a pedido do
+// cliente (2026-10-06).
 // As páginas de curso existem só como porta de entrada pelo Google (sem links daqui).
 // Ordem: marca + promessa + produto (mural) na 1ª tela → por que escolher → problema
 // (texto do cliente) → o que a assinatura inclui → vitrine dos cursos → como funciona → planos → dúvidas → fechamento.
@@ -16,8 +17,6 @@ import CtaButton from '../components/CtaButton.astro';
 import TrilhaSection from '../components/TrilhaSection.astro';
 import Planos from '../components/Planos.astro';
 import Faq from '../components/Faq.astro';
-import Preencher from '../components/Preencher.astro';
-import { site } from '../data/site';
 import { trilhas } from '../data/trilhas';
 import { ofertaDestaque } from '../data/cursos';
 import { faqGeral } from '../data/faq';
@@ -169,39 +168,6 @@ const inclui = [
   <div id="duvidas" class="container secao">
     <Faq itens={faqGeral} titulo="Dúvidas antes de assinar" />
   </div>
-
-  <section id="contato" class="container secao contato" aria-labelledby="titulo-contato">
-    <h2 id="titulo-contato" class="revela">Fale com o APRISCO</h2>
-    <div class="contato__grade">
-      <div>
-        <p class="contato__intro">Tire suas dúvidas sobre os cursos e a assinatura antes de começar.</p>
-        <address class="contato__canais">
-          <ul class="lista-limpa">
-            <li>
-              <span class="contato__rotulo">WhatsApp</span>
-              {site.contato.whatsapp ? <a href={`https://wa.me/${site.contato.whatsapp}`}>Falar no WhatsApp</a> : <Preencher oque="WhatsApp" />}
-            </li>
-            <li>
-              <span class="contato__rotulo">E-mail</span>
-              {site.contato.email ? <a href={`mailto:${site.contato.email}`}>{site.contato.email}</a> : <Preencher oque="e-mail" />}
-            </li>
-            <li>
-              <span class="contato__rotulo">Instagram</span>
-              {site.redes.instagram ? <a href={site.redes.instagram}>Perfil do APRISCO</a> : <Preencher oque="Instagram" />}
-            </li>
-            <li>
-              <span class="contato__rotulo">Horário</span>
-              {site.contato.horario || <Preencher oque="horário de atendimento" />}
-            </li>
-          </ul>
-        </address>
-      </div>
-      <p class="contato__kiwify">
-        Pagamento, acesso à área de membros e pedidos de reembolso são processados pela Kiwify, a plataforma onde
-        ficam os cursos.
-      </p>
-    </div>
-  </section>
 
   <section class="final" aria-labelledby="titulo-final">
     <div class="container secao final__conteudo">
@@ -426,49 +392,6 @@ const inclui = [
     .passos li {
       grid-row: span 2;
       grid-template-rows: subgrid;
-    }
-  }
-
-  /* Contato */
-  .contato__grade {
-    display: grid;
-    gap: var(--esp-6);
-    margin-top: var(--esp-6);
-  }
-
-  .contato__intro,
-  .contato__kiwify {
-    color: var(--cor-texto-suave);
-  }
-
-  .contato__canais {
-    margin-top: var(--esp-5);
-    font-style: normal;
-  }
-
-  .contato__canais li {
-    display: grid;
-    gap: var(--esp-1);
-    padding-block: var(--esp-3);
-    border-bottom: var(--fio) solid var(--cor-fio);
-  }
-
-  .contato__canais a {
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--alvo-toque);
-    font-weight: var(--peso-forte);
-  }
-
-  .contato__rotulo {
-    color: var(--cor-texto-suave);
-    font-size: var(--fs-pequeno);
-  }
-
-  @media (min-width: 64rem) {
-    .contato__grade {
-      grid-template-columns: 1fr 1fr;
-      gap: var(--esp-8);
     }
   }
 
