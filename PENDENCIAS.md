@@ -1,129 +1,103 @@
 # PENDENCIAS.md — Seminário Teológico APRISCO
 
 Lista viva do que falta. Marque `[x]` quando resolver e anote a resposta ao lado.
-Última atualização: 2026-10-05 (Fase 0).
+Última revisão: 2026-10-06, conferida contra o site atual (home single page, 20 páginas
+de curso, políticas). Itens que deixaram de existir com as mudanças do site foram retirados;
+o histórico fica no git.
 
-## Decisões respondidas (2026-10-05)
+## Como o site está hoje (decisões já tomadas)
 
-- [x] **Modelo de venda:** assinatura (um único checkout na Kiwify)
-- [x] **Cadeados:** cursos ainda não liberados → status "em-breve" (Escatologia, Antropologia Bíblica, Pneumatologia)
-- [x] **Fontes:** as das peças do Canva (Anton + Montserrat)
-- [x] **Fotos sem texto:** não existem → hero tipográfico sobre preto
-- [x] **Promessa do hero:** usar as frases das peças por enquanto; CTA definitivo a rever
+- Home em página única: topo → Por que escolher → Uma fé rasa → O que a assinatura inclui →
+  vitrine de cursos → Como funciona → planos → dúvidas → fechamento. Sem seção de contato
+- Venda por assinatura: anual (12x de R$ 19,86 ou R$ 192 à vista) em destaque e mensal (R$ 37)
+  em segundo plano. Todo botão de compra leva ao checkout **anual**; só o card mensal leva ao mensal
+- Cor primária: roxo `#4C059E` (botões); traços e ícones em `#7C3AED`. Fontes: Anton + Montserrat
+- FAQ com os textos definitivos do cliente; garantia de 7 dias, cancelamento livre, certificado
+  de conclusão (não conta como carga horária de bacharelado)
+- A home **não tem nenhum [PREENCHER] visível**. Os que restam estão nas páginas de curso e nas
+  políticas (abaixo)
 
-## Decorrentes da assinatura (novas)
+---
 
-- [x] Planos: mensal R$ 37,00; anual R$ 192,00 à vista ou 12x de R$ 19,86 (já na Kiwify)
-- [x] Checkout mensal: `https://pay.kiwify.com.br/226Zzxj` (oficial)
-- [x] Checkout anual: `https://pay.kiwify.com.br/Rcvmvex` (oficial)
-- [ ] Nome oficial do plano/assinatura, se houver
-- [x] A assinatura dá acesso a todos os cursos, inclusive os ainda não liberados
-- [ ] Previsão de lançamento dos cursos "em breve" (só se o cliente quiser divulgar)
-- [x] Cancelamento: livre, "cancele quando quiser" (texto do cliente no FAQ, 2026-10-06)
-- [ ] CTA definitivo do hero
-- [x] **FAQ definitivo:** textos enviados pelo cliente em 2026-10-06 e aplicados em `src/data/faq.ts` (nenhuma resposta com [PREENCHER])
+## 1. Bloqueiam o lançamento
 
-## Pendências de identidade visual (pasta /design)
+- [ ] **CNPJ e razão social.** A lei de e-commerce (Decreto 7.962/2013) pede nome e CNPJ do
+  fornecedor no site. Preencher `empresa` em `src/data/site.ts`: entram sozinhos no rodapé e na
+  Política de Privacidade
+- [ ] **Boleto.** O FAQ ("Onde eu faço meu pagamento?") diz "cartão, Pix ou boleto", mas os dois
+  checkouts da Kiwify oferecem só **Cartão e Pix Automático** (conferido em 2026-10-06). Ativar o
+  boleto na Kiwify ou tirar do FAQ (`src/data/faq.ts`)
+- [ ] **Total a prazo do anual.** O card mostra "12x de R$ 19,86" e "ou R$ 192 à vista", sem o
+  total (R$ 238,32), por decisão do cliente. As regras de oferta parcelada (CDC / Decreto
+  5.903/2006) pedem à vista, parcelas e total juntos. Confirmar com o jurídico. O total aparece
+  hoje só na resposta "Quanto custa?" do FAQ
+- [ ] **Política de Privacidade** (rascunho, com aviso visível de revisão jurídica). Faltam:
+  - razão social, CNPJ e endereço do controlador
+  - e-mail do encarregado de dados (LGPD), em `site.contato.email`
+  - provedor de hospedagem e prazo de retenção dos registros
+  - quais dados de alunos o APRISCO recebe da Kiwify e para quê
+  - ferramenta de medição/pixel, se houver, e os cookies envolvidos
+- [ ] **Termos de Uso** (rascunho). Faltam foro e legislação aplicável, e as regras da assinatura.
+  Já se sabe: cancelamento livre e garantia de 7 dias; falta confirmar como funciona a renovação
+- [ ] **Domínio oficial** (com ou sem `www`) conectado na Vercel, conferindo que ele **não**
+  responde `X-Robots-Tag: noindex` (o `vercel.json` bloqueia só os endereços `*.vercel.app`)
+- [ ] **Vercel no plano Pro** (uso comercial; a demonstração está no plano gratuito)
+- [ ] **Remover `src/pages/teste.astro`** (página de teste da Fase 1, com noindex e fora do sitemap)
 
-- [ ] `design/identidade.md` não existe (paleta e fontes deste plano foram extraídas das imagens; confirmar)
-- [ ] **Roxo `#4C059E` (2026-10-06):** cor primária definida pelo cliente, em lugar do coral `#F98080` que vinha das peças. As peças da pasta `/design` (capas, logo, imagem de compartilhamento) continuam no visual antigo: confirmar se serão refeitas no roxo
-- [x] ~~Confirmar o tom de apoio do roxo~~ (2026-10-06: o cliente pediu a família toda escura, sem puxar para o rosa; traços e ícones usam `#7C3AED`; desde então todos os botões usam o `#4C059E`, os discretos só com letra menor. O `#4C059E` puro tem 1,7:1 sobre o fundo e só funciona preenchido)
-- [ ] Logo em **SVG**: símbolo (cordeiro no círculo) e wordmark completo ("SEMINÁRIO TEOLÓGICO / APRISCO"). Hoje só há PNG 2560×1440 com o símbolo no centro de um quadro vazio; o wordmark existe apenas dentro de `6.png`
-  - Alternativa, se não houver SVG: vetorizar o PNG do cordeiro (pedir aprovação do resultado)
-- [ ] Manual de marca (área de respiro, tamanho mínimo, usos proibidos), se existir
-- [ ] Capas em alta resolução: 15 das 20 capas estão em 320×440 px (ficam borradas em telas grandes). Ideal: 1080×1350, como Cristologia, Escatologia, Teontologia, Antropologia e Pneumatologia
-- [ ] Padronizar a proporção das capas: há capas em 4:5 (1080×1350) e em 8:11 (320×440)
-- [x] ~~Capa do curso FLM~~ (curso retirado do site em 2026-10-05)
-- [ ] O arquivo `CAPAS CURSOS APRISCO.png` é a capa do Panorama do Antigo Testamento (renomear na origem, se quiser)
-- [ ] O arquivo `ESCOLA DE SEXOLOGIA BIBLICA.png` tem o nome divergente do curso ("Sexualidade"); confirmar que o nome oficial é "Escola de Sexualidade Bíblica"
-- [ ] Fonte usada no texto das capas (sans fina, parecida com Inter/Helvetica); só importa se o cliente quiser reproduzi-la no site
-- [ ] A imagem `5.png` (Santa Ceia com computadores) é peça de campanha? Pode ser usada no site?
+## 2. Conteúdo que o cliente precisa enviar
 
-## Pendências de conteúdo
-
-- [x] Preço da assinatura (ver acima; o site precisa continuar igual à Kiwify se o preço mudar)
-- [x] Garantia: 7 dias (garantia do consumidor), com reembolso (cliente, 2026-10-06)
-- [x] Certificado: de reconhecimento de conclusão; não conta como carga horária de bacharelado em Teologia (cliente, 2026-10-06)
-- [ ] Formato dos cursos (videoaulas, material em PDF, tempo de acesso, suporte)
-- [ ] Professores/fundador: nome, foto com autorização, minibiografia, formação e ministério
-- [ ] Depoimentos reais com autorização (se não houver, a seção não aparece)
-- [ ] Linha doutrinária ou declaração de fé
-- [x] ~~Nome completo da sigla FLM~~ (curso retirado do site em 2026-10-05)
-- [ ] Módulos/aulas de cada curso (para "O que você vai estudar")
-- [ ] Descrição de 2–4 frases de cada curso (só há a chamada curta)
-- [ ] Revisão doutrinária do cliente em todos os textos, com atenção a: Escola de Sexualidade Bíblica, Namoro Cristão, Salve a sua Família, Encontre a Pessoa Certa, Escatologia
-- [ ] Material gratuito para quem ainda não vai comprar (aula, PDF), se existir
-- [ ] Chamadas lidas dos prints (conferir a redação final):
+- [ ] **Páginas de curso (20).** Cada uma mostra [PREENCHER] em: descrição (2 a 4 frases), "O que
+  você vai estudar" (módulos/temas), "Para quem é", formato e carga horária. Sem isso as páginas
+  dificilmente ranqueiam no Google (ideal: 300+ palavras reais por curso). Campos em
+  `src/data/cursos.ts`
+- [ ] **Revisão doutrinária** de todos os textos, com atenção aos cursos marcados como sensíveis:
+  Escatologia, Teologia do Corpo, Escola de Sexualidade Bíblica, Salve a sua Família, Namoro
+  Cristão, Encontre a Pessoa Certa
+- [ ] **Chamadas dos cursos lidas dos prints** (conferir a redação final):
   - Fé e Trabalho: "Glorificando a Deus num mundo caído."
   - Panorama do Novo Testamento: "Mergulhe numa jornada entre os Evangelhos, Atos, Cartas e Apocalipse."
-  - Panorama do Antigo Testamento: "Descubra a beleza da revelação de Deus nas páginas do Antigo Testamento e compreenda toda sua estrutura bíblica."
-  - Namoro Cristão: "Vivendo um relacionamento para a glória de Deus e aprendendo a controlar o fogo no parquinho enquanto esperam." (expressão informal; confirmar se deve ir para o site público)
-- [ ] Nome das trilhas: a área de membros usa "Teologia para o dia-a-dia"; no site proponho "dia a dia" (grafia atual). Confirmar
+  - Panorama do Antigo Testamento: "Descubra a beleza da revelação de Deus nas páginas do Antigo Testamento…"
+  - Namoro Cristão: "…aprendendo a controlar o fogo no parquinho enquanto esperam." (expressão
+    informal; confirmar se vai para o site público)
 
-## Pendências institucionais e legais
+## 3. Confirmações rápidas
 
-- [ ] Canais oficiais: Instagram, YouTube, WhatsApp de atendimento, e-mail
-- [ ] Horário de atendimento
-- [ ] CNPJ/razão social e endereço (rodapé e política de privacidade)
-- [ ] Revisão jurídica da Política de Privacidade e dos Termos de Uso (serão rascunhos)
+- [ ] **Bandeiras de cartão.** As fichas sob o botão do anual mostram Visa, Mastercard, Elo e Pix
+  (`src/components/FormasPagamento.astro`). O checkout não lista bandeiras; confirmar com a Kiwify
+- [ ] **Parcela do anual.** O texto do cliente dizia "R$ 19,90"; a Kiwify cobra **R$ 19,86**, que é o
+  que o site mostra. Se a Kiwify mudar, atualizar só `src/data/cursos.ts`
+- [ ] **Aprovar o cordeiro vetorizado** (`public/logo/cordeiro-selo-*.svg`, `public/favicon.svg`),
+  feito a partir de `design/logo-preto.png`
+- [ ] **Aprovar a imagem de compartilhamento** `public/og/default.jpg` (recriação da peça `6.png`)
+- [ ] **Peças da pasta `/design` no roxo?** Capas, logo e imagem de compartilhamento seguem o
+  visual antigo (coral)
+- [ ] **Nome do curso:** o arquivo da capa diz "Escola de Sexologia Bíblica"; o site usa "Escola de
+  Sexualidade Bíblica". Confirmar o nome oficial
+- [ ] **Nome da trilha:** a área de membros usa "Teologia para o dia-a-dia"; o site usa "dia a dia"
+  (grafia atual)
+- [ ] **Palavras-chave de SEO:** home ("seminário teológico online") e as dos 20 cursos (campo
+  `palavraChave` em `src/data/cursos.ts`; o build impede duas páginas com a mesma)
 
-## Pendências técnicas
+## 4. Melhoram o site, mas não bloqueiam
 
-- [ ] Domínio definido (com ou sem `www`)
-- [x] Links de checkout da assinatura na Kiwify (oficiais, ver acima)
-- [ ] **Aprovar o cordeiro vetorizado** (Fase 1): `public/logo/cordeiro-selo-branco.svg`, `cordeiro-selo-preto.svg`, `public/favicon.svg`. Feito a partir de `design/logo-preto.png`
-- [ ] Aprovar a imagem de compartilhamento `public/og/default.jpg` (recriação da peça `6.png` com as fontes reais)
-- [x] Endereço do site automático (`astro.config.mjs`): na Vercel usa o endereço de produção do projeto (o `*.vercel.app` na demonstração e o domínio oficial quando for conectado); fora da Vercel, `aprisco.example.com`
-- [x] Demonstração fora do Google: `vercel.json` manda `X-Robots-Tag: noindex` para qualquer endereço `*.vercel.app`. O domínio oficial não recebe esse cabeçalho
-- [ ] Antes do lançamento: conectar o domínio oficial na Vercel e conferir que ele **não** responde `X-Robots-Tag: noindex`
-- [ ] Remover `src/pages/teste.astro` antes do lançamento (página de teste da Fase 1, já com noindex e fora do sitemap)
-- [ ] Verificar se o checkout da Kiwify preserva UTMs
-- [ ] Ferramenta de analytics (Plausible, Umami ou GA4) e pixels de anúncio (impacta aviso de cookies/LGPD)
-- [ ] Conta Vercel no plano Pro (uso comercial)
-- [ ] Repositório no GitHub (privado ou público)
+- [ ] **Capas em alta resolução:** 15 das 20 estão em 320×440 px e ficam borradas em telas
+  grandes. Ideal 1080×1350 (4:5), como Cristologia, Escatologia, Teontologia, Antropologia e
+  Pneumatologia
+- [ ] **Prova social:** depoimentos reais com autorização, professores (nome, foto, minibiografia)
+  e declaração de fé. Hoje a home não tem essas seções; entram quando houver material real
+- [ ] **Logo em SVG original** (símbolo e wordmark), se existir, no lugar da vetorização
+- [ ] **Analytics** (Plausible, Umami ou GA4) e pixels de anúncio. Os botões já têm
+  `data-cta`/`data-plano`/`data-curso` para medição. Impacta aviso de cookies e a Política de
+  Privacidade. Antes de repassar UTMs ao checkout, verificar se a Kiwify as preserva
+- [ ] **Previsão dos cursos "em preparação"** (Escatologia, Antropologia Bíblica, Pneumatologia),
+  só se o cliente quiser divulgar
+- [ ] **Links para as páginas de curso:** na home as capas não são links (decisão do single page);
+  o Google acha as páginas pelo sitemap e pelos cursos relacionados. Links de fora (Instagram,
+  anúncios) ajudam
+- [ ] **Imagem de compartilhamento por curso** (hoje todas usam `og/default.jpg`)
 
-## SEO
+## 5. Manter atualizado
 
-- [ ] Palavra-chave principal da home: proposta "seminário teológico online" (validar)
-- [ ] Validar as palavras-chave propostas para os 21 cursos (campo `palavraChave` em `src/data/cursos.ts`; o build impede duas páginas com a mesma)
-
-## Dados do cliente a manter atualizados (2026-10-06)
-
-- [ ] **"+80 aulas disponíveis hoje"** (seção "O que a assinatura inclui", em `src/pages/index.astro`): número informado pelo cliente. Revisar sempre que entrarem cursos novos, para o site não prometer menos nem mais do que existe
-- [x] ~~"cancele quando quiser" no FAQ~~ (texto do cliente aplicado em 2026-10-06)
-- [ ] **Parcela do plano anual:** o texto do FAQ enviado pelo cliente diz "R$ 19,90 mês em 12x", mas a Kiwify e o `cursos.ts` usam **R$ 19,86**. O site mostra 19,86 (valor real). Se a Kiwify mudar para 19,90, atualizar `cursos.ts`
-
-## Formas de pagamento (2026-10-06)
-
-- [ ] **Boleto:** o FAQ ("Onde eu faço meu pagamento?") diz "cartão, Pix ou boleto", mas os dois checkouts da Kiwify (anual e mensal) oferecem só **Cartão e Pix Automático**, conferido em 2026-10-06. Ou o boleto é ativado na Kiwify, ou sai do FAQ (`src/data/faq.ts`)
-- [ ] **Bandeiras:** as fichas abaixo do botão do plano anual mostram Visa, Mastercard, Elo e Pix (`src/components/FormasPagamento.astro`). O checkout não lista bandeiras; Visa/Mastercard/Elo foram indicadas pelo cliente. Confirmar com a Kiwify antes do lançamento
-
-## Oferta parcelada (2026-10-05)
-
-- [ ] O card do plano anual mostra "12x de R$ 19,86" e "ou R$ 192 à vista", sem o total a prazo (R$ 238,32), por decisão do cliente. As regras de oferta parcelada (CDC / Decreto 5.903/2006) pedem preço à vista, parcelas e total a prazo juntos: **confirmar com o jurídico**. O total ainda aparece na resposta "Quanto custa?" do FAQ
-
-## Single page (2026-10-05)
-
-- [ ] Páginas de curso sem link da home: o Google as encontra pelo sitemap e pelos links entre cursos relacionados. Para cada curso ranquear bem, o ideal é ter descrição real (300+ palavras) e, se possível, links de fora (Instagram, anúncios)
-- [ ] Sobre (seção da home): hoje só tem o manifesto; declaração de fé e professores entram quando houver material
-- [x] ~~Contato (seção da home)~~ (seção, item do menu e coluna "Atendimento" do rodapé removidos a pedido do cliente em 2026-10-06)
-
-## Registro da Fase 3 (2026-10-05)
-
-- [ ] **Sobre:** história da escola, declaração de fé e "Quem ensina" (professores) aparecem como [PREENCHER]
-- [ ] Home: "Quem ensina" e "Depoimentos" **não aparecem** até haver dados reais (decisão de design: seção some em vez de mostrar placeholder)
-- [x] ~~Home, passo 3: como e quando o acesso chega ao aluno~~ (texto enviado pelo cliente em 2026-10-06: acesso por e-mail + app da Kiwify)
-- [ ] Páginas de curso: ficha "Como funciona" com formato e carga horária em [PREENCHER] (certificado preenchido em 2026-10-06 com a resposta do FAQ)
-- [ ] Política de Privacidade e Termos de Uso: rascunhos com aviso visível de revisão jurídica; faltam controlador, hospedagem, analytics, regras da assinatura e foro
-- [ ] Canais (WhatsApp, e-mail) em `src/data/site.ts`: não aparecem mais na home, mas o e-mail ainda é pedido na Política de Privacidade (contato do encarregado de dados, LGPD) e o WhatsApp é a alternativa do botão de compra se um link de checkout faltar
-- [ ] Imagem de compartilhamento por curso: hoje todas usam `og/default.jpg` (capas são retrato e cortariam mal em 1200×630); gerar uma por curso é opcional
-- [x] Blog removido do escopo pelo cliente (2026-10-05); link retirado do menu
-
-## Registro da Fase 2 (2026-10-05)
-
-- [ ] Os 21 cursos estão com `descricao`, `paraQuem` e `aprendizados` vazios → aparecem como [PREENCHER] nas páginas de curso (Fase 3) até o cliente enviar o material
-- [ ] Cursos marcados com `revisaoSensivel` (revisão doutrinária obrigatória): Escatologia, Teologia do Corpo, Escola de Sexualidade Bíblica, Salve a sua Família, Namoro Cristão, Encontre a Pessoa Certa
-- [x] ~~FLM sem capa~~ (curso e trilha "Treinamento e capacitação" retirados do site em 2026-10-05)
-- [x] ~~FAQ provisório (`src/data/faq.ts`)~~ (respostas definitivas enviadas pelo cliente em 2026-10-06)
-- [ ] Verificar se o checkout da Kiwify preserva UTMs antes de repassá-las no `CtaButton`
-- [ ] Os botões de compra já têm `data-cta`/`data-plano`/`data-curso` para medição; falta escolher a ferramenta de analytics
+- [ ] **"+80 aulas disponíveis hoje"** (seção "O que a assinatura inclui", `src/pages/index.astro`):
+  número informado pelo cliente. Revisar quando entrarem cursos novos
+- [ ] **Preços e links de checkout** só em `src/data/cursos.ts`; o site inteiro acompanha
