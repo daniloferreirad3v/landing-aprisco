@@ -1,44 +1,71 @@
 ---
 name: design-aprisco
-description: Use em qualquer decisão visual do site do Seminário Teológico APRISCO: cores, tipografia, layout, componentes, imagens e animação. Obriga a ler a pasta /design (identidade oficial) antes de codar e aplica princípios de design autoral, evitando o visual genérico de páginas geradas.
+description: Use em qualquer decisão visual do site do Seminário Teológico APRISCO: cores, tipografia, layout, componentes, imagens e animação. Obriga a conhecer a identidade atual (tokens e decisões do cliente) antes de codar e aplica princípios de design autoral, evitando o visual genérico de páginas geradas.
 ---
 
 # Design do site APRISCO
 
-Detalhes completos em `docs/05-DESIGN.md`. Leia-o na primeira vez que usar a skill na sessão.
+Leia na primeira vez que usar a skill na sessão: `docs/projeto/06-visual-e-animacoes.md` (estado
+atual), `docs/design-plan.md` (raciocínio e paleta) e `docs/05-DESIGN.md` (processo).
 
 ## Passo zero (obrigatório)
 
-Leia **toda** a pasta `/design`: `LEIA-ME.md`, `identidade.md`, logos, fontes, fotos e referências. Os valores de lá vencem qualquer valor dos documentos. Se faltar logo, paleta ou fontes, **pare e pergunte**. Nunca invente a marca. Nunca altere arquivos de `/design`.
+- **Valores visuais vêm de `src/styles/tokens.css`.** Nenhuma cor, fonte ou espaço solto no componente.
+- A pasta `/design` é a identidade **de origem** (peças do Canva, capas, logo, prints): consulte para
+  marca, cordeiro e capas, e **nunca altere** seus arquivos. Atenção: as peças ainda estão em coral;
+  a cor primária do site passou a ser o **roxo** por decisão do cliente. Em conflito, valem as
+  decisões do cliente (`docs/projeto/07-decisoes.md`) e os tokens.
+- Antes de "corrigir" algo que pareça estranho, veja se não é decisão do cliente.
+
+## Identidade atual (resumo)
+
+- Escura, séria e contemplativa: preto `#000`/`#09090B`, creme `#F4F1EC`, Anton (títulos, caixa-alta)
+  + Montserrat (texto), cordeiro como símbolo.
+- **Roxo `#4C059E` só preenchido** (botões, selo), com texto branco. Sobre o fundo ele tem 1,7:1.
+- **Traços em `#7C3AED`** (bordas, linhas, ícones, foco). **Texto nunca é roxo.**
+- Nada de lilás ou tons claros de roxo ("puxa para o rosa", recusado pelo cliente).
 
 ## Fluxo
 
-1. **Plano em `docs/design-plan.md`:** paleta (4–6 hex nomeados), tipografia (famílias e papéis), layout (frase por seção + wireframe ASCII da home e da página de curso) e princípios.
-2. **Revisão contra o genérico:** compare o plano com os padrões de página gerada e reescreva o que for padrão (ver abaixo). Registre o que mudou e por quê.
-3. **Construção mobile primeiro** (375 px), a partir de `src/styles/tokens.css`. Todo valor visual vem de token.
-4. **Crítica com capturas** em 375, 768 e 1280 px (Playwright, se disponível). Remova uma decoração antes de finalizar.
+1. Celular primeiro (375 px), a partir dos tokens.
+2. **Crítica com capturas** em 375 e 1366 px (e 320/768/1024 quando mexer em layout). Remova uma
+   decoração antes de finalizar.
+3. Só registre em `docs/design-plan.md` decisões **definitivas**, aprovadas pelo cliente.
 
 ## Princípios
 
-- A marca é escura, séria e contemplativa: fotografia escurecida, wordmark condensado pesado, cordeiro, acento coral usado com contenção. Siga a identidade oficial; o escuro aqui é a marca, não um padrão.
-- **Gaste a ousadia em um lugar só.** Um elemento memorável (o hero); o resto, quieto e disciplinado.
-- A tipografia carrega a personalidade. Uma ou duas famílias, bem distintas se forem duas. Escala definida, linhas de 65–75 caracteres, texto de leitura ≥ 16 px no celular.
-- Estrutura visual (bordas, divisores, numeração, rótulos) só quando carrega informação. Numerar só sequências reais (ex.: passos de como funciona).
-- Texto de interface em caixa normal; caixa-alta apenas onde a marca exige (wordmark, títulos de destaque).
-- Copy de design: do ponto de vista do aluno, verbos de ação nos botões ("Quero me inscrever"), mesmo nome para a mesma ação, sem exagero.
+- **Gaste a ousadia em um lugar só.** O memorável é o topo (tipografia + mural de capas); o resto,
+  quieto e disciplinado.
+- A tipografia carrega a personalidade. Escala dos tokens, linhas de 65–75 caracteres, texto de
+  leitura ≥ 16 px no celular. Medidas da Anton em `em`, não `ch`.
+- Estrutura visual (bordas, divisores, numeração, rótulos) só quando carrega informação. Numerar só
+  sequências reais (ex.: passos de "Como funciona").
+- Texto de interface em caixa normal; caixa-alta onde a marca exige (títulos) ou o cliente pediu
+  (botões de compra: "ASSINAR AGORA", "QUERO COMEÇAR AGORA").
+- Copy: do ponto de vista do aluno, mesmo nome para a mesma ação, sem exagero. Textos do cliente
+  entram como ele mandou.
 
 ## Evitar (padrões de página genérica)
 
-- Cartões idênticos arredondados com a mesma sombra em tudo.
+- Cartões idênticos arredondados com a mesma sombra em tudo (raio do site: 4 px, sem sombra).
 - Rótulo em caixa-alta espaçada acima de todo título.
 - Destacar uma única palavra do título com cor ou itálico.
-- Gradientes decorativos, brilhos, fade-in em todas as seções, hover animado em todos os cards.
-- Preto "#0B0B0B" com um único acento neon só por hábito. Use as cores reais da marca.
+- Gradientes decorativos; brilho em elementos que não são os botões de compra.
+- Recortes, cortinas e efeitos "mirabolantes" na rolagem (testados e recusados pelo cliente).
 
 ## Qualidade mínima (sem anunciar)
 
-Responsivo até 320 px; foco visível; `prefers-reduced-motion` respeitado; contraste ≥ 4,5:1 (inclusive texto sobre foto, com overlay); alvos de toque ≥ 44 px; sem rolagem horizontal da página; CSS sem conflitos de especificidade (espaçamento vertical entre seções definido por um único token).
+Responsivo até 320 px; foco visível; `prefers-reduced-motion` respeitado; contraste ≥ 4,5:1 em
+texto e ≥ 3:1 em elementos não textuais (texto sobre imagem medido pixel a pixel); alvos de toque
+≥ 44 px; sem rolagem horizontal; CSS sem conflitos de especificidade (espaço vertical entre seções
+por um único token, `--espaco-secao`).
 
-## Motion
+## Motion (o que o cliente aprovou)
 
-No máximo um momento orquestrado (ex.: revelação suave do hero). Movimento que responde a uma ação (abrir FAQ ou menu) é bem-vindo. Tudo desligado com `prefers-reduced-motion: reduce`.
+- Revelação ao rolar: **fade sutil** com subida curta (`.revela`, `animation-timeline: view()`),
+  terminando perto do meio da tela; cascata com `--revela-i`.
+- Entrada do topo ao carregar e mural de capas que "respira".
+- Brilho lento nos botões de compra (passa por trás do texto).
+- Respostas a ação: capa sobe 6 px no hover, botão sobe 2 px, FAQ e menu deslizam.
+- Tudo desligado com `prefers-reduced-motion: reduce`. Ver armadilhas do minificador em
+  `docs/projeto/08-armadilhas.md`.
