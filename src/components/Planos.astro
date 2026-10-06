@@ -185,10 +185,25 @@ const melhorCusto = ofertaDestaque.parcela < mensal.valor;
 
   /* Dois cards lado a lado; o anual fica um pouco mais largo para seguir sendo o foco */
   @media (min-width: 48rem) {
+    /* o cabeçalho acompanha o eixo central dos cards */
+    .planos__cabeca {
+      justify-items: center;
+      max-width: 54rem;
+      margin-inline: auto;
+      text-align: center;
+    }
+
     .planos__lista {
       grid-template-columns: 1.1fr 0.9fr;
       gap: var(--esp-5);
       max-width: 54rem;
+      margin-inline: auto;
+    }
+
+    /* a nota acompanha o bloco de cards, para não ficar solta na borda esquerda */
+    .planos__nota {
+      max-width: 54rem;
+      margin-inline: auto;
     }
 
     .plano {
