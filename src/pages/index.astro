@@ -18,7 +18,6 @@ import TrilhaSection from '../components/TrilhaSection.astro';
 import Planos from '../components/Planos.astro';
 import Faq from '../components/Faq.astro';
 import { trilhas } from '../data/trilhas';
-import { ofertaDestaque } from '../data/cursos';
 import { faqGeral } from '../data/faq';
 import { montarTitulo } from '../lib/seo';
 
@@ -173,7 +172,6 @@ const inclui = [
     <div class="container secao final__conteudo">
       <img class="final__selo revela revela--cedo" src="/logo/cordeiro-selo-branco.svg" alt="" width="458" height="458" loading="lazy" />
       <h2 id="titulo-final" class="revela revela--cedo">Construa uma vida profunda a partir do conhecimento de Deus.</h2>
-      <p class="revela revela--cedo">Acesso a todos os cursos por {ofertaDestaque.texto}.</p>
       <CtaButton>ASSINAR AGORA</CtaButton>
     </div>
   </section>
@@ -417,7 +415,8 @@ const inclui = [
     max-width: 11em;
   }
 
-  .final__conteudo p {
-    color: var(--cor-texto-suave);
+  /* sem a linha de preço entre os dois, o botão ganha respiro próprio do título */
+  .final__conteudo :global(.botao) {
+    margin-top: var(--esp-4);
   }
 </style>
