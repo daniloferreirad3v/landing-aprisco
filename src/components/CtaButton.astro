@@ -13,7 +13,7 @@ interface Props {
   plano?: PlanoId;
   destino?: string;
   curso?: string; // slug, só para medição
-  variante?: 'principal' | 'secundario' | 'link'; // link = opção discreta (ex.: plano mensal)
+  variante?: 'principal' | 'secundario' | 'suave' | 'link'; // suave = preenchido, menos intenso; link = opção discreta
   largura?: 'auto' | 'total';
 }
 
@@ -73,7 +73,8 @@ const classes = ['botao', `botao--${variante}`, largura === 'total' && 'botao--t
 
   /* Resposta à ação: sobe levemente ao passar o mouse e "afunda" ao clicar */
   .botao--principal:hover,
-  .botao--secundario:hover {
+  .botao--secundario:hover,
+  .botao--suave:hover {
     transform: translateY(-2px);
   }
 
@@ -100,6 +101,34 @@ const classes = ['botao', `botao--${variante}`, largura === 'total' && 'botao--t
   .botao--secundario:hover {
     border-color: var(--cor-destaque);
     color: var(--cor-destaque);
+  }
+
+  /* Preenchido, porém menos intenso: coral clareado, texto escuro (contraste 10,8:1).
+     Ao passar o mouse, vai para o coral cheio.
+     Texto em caixa-alta fica menor e mais espaçado para não "gritar". */
+  .botao--suave {
+    background: var(--cor-destaque-suave);
+    color: var(--cor-sobre-destaque);
+    /* No celular ocupava quase a largura toda em 2 linhas: letra e respiro menores,
+       mantendo a altura mínima de toque (44 px) */
+    min-height: var(--alvo-toque);
+    padding-inline: var(--esp-4);
+    font-size: var(--fs-mini);
+    letter-spacing: 0.03em;
+  }
+
+  .botao--suave:hover {
+    background: var(--cor-destaque);
+    color: var(--cor-sobre-destaque);
+  }
+
+  @media (min-width: 48rem) {
+    .botao--suave {
+      min-height: 3.25rem;
+      padding-inline: var(--esp-5);
+      font-size: var(--fs-pequeno);
+      letter-spacing: 0.04em;
+    }
   }
 
   /* Opção em segundo plano: aparência de link, mantendo área de toque de 44 px */

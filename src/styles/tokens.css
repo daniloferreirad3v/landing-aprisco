@@ -40,6 +40,8 @@
   --cor-texto: #f4f1ec;
   --cor-texto-suave: #a3a09b;
   --cor-destaque: #f98080;
+  /* coral clareado (70% destaque + 30% branco): botão de destaque mais leve */
+  --cor-destaque-suave: #fba6a6;
   --cor-aviso: #e8c27a;
   --cor-fio: rgb(244 241 236 / 0.14);
   --cor-sobre-destaque: #09090b;
