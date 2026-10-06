@@ -15,8 +15,9 @@ não guarda dados de alunos.
 1. **Este arquivo** — regras e armadilhas que mais causam erro.
 2. **[docs/projeto/README.md](docs/projeto/README.md)** — índice da documentação do estado atual.
 3. **[PENDENCIAS.md](PENDENCIAS.md)** — o que falta, por prioridade.
-4. Só se precisar do contexto original: `CLAUDE.md`, `PROMPT-INICIAL.md` e `docs/01` a `07`
-   (briefing do kit; vários pontos foram superados, ver `docs/projeto/README.md`).
+4. Conforme a tarefa: `CLAUDE.md` (regras e definição de pronto), `docs/01` a `07` (projeto,
+   estrutura, SEO, HTML semântico, design, conteúdo, deploy) e `docs/design-plan.md`. Todos
+   revisados em 2026-10-06 para o site atual; o mapa está em `docs/projeto/README.md`.
 
 ## Comandos
 

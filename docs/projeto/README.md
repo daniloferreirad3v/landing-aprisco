@@ -22,20 +22,23 @@ O que falta fazer não está aqui: fica no [PENDENCIAS.md](../../PENDENCIAS.md),
 
 ## Relação com os outros documentos
 
-O repositório nasceu de um kit de documentação (briefing). Ele continua no repositório como
-contexto, mas **foi superado em vários pontos**. Quando houver conflito, vale esta pasta e o código.
+O repositório nasceu de um kit de documentação (briefing). Esses documentos foram **revisados em
+2026-10-06** para refletir o site atual e continuam valendo como regras e referência. Esta pasta é o
+retrato detalhado; em caso de conflito, vale esta pasta e o código.
 
-| Documento | Situação |
+| Documento | Papel |
 |---|---|
-| `CLAUDE.md` (raiz) | Regras inegociáveis e definição de pronto **continuam valendo**. A "ordem de leitura" e a menção a blog são do plano original |
-| `PROMPT-INICIAL.md` (raiz) | Fases de execução do kit. Fases 0 a 3 feitas; a Fase 4 (blog) foi **cancelada**; a Fase 5 (deploy) foi feita só para demonstração |
-| `docs/01-PROJETO.md` | Contexto e público continuam válidos. Desatualizado: catálogo e páginas separadas de Sobre/Contato, curso FLM |
-| `docs/02-ESTRUTURA.md` | Desatualizado em rotas (não há `/cursos`, `/sobre`, `/contato`, `/blog`). Ver [02-arquitetura.md](02-arquitetura.md) |
-| `docs/03-SEO.md` | Princípios e checklist **continuam valendo**. Ignorar o que fala de blog, catálogo e `ItemList` |
-| `docs/04-HTML-SEMANTICO.md` | Regras **continuam valendo**. O esqueleto da home mudou (ver [03-home.md](03-home.md)) |
-| `docs/05-DESIGN.md` | Processo e princípios valem. A cor de acento mudou de coral para roxo |
-| `docs/06-CONTEUDO.md` | Regras de copy valem. Estrutura da home, trilha "Treinamento e capacitação" e FLM foram superadas |
-| `docs/07-DEPLOY-E-QUALIDADE.md` | Checklist de lançamento **continua valendo** e ainda não foi cumprido |
-| `docs/design-plan.md` | Plano de design vivo: paleta e tipografia estão atualizadas. Os wireframes e as seções 9 e 11 são do plano original (ex.: botão no topo, que saiu) |
-| `design/` | Identidade visual de origem (peças do Canva, capas, prints). **Nunca alterar** |
-| `.claude/skills/` | Skills do Claude Code (`design-aprisco`, `seo-astro`). Úteis como checklist para qualquer agente |
+| `CLAUDE.md` (raiz) | Regras inegociáveis, stack e definição de pronto (lido automaticamente pelo Claude Code) |
+| `AGENTS.md` (raiz) | Ponto de entrada para qualquer agente de IA |
+| `PENDENCIAS.md` (raiz) | O que falta, por prioridade |
+| `PROMPT-INICIAL.md` (raiz) | Registro das fases de construção (não colar de novo) |
+| `docs/01-PROJETO.md` | Contexto, público, objetivos, perguntas ao cliente e respostas |
+| `docs/02-ESTRUTURA.md` | Pastas, rotas e o modelo de dados de `cursos.ts` |
+| `docs/03-SEO.md` | Princípios de SEO, `<head>`, JSON-LD, performance e checklist por página |
+| `docs/04-HTML-SEMANTICO.md` | Landmarks, outline de títulos, links, imagens e acessibilidade |
+| `docs/05-DESIGN.md` | Processo de design, direção por seção, botões e motion |
+| `docs/06-CONTEUDO.md` | Catálogo com as chamadas, estrutura das páginas e regras de copy |
+| `docs/07-DEPLOY-E-QUALIDADE.md` | Vercel, domínio e checklist de lançamento (ainda não cumprido) |
+| `docs/design-plan.md` | Plano de design em uso: paleta, tipografia, layout, wireframes e princípios |
+| `design/` | Identidade de origem (peças do Canva em coral, capas, prints). **Nunca alterar** |
+| `.claude/skills/` | Skills `design-aprisco` e `seo-astro`: checklists que o Claude Code carrega sozinho |

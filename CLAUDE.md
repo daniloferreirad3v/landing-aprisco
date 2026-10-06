@@ -2,39 +2,41 @@
 
 Este é o ponto de entrada do projeto. Leia este arquivo inteiro antes de qualquer ação.
 
-> **Estado atual do site:** este arquivo é o briefing original do kit e continua valendo nas
-> regras inegociáveis e na definição de pronto. O que mudou desde então (página única, sem blog,
-> roxo no lugar do coral, sem contato) está em [AGENTS.md](AGENTS.md) e em
+> O retrato detalhado do site como ele está hoje fica em [AGENTS.md](AGENTS.md) e em
 > [docs/projeto/](docs/projeto/README.md). Em caso de conflito, valem esses e o código.
 
 ## O que estamos construindo
 
 Um site estático em **Astro** para o Seminário Teológico APRISCO, com duas funções:
 
-1. **Landing page de vendas / site institucional** que apresenta a escola e o catálogo de cursos.
-2. **Uma página por curso**, otimizada para aparecer no Google, com botão que leva ao checkout da **Kiwify**.
+1. **Landing page de vendas em página única** (`/`), que apresenta a escola, a assinatura e o catálogo de cursos. A navegação é por âncoras (`#sobre`, `#cursos`, `#duvidas`).
+2. **Uma página por curso** (`/cursos/<slug>`), otimizada para aparecer no Google, com botão que leva ao checkout da **Kiwify**.
+
+A venda é por **assinatura** (anual em destaque, mensal em segundo plano), que dá acesso a todos os cursos. Não há blog, catálogo separado, página de sobre nem de contato.
 
 O site **não processa pagamento, não tem login e não guarda dados de alunos**. Compra, e-mail de entrega, área de membros, nota fiscal e suporte de reembolso ficam todos na Kiwify. O site é a vitrine; a Kiwify é o caixa.
 
 ## Ordem de leitura obrigatória
 
-Leia nesta ordem e não escreva código antes de terminar:
+Leia nesta ordem antes de escrever código:
 
-1. **`/design` (a pasta inteira)** — identidade visual oficial. Veja `design/LEIA-ME.md`. Se a pasta estiver vazia ou faltar logo/paleta/fontes, **pare e pergunte** em vez de inventar.
-2. `docs/01-PROJETO.md` — contexto, público, objetivos, perguntas em aberto.
-3. `docs/02-ESTRUTURA.md` — pastas, rotas, componentes.
-4. `docs/03-SEO.md` — SEO técnico, de conteúdo e dados estruturados.
-5. `docs/04-HTML-SEMANTICO.md` — tags semânticas, hierarquia de títulos, acessibilidade.
-6. `docs/05-DESIGN.md` — direção visual e processo de design.
-7. `docs/06-CONTEUDO.md` — seções, catálogo de cursos e regras de copy.
-8. `docs/07-DEPLOY-E-QUALIDADE.md` — Vercel, domínio, checklist de lançamento.
-9. `PROMPT-INICIAL.md` — fases de execução.
+1. `AGENTS.md` e `docs/projeto/` — estado atual do site, decisões do cliente e armadilhas.
+2. `PENDENCIAS.md` — o que falta, por prioridade.
+3. `docs/01-PROJETO.md` — contexto, público, objetivos.
+4. `docs/02-ESTRUTURA.md` — pastas, rotas, componentes.
+5. `docs/03-SEO.md` — SEO técnico, de conteúdo e dados estruturados.
+6. `docs/04-HTML-SEMANTICO.md` — tags semânticas, hierarquia de títulos, acessibilidade.
+7. `docs/05-DESIGN.md` e `docs/design-plan.md` — direção visual e processo de design.
+8. `docs/06-CONTEUDO.md` — seções, catálogo de cursos e regras de copy.
+9. `docs/07-DEPLOY-E-QUALIDADE.md` — Vercel, domínio, checklist de lançamento.
+
+A pasta `/design` é a identidade de origem (peças do Canva, capas, logo, prints): consulte, mas **nunca altere**. A cor primária do site mudou por decisão do cliente (roxo, não o coral das peças); os valores em uso estão em `src/styles/tokens.css`. `PROMPT-INICIAL.md` é o registro das fases de construção.
 
 ## Skills do projeto
 
 Estão em `.claude/skills/`:
 
-- `seo-astro` — use em toda página, componente de head, dado estruturado ou conteúdo de blog.
+- `seo-astro` — use em toda página, componente de head ou dado estruturado.
 - `design-aprisco` — use em toda decisão visual (cores, tipografia, layout, motion).
 
 ## Regras inegociáveis
@@ -46,27 +48,28 @@ Estão em `.claude/skills/`:
 5. **HTML semântico primeiro**, CSS depois, JavaScript só se for indispensável. Meta: zero JS no cliente na maioria das páginas.
 6. **Acessibilidade é requisito**, não extra: contraste, foco visível, `prefers-reduced-motion`, textos alternativos.
 7. **Todo texto visível em português do Brasil** (`lang="pt-BR"`), em linguagem acolhedora e clara.
-8. **Não adicione dependências** sem justificar. Preferência: Astro + `@astrojs/sitemap` + (se houver blog) MDX/content collections. Sem bibliotecas de UI.
+8. **Não adicione dependências** sem justificar. Hoje: Astro + `@astrojs/sitemap` + `@astrojs/check`. Sem bibliotecas de UI.
 
 ## Stack
 
-- Astro (versão estável atual; confirme em docs.astro.build, porque APIs como content collections mudam entre versões).
+- Astro 7 (confirme APIs em docs.astro.build antes de usar algo novo; elas mudam entre versões).
 - TypeScript no modo estrito para dados e componentes.
 - CSS com variáveis (design tokens) e estilos escopados do Astro. Sem framework de CSS, a menos que o projeto decida o contrário.
 - Imagens com `astro:assets`. Fontes hospedadas localmente.
-- Deploy na Vercel (plano Pro, por ser uso comercial).
+- Deploy na Vercel (hoje só demonstração, no plano gratuito; para vender, plano Pro, por ser uso comercial).
 
 ## Comandos
 
 ```bash
 npm run dev       # desenvolvimento
 npm run build     # gera /dist (deve passar sem erros nem avisos)
+npm run check     # astro check (TypeScript estrito; deve dar 0 erros)
 npm run preview   # testa o build local
 ```
 
 ## Definição de pronto (para qualquer tarefa)
 
-- [ ] `npm run build` passa.
+- [ ] `npm run build` passa e `npm run check` dá 0 erros.
 - [ ] HTML validado: um `<h1>` por página, hierarquia sem pulos, landmarks corretos.
 - [ ] `title`, `description`, canonical e Open Graph únicos na página.
 - [ ] Imagens com `alt`, `width` e `height`.

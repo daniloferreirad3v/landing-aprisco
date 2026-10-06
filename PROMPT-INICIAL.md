@@ -1,5 +1,21 @@
 # PROMPT-INICIAL.md
 
+Prompt com que o projeto foi iniciado. Ficou como registro das fases; **não cole de novo**: o site
+já está construído. Para continuar o trabalho, leia `AGENTS.md`.
+
+## Situação das fases (2026-10-06)
+
+| Fase | Situação |
+|---|---|
+| 0 — Leitura e plano | Feita (`PENDENCIAS.md`, `docs/design-plan.md`) |
+| 1 — Fundação | Feita |
+| 2 — Dados e componentes | Feita |
+| 3 — Páginas | Feita, com mudança do cliente: **página única**. Existem a home, as 20 páginas de curso, as políticas e a 404. **Não** existem catálogo (`/cursos`), `/sobre` nem `/contato` |
+| 4 — Blog | **Cancelada** pelo cliente |
+| 5 — Qualidade e deploy | Feita só para **demonstração** (`vercel.json` com `noindex` em `*.vercel.app`). O checklist de lançamento de `docs/07` ainda não foi cumprido |
+
+O texto abaixo é o original.
+
 ## Como começar
 
 1. Crie a pasta do projeto e copie este kit para dentro dela (mantendo `CLAUDE.md`, `docs/`, `design/` e `.claude/`).
