@@ -67,8 +67,9 @@ export function formatarNumero(valor: number): string {
 
 /**
  * Oferta de destaque do site (pedido do cliente, 2026-10-05): o plano anual parcelado,
- * com ênfase no valor da parcela. O preço à vista e o total a prazo são CALCULADOS e
- * continuam informados no card do plano (exigência das regras de oferta parcelada).
+ * com ênfase no valor da parcela. O preço à vista e o total a prazo são CALCULADOS.
+ * O card do plano mostra a parcela e o à vista; o total a prazo saiu do card por decisão
+ * do cliente e aparece só no FAQ (pendência jurídica em PENDENCIAS.md).
  */
 const anual = getPlano('anual');
 if (!anual.parcelas) throw new Error('O plano anual precisa de `parcelas` para a oferta de destaque.');
