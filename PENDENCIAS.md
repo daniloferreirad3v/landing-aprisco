@@ -85,6 +85,11 @@ Lista viva do que falta. Marque `[x]` quando resolver e anote a resposta ao lado
 - [ ] Palavra-chave principal da home: proposta "seminário teológico online" (validar)
 - [ ] Validar as palavras-chave propostas para os 21 cursos (campo `palavraChave` em `src/data/cursos.ts`; o build impede duas páginas com a mesma)
 
+## Dados do cliente a manter atualizados (2026-10-06)
+
+- [ ] **"+80 aulas disponíveis hoje"** (seção "O que a assinatura inclui", em `src/pages/index.astro`): número informado pelo cliente. Revisar sempre que entrarem cursos novos, para o site não prometer menos nem mais do que existe
+- [ ] **"cancele quando quiser"**: o cliente informou que o cancelamento é livre. A resposta "Posso cancelar quando quiser?" no FAQ (`src/data/faq.ts`) ainda está como [PREENCHER] — confirmar o texto e preencher
+
 ## Oferta parcelada (2026-10-05)
 
 - [ ] O card do plano anual mostra "12x de R$ 19,86" e "ou R$ 192 à vista", sem o total a prazo (R$ 238,32), por decisão do cliente. As regras de oferta parcelada (CDC / Decreto 5.903/2006) pedem preço à vista, parcelas e total a prazo juntos: **confirmar com o jurídico**. O total ainda aparece na resposta "Quanto custa?" do FAQ
