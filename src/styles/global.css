@@ -173,6 +173,13 @@ strong {
       animation-timeline: view();
       animation-range: entry calc(var(--revela-i, 0) * 6%) cover calc(50% + var(--revela-i, 0) * 6%);
     }
+
+    /* Perto do fim da página o elemento não sobe até o meio da tela (não há mais
+       rolagem): termina de aparecer assim que entra inteiro, senão em telas altas
+       ficava parado no meio do fade */
+    html .revela.revela--cedo {
+      animation-range: entry 0% entry 100%;
+    }
   }
 }
 
