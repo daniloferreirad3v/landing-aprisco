@@ -1,0 +1,71 @@
+---
+// Formas de pagamento mostradas abaixo do botão de compra.
+// Conferido no checkout da Kiwify em 2026-10-06: Cartão e Pix Automático (sem boleto).
+// O checkout não lista as bandeiras; Visa, Mastercard e Elo foram indicadas pelo cliente
+// (confirmar com a Kiwify, ver PENDENCIAS.md). Marcas desenhadas em SVG simples, sem
+// dependência nem imagem externa.
+---
+<ul class="pagamento lista-limpa" aria-label="Formas de pagamento">
+  <li class="pagamento__item">
+    <svg viewBox="0 0 48 16" role="img" aria-label="Visa">
+      <text x="24" y="13" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" font-style="italic" fill="#1a1f71" letter-spacing="0.5">VISA</text>
+    </svg>
+  </li>
+  <li class="pagamento__item">
+    <svg viewBox="0 0 48 16" role="img" aria-label="Mastercard">
+      <circle cx="19.5" cy="8" r="7" fill="#eb001b" />
+      <circle cx="28.5" cy="8" r="7" fill="#f79e1b" />
+      <path d="M24 2.6a7 7 0 0 1 0 10.8a7 7 0 0 1 0-10.8z" fill="#ff5f00" />
+    </svg>
+  </li>
+  <li class="pagamento__item">
+    <svg viewBox="0 0 48 16" role="img" aria-label="Elo">
+      <text x="24" y="12.5" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#000000">elo</text>
+    </svg>
+  </li>
+  <li class="pagamento__item">
+    <svg viewBox="0 0 48 16" role="img" aria-label="Pix">
+      <rect x="9" y="3" width="10" height="10" rx="2.2" transform="rotate(45 14 8)" fill="#32bcad" />
+      <text x="31" y="12" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#333333">pix</text>
+    </svg>
+  </li>
+</ul>
+
+<style>
+  .pagamento {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--esp-2);
+  }
+
+  /* Fichas brancas, como as bandeiras costumam aparecer: as cores das marcas
+     precisam de fundo claro para serem reconhecidas */
+  .pagamento__item {
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 1.75rem;
+    padding: 0.3rem;
+    border-radius: var(--raio);
+    background: #ffffff;
+  }
+
+  .pagamento__item svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* No celular as fichas ficam menores: ao lado do botão, competiam com ele */
+  @media (max-width: 47.9375rem) {
+    .pagamento {
+      gap: var(--esp-1);
+    }
+
+    .pagamento__item {
+      width: 2.5rem;
+      height: 1.375rem;
+      padding: 0.2rem;
+    }
+  }
+</style>

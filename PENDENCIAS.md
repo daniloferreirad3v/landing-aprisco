@@ -93,6 +93,11 @@ Lista viva do que falta. Marque `[x]` quando resolver e anote a resposta ao lado
 - [x] ~~"cancele quando quiser" no FAQ~~ (texto do cliente aplicado em 2026-10-06)
 - [ ] **Parcela do plano anual:** o texto do FAQ enviado pelo cliente diz "R$ 19,90 mês em 12x", mas a Kiwify e o `cursos.ts` usam **R$ 19,86**. O site mostra 19,86 (valor real). Se a Kiwify mudar para 19,90, atualizar `cursos.ts`
 
+## Formas de pagamento (2026-10-06)
+
+- [ ] **Boleto:** o FAQ ("Onde eu faço meu pagamento?") diz "cartão, Pix ou boleto", mas os dois checkouts da Kiwify (anual e mensal) oferecem só **Cartão e Pix Automático**, conferido em 2026-10-06. Ou o boleto é ativado na Kiwify, ou sai do FAQ (`src/data/faq.ts`)
+- [ ] **Bandeiras:** as fichas abaixo do botão do plano anual mostram Visa, Mastercard, Elo e Pix (`src/components/FormasPagamento.astro`). O checkout não lista bandeiras; Visa/Mastercard/Elo foram indicadas pelo cliente. Confirmar com a Kiwify antes do lançamento
+
 ## Oferta parcelada (2026-10-05)
 
 - [ ] O card do plano anual mostra "12x de R$ 19,86" e "ou R$ 192 à vista", sem o total a prazo (R$ 238,32), por decisão do cliente. As regras de oferta parcelada (CDC / Decreto 5.903/2006) pedem preço à vista, parcelas e total a prazo juntos: **confirmar com o jurídico**. O total ainda aparece na resposta "Quanto custa?" do FAQ

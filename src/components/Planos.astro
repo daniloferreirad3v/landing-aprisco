@@ -7,6 +7,7 @@
 // pedido do cliente (2026-10-05); continua no FAQ. Ver PENDENCIAS.md (regras de oferta parcelada).
 // Valores e links vêm de cursos.ts (assinatura.planos).
 import CtaButton from './CtaButton.astro';
+import FormasPagamento from './FormasPagamento.astro';
 import { formatarNumero, formatarReais, getPlano, ofertaDestaque } from '../data/cursos';
 
 interface Props {
@@ -49,6 +50,7 @@ const melhorCusto = ofertaDestaque.parcela < mensal.valor;
         </ul>
         <div class="plano__acao">
           <CtaButton plano="anual" curso={curso} largura="total">ASSINAR AGORA</CtaButton>
+          <FormasPagamento />
         </div>
       </article>
     </li>
@@ -168,7 +170,10 @@ const melhorCusto = ofertaDestaque.parcela < mensal.valor;
   }
 
   /* Os botões dos dois cards ficam na mesma linha de base */
+  /* respiro entre o botão e as bandeiras: coladas, pareciam parte do botão */
   .plano__acao {
+    display: grid;
+    gap: var(--esp-5);
     margin-top: auto;
     padding-top: var(--esp-5);
   }
@@ -270,6 +275,10 @@ const melhorCusto = ofertaDestaque.parcela < mensal.valor;
 
     .plano--destaque .plano__detalhes {
       font-size: var(--fs-corpo);
+    }
+
+    .plano--destaque .plano__acao {
+      gap: var(--esp-6);
     }
 
     .plano--destaque .plano__acao :global(.botao) {
