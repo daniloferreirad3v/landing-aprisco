@@ -2,7 +2,9 @@
 // ÚNICO componente que gera links de compra (CLAUDE.md, regra 4).
 //
 // - Com `plano`: abre o checkout daquele plano na Kiwify (URL vinda de cursos.ts).
-// - Sem `plano`: leva à seção de assinatura (`destino`, padrão "#assinatura").
+// - Sem `plano` e sem `destino`: abre o checkout do plano ANUAL (pedido do cliente,
+//   2026-10-06: todo botão de compra leva direto à assinatura anual).
+// - Com `destino`: navegação interna (ex.: "#assinatura"), sem checkout.
 //
 // É um <a> (navegação), nunca <button>. Mesma aba, sem target="_blank".
 // Os atributos data-cta/data-plano/data-curso servem para medir cliques (analytics).
@@ -17,9 +19,10 @@ interface Props {
   largura?: 'auto' | 'total';
 }
 
-const { plano, destino = '#assinatura', curso, variante = 'principal', largura = 'auto' } = Astro.props;
+const { plano: planoPedido, destino, curso, variante = 'principal', largura = 'auto' } = Astro.props;
 
-const link = plano ? getPlano(plano).linkKiwify : destino;
+const plano: PlanoId | undefined = planoPedido ?? (destino ? undefined : 'anual');
+const link = plano ? getPlano(plano).linkKiwify : destino!;
 const externo = Boolean(plano);
 const indisponivel = plano !== undefined && link === '';
 const alternativa = site.contato.whatsapp ? `https://wa.me/${site.contato.whatsapp}` : '';
