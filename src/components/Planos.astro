@@ -54,7 +54,7 @@ const melhorCusto = ofertaDestaque.parcela < mensal.valor;
     </li>
 
     <li>
-      <article class="plano revela revela--zoom" style="--revela-i: 1" aria-labelledby="plano-mensal">
+      <article class="plano plano--mensal revela revela--zoom" style="--revela-i: 1" aria-labelledby="plano-mensal">
         <div class="plano__topo">
           <h3 id="plano-mensal" class="plano__nome">{mensal.nome}</h3>
         </div>
@@ -67,7 +67,7 @@ const melhorCusto = ofertaDestaque.parcela < mensal.valor;
           <li>Pagamento mês a mês, cancele quando quiser.</li>
         </ul>
         <div class="plano__acao">
-          <CtaButton plano="mensal" curso={curso} largura="total" variante="secundario">Assinar mês a mês</CtaButton>
+          <CtaButton plano="mensal" curso={curso} largura="total" variante="secundario">ASSINAR</CtaButton>
         </div>
       </article>
     </li>
@@ -183,31 +183,73 @@ const melhorCusto = ofertaDestaque.parcela < mensal.valor;
     margin-bottom: var(--esp-5);
   }
 
-  /* Dois cards lado a lado; o anual fica um pouco mais largo para seguir sendo o foco */
+  /* Mensal: alternativa em segundo plano, card menor e mais discreto */
+  .plano--mensal {
+    padding: var(--esp-4) var(--esp-5);
+  }
+
+  .plano--mensal .plano__nome {
+    font-size: var(--fs-pequeno);
+    color: var(--cor-texto-suave);
+  }
+
+  .plano--mensal .plano__preco {
+    margin-top: var(--esp-2);
+  }
+
+  .plano--mensal .plano__valor {
+    font-size: 2.25rem;
+  }
+
+  .plano--mensal .plano__moeda {
+    font-size: var(--fs-corpo);
+  }
+
+  .plano--mensal .plano__detalhes {
+    margin-top: var(--esp-2);
+    font-size: var(--fs-mini);
+  }
+
+  .plano--mensal .plano__acao {
+    padding-top: var(--esp-4);
+  }
+
+  .plano--mensal .plano__acao :global(.botao) {
+    min-height: var(--alvo-toque);
+    font-size: var(--fs-pequeno);
+  }
+
+  /* Dois cards lado a lado: o anual bem maior, o mensal estreito e mais baixo,
+     centrado na altura do anual */
   @media (min-width: 48rem) {
     /* o cabeçalho acompanha o eixo central dos cards */
     .planos__cabeca {
       justify-items: center;
-      max-width: 54rem;
+      max-width: 58rem;
       margin-inline: auto;
       text-align: center;
     }
 
     .planos__lista {
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
+      align-items: center;
       gap: var(--esp-5);
-      max-width: 54rem;
+      max-width: 58rem;
       margin-inline: auto;
     }
 
     /* a nota acompanha o bloco de cards, para não ficar solta na borda esquerda */
     .planos__nota {
-      max-width: 54rem;
+      max-width: 58rem;
       margin-inline: auto;
     }
 
-    .plano {
-      padding: var(--esp-6);
+    .plano--destaque {
+      padding: var(--esp-7);
+    }
+
+    .plano--mensal {
+      padding: var(--esp-5);
     }
 
     .plano--destaque .plano__nome {
@@ -215,11 +257,11 @@ const melhorCusto = ofertaDestaque.parcela < mensal.valor;
     }
 
     .plano--destaque .plano__valor {
-      font-size: 4.25rem;
+      font-size: 6rem;
     }
 
     .plano--destaque .plano__moeda {
-      font-size: var(--fs-h3);
+      font-size: var(--fs-h2);
     }
 
     .plano--destaque .plano__periodo {
