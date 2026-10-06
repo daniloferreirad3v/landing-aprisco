@@ -2,7 +2,7 @@
 // Home: página de vendas da assinatura, em SINGLE PAGE (decisão do cliente, 2026-10-05).
 // O menu rola até as seções: #cursos, #sobre, #planos, #duvidas, #contato.
 // As páginas de curso existem só como porta de entrada pelo Google (sem links daqui).
-// Ordem pensada para conversão: oferta + produto na 1ª tela → problema (texto do cliente)
+// Ordem: marca + promessa + produto (mural) na 1ª tela → problema (texto do cliente)
 // → o que a assinatura inclui → vitrine dos cursos → como funciona → planos → dúvidas → fechamento.
 // Outline: h1 → h2 manifesto → h2 inclui → h2 cursos (h3 trilhas, h4 cursos) → h2 como funciona
 // (h3 passos) → h2 planos (h3 planos) → h2 perguntas → h2 fechamento.
@@ -20,7 +20,7 @@ import BarraAssinatura from '../components/BarraAssinatura.astro';
 import Preencher from '../components/Preencher.astro';
 import { site } from '../data/site';
 import { trilhas } from '../data/trilhas';
-import { formatarNumero, ofertaDestaque } from '../data/cursos';
+import { ofertaDestaque } from '../data/cursos';
 import { faqGeral } from '../data/faq';
 import { montarTitulo } from '../lib/seo';
 
@@ -28,8 +28,6 @@ const title = montarTitulo('Seminário Teológico Online');
 const description =
   'Estude teologia de maneira profunda e descomplicada. Cursos online de Bíblia, doutrina, família e vida cristã no Seminário Teológico APRISCO.';
 
-// Oferta em destaque: plano anual parcelado (pedido do cliente). Sem contagem de cursos no texto.
-const parcela = formatarNumero(ofertaDestaque.parcela);
 
 const inclui = [
   {
@@ -54,19 +52,9 @@ const inclui = [
   <Hero titulo="Estude teologia de maneira profunda e descomplicada.">
     <AssinaturaMarca slot="marca" />
     <p>
-      Cursos online de teologia bíblica para quem quer conhecer a Deus com profundidade e viver a fé no dia a dia.
+      Estude Teologia de maneira profunda e descomplicada para Conhecer a Deus, Fortalecer sua Fé e Servir com
+      excelência à Igreja de Cristo.
     </p>
-    <Fragment slot="acoes">
-      <p class="hero-oferta">
-        <span class="hero-oferta__texto">Acesso a todos os cursos por</span>
-        <span class="hero-oferta__preco">
-          {ofertaDestaque.quantidade}x de <span class="hero-oferta__moeda">R$</span>
-          <strong class="hero-oferta__valor">{parcela}</strong>
-        </span>
-      </p>
-      <CtaButton>Assinar agora</CtaButton>
-      <a class="link-forte hero-ver-cursos" href="#cursos">Ver os cursos</a>
-    </Fragment>
     <MuralCapas slot="visual" />
   </Hero>
 
@@ -198,74 +186,6 @@ const inclui = [
 </Base>
 
 <style>
-  .link-forte {
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--alvo-toque);
-    font-weight: var(--peso-forte);
-  }
-
-  /* Oferta: a parcela é o número em destaque (pedido do cliente).
-     Celular: preço em cima, botão embaixo. Desktop: botão e preço lado a lado, para o botão
-     aparecer sem rolar em notebooks. Ordem: regras gerais primeiro, depois as do desktop. */
-  .hero-oferta {
-    display: grid;
-    gap: var(--esp-1);
-    flex-basis: 100%;
-    color: var(--cor-texto);
-  }
-
-  .hero-oferta__preco {
-    display: flex;
-    align-items: baseline;
-    gap: 0.3em;
-    font-weight: var(--peso-forte);
-  }
-
-  /* Só os números em Anton; "12x de R$" na fonte de texto (o "R$" em Anton fica espremido) */
-  .hero-oferta__valor {
-    font-family: var(--fonte-display);
-    font-size: clamp(2.25rem, 1.9rem + 1.2vw, 2.75rem);
-    font-weight: 400;
-    line-height: 1;
-  }
-
-  .hero-ver-cursos {
-    flex-basis: 100%;
-  }
-
-  @media (min-width: 48rem) {
-    /* O bloco do preço tem a altura do botão: o texto encosta no topo do botão e a base
-       dos números na base dele (line-height curto tira o espaço vazio abaixo dos dígitos) */
-    .hero-oferta {
-      flex-basis: auto;
-      order: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 0;
-    }
-
-    .hero-oferta__texto {
-      color: var(--cor-texto-suave);
-      font-size: var(--fs-pequeno);
-      line-height: 1;
-    }
-
-    .hero-oferta__preco {
-      line-height: 1;
-    }
-
-    .hero-oferta__valor {
-      font-size: 2.25rem;
-      line-height: 0.76;
-    }
-
-    .hero-ver-cursos {
-      order: 2;
-    }
-  }
-
   /* Manifesto: o problema, com as palavras do cliente */
   .manifesto {
     border-block: var(--fio) solid var(--cor-fio);
@@ -486,18 +406,5 @@ const inclui = [
 
   .final__conteudo p {
     color: var(--cor-texto-suave);
-  }
-
-  @media (min-width: 100rem) and (min-height: 50rem) {
-    .hero-oferta__texto {
-      font-size: var(--fs-corpo);
-    }
-
-    /* Números altos da Anton: 2,375rem cabe junto do texto na altura do botão sem encostar */
-    .hero-oferta__valor {
-      font-size: 2.375rem;
-      line-height: 0.76;
-    }
-
   }
 </style>
