@@ -222,7 +222,3 @@ strong {
   }
 }
 
-/* O <main> recebe foco pelo skip link; o contorno não é necessário ali */
-main:focus {
-  outline: none;
-}
