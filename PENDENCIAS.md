@@ -104,7 +104,7 @@ Lista viva do que falta. Marque `[x]` quando resolver e anote a resposta ao lado
 
 - [ ] **Sobre:** história da escola, declaração de fé e "Quem ensina" (professores) aparecem como [PREENCHER]
 - [ ] Home: "Quem ensina" e "Depoimentos" **não aparecem** até haver dados reais (decisão de design: seção some em vez de mostrar placeholder)
-- [ ] Home, passo 3 de "Como funcionam os cursos": como e quando o acesso chega ao aluno
+- [x] ~~Home, passo 3: como e quando o acesso chega ao aluno~~ (texto enviado pelo cliente em 2026-10-06: acesso por e-mail + app da Kiwify)
 - [ ] Páginas de curso: ficha "Como funciona" com formato, carga horária e certificado em [PREENCHER]
 - [ ] Política de Privacidade e Termos de Uso: rascunhos com aviso visível de revisão jurídica; faltam controlador, hospedagem, analytics, regras da assinatura e foro
 - [ ] Contato: canais (WhatsApp, e-mail, Instagram, horário) em `src/data/site.ts`

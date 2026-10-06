@@ -124,19 +124,20 @@ const inclui = [
           <p>Você vai direto para a página de pagamento.</p>
         </li>
         <li class="revela" style="--revela-i: 1">
-          <h3>Pague na Kiwify</h3>
-          <p>A compra é processada pela Kiwify, a plataforma onde ficam os cursos.</p>
+          <h3>Finalize o pagamento</h3>
+          <p>A compra é processada pela Kiwify, plataforma de hospedagem dos nossos cursos.</p>
         </li>
         <li class="revela" style="--revela-i: 2">
-          <h3>Acesse a área de membros</h3>
+          <h3>Acesso à área de membros</h3>
           <p>
-            Os cursos ficam na área de membros da Kiwify.{' '}
-            <Preencher oque="como e quando o acesso chega ao aluno" />
+            Você receberá em seu e-mail acesso à nossa área de membros. Basta seguir o passo a passo. Se quiser
+            melhorar a sua experiência, baixe o app da Kiwify e cadastre-se com o mesmo e-mail de compra do curso.
+            O Seminário Teológico APRISCO estará lá dentro!
           </p>
         </li>
         <li class="revela" style="--revela-i: 3">
-          <h3>Estude no seu ritmo</h3>
-          <p>Comece pela trilha que fizer mais sentido para você agora.</p>
+          <h3>Estude no seu Ritmo</h3>
+          <p>Estude Teologia a qualquer hora e em qualquer lugar.</p>
         </li>
       </ol>
     </div>
@@ -339,12 +340,14 @@ const inclui = [
     font-size: var(--fs-pequeno);
   }
 
-  /* Desktop: os 4 passos dividem as mesmas linhas (subgrid), então os títulos e os textos
-     começam na mesma altura em todas as colunas */
-  @media (min-width: 64rem) {
+  /* Tablet e desktop: 2 colunas, para o passo 3 (texto longo) não virar uma coluna
+     estreita de muitas linhas ao lado de passos de 2 linhas.
+     Subgrid: dentro de cada linha, títulos e textos começam na mesma altura. */
+  @media (min-width: 48rem) {
     .passos {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      row-gap: 0;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--esp-7);
+      row-gap: var(--esp-6);
     }
 
     .passos li {
