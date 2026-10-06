@@ -12,7 +12,7 @@ interface Props {
 const { itens, titulo = 'Perguntas frequentes', id = 'titulo-faq' } = Astro.props;
 ---
 <section class="faq" aria-labelledby={id}>
-  <h2 id={id}>{titulo}</h2>
+  <h2 id={id} class="revela">{titulo}</h2>
   <div class="faq__lista">
     {itens.map((item) => (
       <details class="faq__item">

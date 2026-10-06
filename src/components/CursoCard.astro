@@ -60,6 +60,14 @@ const emBreve = curso.status === 'em-breve';
     border-radius: var(--raio);
     background: var(--cor-superficie);
     margin-bottom: var(--esp-2);
+    transition: transform var(--duracao-rapida) var(--curva-saida);
+  }
+
+  /* Resposta ao mouse: a capa salta um pouco, como quem puxa o livro da estante.
+     Vale também na home, onde o card não é link (decisão do single page). */
+  .card:hover .card__capa,
+  .card:focus-within .card__capa {
+    transform: translateY(-6px);
   }
 
   /* Linha roxa sob a capa: citação da área de membros, aqui indicando seleção */

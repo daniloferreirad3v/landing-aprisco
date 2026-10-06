@@ -152,7 +152,9 @@ strong {
     .revela {
       animation-name: revela-subindo;
       animation-fill-mode: both;
-      animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+      /* linear: a revelação acompanha o dedo/roda. Com curva de saída, quase todo o
+         movimento acontecia nos primeiros pixels e o resto passava despercebido. */
+      animation-timing-function: linear;
     }
 
     .revela--linha {
@@ -163,9 +165,13 @@ strong {
       animation-name: revela-zoom;
     }
 
+
+    /* A faixa de rolagem termina quando o elemento chega perto do meio da tela.
+       Com um fim curto (cover 24%) a revelação acabava com o elemento ainda colado
+       na borda de baixo: quando a pessoa olhava, já estava tudo revelado. */
     html .revela {
       animation-timeline: view();
-      animation-range: entry calc(var(--revela-i, 0) * 7%) cover calc(24% + var(--revela-i, 0) * 7%);
+      animation-range: entry calc(var(--revela-i, 0) * 6%) cover calc(50% + var(--revela-i, 0) * 6%);
     }
   }
 }
@@ -173,7 +179,7 @@ strong {
 @keyframes revela-subindo {
   from {
     opacity: 0;
-    transform: translateY(28px);
+    transform: translateY(16px);
   }
 }
 
