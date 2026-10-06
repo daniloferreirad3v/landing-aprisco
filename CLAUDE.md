@@ -2,6 +2,11 @@
 
 Este é o ponto de entrada do projeto. Leia este arquivo inteiro antes de qualquer ação.
 
+> **Estado atual do site:** este arquivo é o briefing original do kit e continua valendo nas
+> regras inegociáveis e na definição de pronto. O que mudou desde então (página única, sem blog,
+> roxo no lugar do coral, sem contato) está em [AGENTS.md](AGENTS.md) e em
+> [docs/projeto/](docs/projeto/README.md). Em caso de conflito, valem esses e o código.
+
 ## O que estamos construindo
 
 Um site estático em **Astro** para o Seminário Teológico APRISCO, com duas funções:
