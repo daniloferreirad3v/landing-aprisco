@@ -16,7 +16,6 @@ interface Props {
 
 const { curso, nivel = 'h3', prioridade = false, compacto = false, link = true } = Astro.props;
 const Titulo = nivel;
-const emBreve = curso.status === 'em-breve';
 ---
 <article class:list={['card', link && 'card--link']}>
   <div class="card__capa">
@@ -37,7 +36,6 @@ const emBreve = curso.status === 'em-breve';
         </div>
       )
     }
-    {emBreve && <p class="card__selo">Em preparação</p>}
   </div>
   <Titulo class="card__titulo">
     {link ? <a href={urlDoCurso(curso)}>{curso.nome}</a> : curso.nome}
@@ -107,18 +105,6 @@ const emBreve = curso.status === 'em-breve';
     text-transform: uppercase;
     text-align: center;
     line-height: var(--lh-display);
-  }
-
-  .card__selo {
-    position: absolute;
-    top: var(--esp-2);
-    left: var(--esp-2);
-    padding: 0.2em 0.6em;
-    border-radius: var(--raio);
-    background: var(--cor-preto);
-    color: var(--cor-aviso);
-    font-size: var(--fs-mini);
-    font-weight: var(--peso-forte);
   }
 
   .card__titulo {
