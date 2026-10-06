@@ -17,6 +17,7 @@ conversa. O ponto de entrada geral é o [AGENTS.md](../../AGENTS.md), na raiz.
 | 7 | [07-decisoes.md](07-decisoes.md) | Por que as coisas estão como estão: decisões do cliente, em ordem |
 | 8 | [08-armadilhas.md](08-armadilhas.md) | Problemas técnicos que já aconteceram e como evitar |
 | 9 | [09-fluxo-de-trabalho.md](09-fluxo-de-trabalho.md) | Como o cliente trabalha e como verificar uma alteração antes de entregar |
+| 10 | [10-hospedagem-e-publicacao.md](10-hospedagem-e-publicacao.md) | Onde hospedar (regras de uso comercial), PageSpeed, teste de carga e o passo a passo da virada para o domínio oficial |
 
 O que falta fazer não está aqui: fica no [PENDENCIAS.md](../../PENDENCIAS.md), na raiz.
 

@@ -41,7 +41,7 @@ o histórico fica no git.
   Já se sabe: cancelamento livre e garantia de 7 dias; falta confirmar como funciona a renovação
 - [ ] **Domínio oficial** (com ou sem `www`) conectado na Vercel, conferindo que ele **não**
   responde `X-Robots-Tag: noindex` (o `vercel.json` bloqueia só os endereços `*.vercel.app`)
-- [ ] **Vercel no plano Pro** (uso comercial; a demonstração está no plano gratuito)
+- [ ] **Hospedagem para vender:** o Vercel gratuito proíbe uso comercial. Escolher entre Vercel Pro, Cloudflare Pages ou Hostinger com deploy automático (comparação em `docs/projeto/10-hospedagem-e-publicacao.md`)
 - [ ] **Remover `src/pages/teste.astro`** (página de teste da Fase 1, com noindex e fora do sitemap)
 
 ## 2. Conteúdo que o cliente precisa enviar
