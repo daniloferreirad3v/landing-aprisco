@@ -14,7 +14,7 @@ const { empresa } = site;
 
     <nav class="rodape__nav" aria-label="Rodapé">
       <h2 class="rodape__titulo">Navegação</h2>
-      <ul class="lista-limpa">
+      <ul class="rodape__links lista-limpa">
         <li><a href="/">Início</a></li>
         {navegacao.map((item) => (
           <li><a href={item.href}>{item.rotulo}</a></li>
@@ -62,6 +62,16 @@ const { empresa } = site;
     margin-top: var(--esp-4);
     color: var(--cor-texto-suave);
     max-inline-size: 32ch;
+  }
+
+  /* Navegação em duas colunas, preenchidas de cima para baixo:
+     Início e Cursos à esquerda; Sobre e Dúvidas à direita */
+  .rodape__links {
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    column-gap: var(--esp-8);
   }
 
   .rodape__titulo {
