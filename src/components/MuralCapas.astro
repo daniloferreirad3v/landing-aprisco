@@ -5,11 +5,12 @@
 import { Image } from 'astro:assets';
 import { getCurso } from '../data/cursos';
 
-// Capas disponíveis, alternando trilhas e tons (claro/escuro/quente) entre vizinhas.
+// 10 capas únicas: 5 de Teologia Sistemática no primeiro plano focal,
+// complementadas por cursos fundamentais de Bíblia e Doutrina no segundo plano.
 const slugs = [
-  ['cristologia', 'escola-de-oracao', 'teologia-digital'],
-  ['teontologia', 'como-ler-a-sua-biblia', 'carater-cristao', 'cosmovisao-crista'],
-  ['salve-a-sua-familia', 'panorama-novo-testamento', 'fe-e-trabalho'],
+  ['cristologia', 'antropologia-biblica', 'fundamentos-da-fe'],
+  ['teontologia', 'pneumatologia', 'como-ler-a-sua-biblia', 'cosmovisao-crista'],
+  ['escatologia', 'panorama-antigo-testamento', 'panorama-novo-testamento'],
 ];
 const colunas = slugs.map((col) => col.map(getCurso).filter((c) => c.capa));
 ---
