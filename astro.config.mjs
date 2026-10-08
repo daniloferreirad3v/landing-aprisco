@@ -3,19 +3,16 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 // Endereço do site: canonical, Open Graph (imagem no WhatsApp), sitemap e robots.txt saem daqui.
-// 1. SITE_URL, se definida (ex.: forçar o domínio oficial no build).
-// 2. Na Cloudflare Pages, o endereço gerado automaticamente (CF_PAGES_URL).
-// 3. Na Vercel, o endereço de produção do projeto (VERCEL_PROJECT_PRODUCTION_URL).
-// 4. Fora de ambos (máquina local), um domínio reservado de exemplo.
+// 1. SITE_URL, se definida (ex.: domínio oficial configurado nas variáveis do Cloudflare).
+// 2. CF_PAGES_URL, gerada automaticamente pelo Cloudflare Pages.
+// 3. Em ambiente local / fallback oficial.
 const SITE =
   process.env.SITE_URL ??
   process.env.CF_PAGES_URL ??
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : 'https://aprisco.example.com');
+  'https://seminarioaprisco.com.br';
 
 // Páginas fora do sitemap (também recebem noindex no <head>).
-const FORA_DO_SITEMAP = ['/404', '/teste'];
+const FORA_DO_SITEMAP = ['/404'];
 
 export default defineConfig({
   site: SITE,

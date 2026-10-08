@@ -42,7 +42,7 @@ o histórico fica no git.
 - [ ] **Domínio oficial** (com ou sem `www`) conectado na Vercel, conferindo que ele **não**
   responde `X-Robots-Tag: noindex` (o `vercel.json` bloqueia só os endereços `*.vercel.app`)
 - [ ] **Hospedagem para vender:** o Vercel gratuito proíbe uso comercial. Escolher entre Vercel Pro, Cloudflare Pages ou Hostinger com deploy automático (comparação em `docs/projeto/10-hospedagem-e-publicacao.md`)
-- [ ] **Remover `src/pages/teste.astro`** (página de teste da Fase 1, com noindex e fora do sitemap)
+- [x] **Remover `src/pages/teste.astro`** (removida em 2026-10-07 para preparação de indexação no Cloudflare Pages)
 
 ## 2. Conteúdo que o cliente precisa enviar
 
