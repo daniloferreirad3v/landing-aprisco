@@ -11,12 +11,10 @@ import CtaButton from '../../components/CtaButton.astro';
 import CursoCard from '../../components/CursoCard.astro';
 import Planos from '../../components/Planos.astro';
 import Faq from '../../components/Faq.astro';
-import Preencher from '../../components/Preencher.astro';
 import JsonLd from '../../components/JsonLd.astro';
 import {
   cursos,
   cursosRelacionados,
-  ofertaDestaque,
   trilhasDoCurso,
   urlDoCurso,
   type Curso,
@@ -76,9 +74,13 @@ const dadosCurso = {
         </p>
         <h1 class="curso__titulo">{curso.nome}</h1>
         <p class="curso__chamada">{curso.chamada}</p>
-        <div class="curso__descricao">
-          {curso.descricao ? <p>{curso.descricao}</p> : <p><Preencher oque={`descrição do curso ${curso.nome} (2 a 4 frases)`} /></p>}
-        </div>
+        {
+          curso.descricao && (
+            <div class="curso__descricao">
+              <p>{curso.descricao}</p>
+            </div>
+          )
+        }
 
         {emBreve && (
           <p class="curso__aviso">
@@ -89,9 +91,6 @@ const dadosCurso = {
 
         <div class="curso__acao">
           <CtaButton curso={curso.slug}>ASSINAR AGORA</CtaButton>
-          <p class="curso__preco">
-            Incluído na assinatura: {ofertaDestaque.texto}.
-          </p>
         </div>
       </div>
 
@@ -116,64 +115,31 @@ const dadosCurso = {
   </div>
 
   <div class="container secao curso__corpo">
-    <section aria-labelledby="titulo-estudar">
-      <h2 id="titulo-estudar">O que você vai estudar</h2>
-      {
-        curso.aprendizados.length > 0 ? (
+    {
+      curso.aprendizados.length > 0 && (
+        <section aria-labelledby="titulo-estudar">
+          <h2 id="titulo-estudar">O que você vai estudar</h2>
           <ol class="curso__lista">
             {curso.aprendizados.map((a) => (
               <li>{a}</li>
             ))}
           </ol>
-        ) : (
-          <p><Preencher oque={`módulos ou temas do curso ${curso.nome}`} /></p>
-        )
-      }
-    </section>
+        </section>
+      )
+    }
 
-    <section aria-labelledby="titulo-para-quem">
-      <h2 id="titulo-para-quem">Para quem é este curso</h2>
-      {
-        curso.paraQuem.length > 0 ? (
+    {
+      curso.paraQuem.length > 0 && (
+        <section aria-labelledby="titulo-para-quem">
+          <h2 id="titulo-para-quem">Para quem é este curso</h2>
           <ul class="curso__lista">
             {curso.paraQuem.map((p) => (
               <li>{p}</li>
             ))}
           </ul>
-        ) : (
-          <p><Preencher oque={`perfis de aluno do curso ${curso.nome}`} /></p>
-        )
-      }
-    </section>
-
-    <section aria-labelledby="titulo-como-funciona">
-      <h2 id="titulo-como-funciona">Como funciona</h2>
-      <dl class="curso__ficha">
-        <div>
-          <dt>Situação</dt>
-          <dd>{emBreve ? 'Em preparação' : 'Disponível'}</dd>
-        </div>
-        <div>
-          <dt>Acesso</dt>
-          <dd>Na área de membros da Kiwify, com a assinatura do APRISCO (todos os cursos incluídos).</dd>
-        </div>
-        <div>
-          <dt>Formato</dt>
-          <dd>{curso.formato ?? <Preencher oque="formato (videoaulas, material de apoio…)" />}</dd>
-        </div>
-        <div>
-          <dt>Carga horária</dt>
-          <dd>{curso.cargaHoraria ?? <Preencher oque="carga horária, se houver" />}</dd>
-        </div>
-        <div>
-          <dt>Certificado</dt>
-          <dd>
-            Certificado de conclusão. Por ser um seminário teológico, e não um bacharelado, ele não conta como
-            carga horária de bacharelado em Teologia.
-          </dd>
-        </div>
-      </dl>
-    </section>
+        </section>
+      )
+    }
   </div>
 
   <div class="container secao">
@@ -257,12 +223,6 @@ const dadosCurso = {
 
   .curso__acao {
     margin-top: var(--esp-6);
-  }
-
-  .curso__preco {
-    margin-top: var(--esp-3);
-    font-size: var(--fs-pequeno);
-    color: var(--cor-texto-suave);
   }
 
   .curso__capa {
