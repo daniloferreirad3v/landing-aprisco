@@ -11,8 +11,9 @@ const SITE =
   process.env.CF_PAGES_URL ??
   'https://seminarioaprisco.com.br';
 
-// Páginas fora do sitemap (também recebem noindex no <head>).
-const FORA_DO_SITEMAP = ['/404'];
+// Só a página inicial vai para o Google (decisão do cliente, 2026-10-13).
+// As demais páginas recebem noindex no <head> (prop `noindex` do layout).
+const PAGINAS_NO_SITEMAP = ['/'];
 
 export default defineConfig({
   site: SITE,
@@ -22,7 +23,7 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
-      filter: (page) => !FORA_DO_SITEMAP.some((rota) => new URL(page).pathname === rota),
+      filter: (page) => PAGINAS_NO_SITEMAP.includes(new URL(page).pathname),
     }),
   ],
 });
