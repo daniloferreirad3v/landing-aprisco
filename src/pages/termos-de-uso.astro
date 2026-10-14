@@ -1,7 +1,6 @@
 ---
 // RASCUNHO para revisão jurídica (docs/06-CONTEUDO.md). Não é aconselhamento legal.
 import Pagina from '../layouts/Pagina.astro';
-import Preencher from '../components/Preencher.astro';
 import { site } from '../data/site';
 import { montarTitulo } from '../lib/seo';
 
@@ -18,7 +17,6 @@ const atualizacao = new Date('2026-10-05');
         {atualizacao.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })}
       </time>
     </p>
-    <p class="rascunho"><Preencher oque="RASCUNHO: revisão jurídica obrigatória antes da publicação" /></p>
   </Fragment>
 
   <h2>Sobre este site</h2>
@@ -38,18 +36,10 @@ const atualizacao = new Date('2026-10-05');
     reembolso seguem as condições apresentadas no checkout e os{' '}
     <a href="https://kiwify.com.br/termos-de-uso/" rel="noopener">termos de uso da Kiwify</a>.
   </p>
-  <p><Preencher oque="regras da assinatura: renovação, cancelamento e garantia" /></p>
 
   <h2>Links externos</h2>
   <p>O site contém links para serviços de terceiros, como a Kiwify, que têm termos e políticas próprios.</p>
 
-  <h2>Alterações e foro</h2>
+  <h2>Alterações</h2>
   <p>Estes termos podem ser atualizados. A data no topo indica a versão em vigor.</p>
-  <p><Preencher oque="foro e legislação aplicável" /></p>
 </Pagina>
-
-<style>
-  .rascunho {
-    margin-top: var(--esp-3);
-  }
-</style>
